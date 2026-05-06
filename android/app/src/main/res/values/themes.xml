@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.VacationBudget" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color (blue-600 equivalent) -->
+        <item name="colorPrimary">@color/md_blue_600</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/md_blue_100</item>
+        <item name="colorOnPrimaryContainer">@color/md_blue_900</item>
+
+        <!-- Secondary brand color (emerald) -->
+        <item name="colorSecondary">@color/md_green_600</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/md_green_100</item>
+        <item name="colorOnSecondaryContainer">@color/md_green_900</item>
+
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+    </style>
+
+</resources>
