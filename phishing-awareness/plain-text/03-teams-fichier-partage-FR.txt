@@ -1,0 +1,48 @@
+De : Microsoft Teams <notifications@teams-microsoft-share.net>
+Objet : {{expediteur}} a partagé "Grille_salaires_2026.xlsx" avec vous
+
+================================================================================
+Microsoft Teams
+================================================================================
+
+{{expediteur}} a partagé un fichier avec vous
+
+Bonjour {{prenom}},
+
+{{expediteur}} vous a partagé un fichier via Microsoft Teams et a ajouté un
+message :
+
+  "Bonjour {{prenom}}, comme convenu voici le document. Merci de le consulter
+   avant notre réunion de vendredi et de me faire un retour rapide.
+   Reste confidentiel svp."
+
+FICHIER PARTAGÉ
+---------------
+Nom     : Grille_salaires_2026.xlsx
+Type    : Feuille de calcul Microsoft Excel
+Taille  : 847 Ko
+Partagé : {{date}} via Teams
+
+Aperçu :
+| Poste               | Niveau | Salaire brut |
+| Développeur Senior  | N3     | █████ €      |
+| Chef de projet      | N4     | █████ €      |
+[ Ouvrez le fichier pour voir le contenu complet... ]
+
+>> Ouvrir dans Teams : {{lien}}
+>> Télécharger : {{lien}}
+
+Ce fichier est accessible uniquement aux membres de {{entreprise}}.
+Si vous n'attendiez pas ce partage, contactez le support IT : {{support}}
+
+================================================================================
+Notification Teams pour {{email}} · Référence : TM-{{date}}-{{email}}
+Gérer mes notifications Teams | Aide & Support
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : teams-microsoft-share.net ≠ microsoft.com
+2. Nom de fichier appâtant délibéré (Grille_salaires)
+3. Boutons Teams pointent vers domaine externe
+4. Les vraies notifs Teams renvoient vers teams.microsoft.com uniquement
+5. Prévisualisation tronquée = technique d'appel à la curiosité

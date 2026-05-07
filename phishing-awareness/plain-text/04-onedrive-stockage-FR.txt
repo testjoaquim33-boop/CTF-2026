@@ -1,0 +1,38 @@
+De : OneDrive <onedrive-storage@microsoft-cloud-notify.com>
+Objet : Votre stockage OneDrive est plein — vos fichiers sont en danger
+
+================================================================================
+OneDrive · Microsoft
+Votre stockage OneDrive est saturé
+================================================================================
+
+Bonjour {{prenom}},
+
+Votre espace de stockage OneDrive associé à {{email}} est plein à 100%.
+Les nouvelles synchronisations sont BLOQUÉES et les fichiers en cours d'édition
+risquent d'être PERDUS.
+
+STOCKAGE : [██████████████████████] 5 Go / 5 Go (100%)
+0 octets disponibles
+
+IMPACTS IMMÉDIATS SI VOUS N'AGISSEZ PAS :
+ ✗ Synchronisation des documents bloquée sur tous vos appareils
+ ✗ Fichiers Excel / Word en cours : perte des dernières modifications
+ ✗ Pièces jointes Outlook ne peuvent plus être sauvegardées
+ ✗ Partages Teams et SharePoint indisponibles sous 48h
+
+>> Libérer de l'espace maintenant : {{lien}}
+>> Mise à niveau gratuite — 100 Go supplémentaires : {{lien}}
+
+Pour toute question, contactez le support IT : {{support}}
+
+================================================================================
+Notification OneDrive pour {{email}} · Compte {{entreprise}}
+Gérer les notifications | Confidentialité
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : microsoft-cloud-notify.com ≠ microsoft.com/onedrive.com
+2. "Vos fichiers sont en danger" = alarmisme excessif
+3. Offre "100 Go gratuits" est fausse : OneDrive ne fait pas ça par email
+4. Vérifier le vrai stockage dans l'app OneDrive ou onedrive.live.com

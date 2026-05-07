@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 08 — Microsoft Intune / Endpoint Security: Compliance Violation (EN)
+==============================================================================
+  LANGUAGE    : English
+  LEVEL       : Advanced
+  THEME       : Microsoft Intune / Endpoint compliance / MDM
+  SUBJECT     : URGENT: Your device is no longer compliant — access will be revoked
+  SENDER      : Microsoft Intune <endpoint-security@microsoft-intune-alerts[.]com>
+  TRIGGERS    : Fear (access revocation), Urgency, Authority (IT policy), Specificity
+  INDICATORS  :
+    - Sender domain non-official (microsoft-intune-alerts[.]com ≠ microsoft.com)
+    - Real Intune compliance emails come from intune@microsoft.com
+    - Fake device ID and policy names create false sense of legitimacy
+    - "Resolve now" button points to external domain
+    - IT admins would contact you via help desk ticket, not email link
+    - Access revocation timeline (4 hours) is unrealistically short
+    - No reference to actual MDM enrollment ID or device serial number
+  DEBRIEF     : See metadata/templates.json — id: "08"
+==============================================================================
+  FOR AUTHORIZED INTERNAL USE ONLY — SECURITY AWARENESS PURPOSES SOLELY
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft Intune — Device Compliance Alert</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #1e1e1e; font-family: 'Segoe UI', Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#1e1e1e"
+         style="background-color: #1e1e1e;">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#252423"
+               style="max-width: 600px; background-color: #252423; border: 1px solid #3b3a39;">
+
+          <!-- HEADER — Dark theme (Microsoft Security Center style) -->
+          <tr>
+            <td bgcolor="#0078D4" style="background-color: #0078D4; padding-top: 18px;
+                                          padding-bottom: 18px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                 font-weight: 400; color: rgba(255,255,255,0.7);
+                                 text-transform: uppercase; letter-spacing: 1px; display: block;
+                                 margin-bottom: 4px;">
+                      Microsoft Intune · Endpoint Manager
+                    </span>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px;
+                                 font-weight: 600; color: #ffffff;">
+                      &#9632;&nbsp;&#9632;&nbsp;&#9632;&nbsp;&#9632;
+                      &nbsp;Device Compliance Alert
+                    </span>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span style="font-size: 32px; color: #ffffff; opacity: 0.8;">&#128187;</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CRITICAL BANNER -->
+          <tr>
+            <td bgcolor="#d13438" style="background-color: #d13438; padding-top: 12px;
+                                          padding-bottom: 12px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+                                 font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">
+                      &#9888;&nbsp; CRITICAL &mdash; CORPORATE RESOURCE ACCESS AT RISK
+                    </span>
+                  </td>
+                  <td align="right">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                 color: rgba(255,255,255,0.8); font-weight: 400;">
+                      Priority: High
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BODY (dark) -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 24px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 22px; font-weight: 600; color: #ffffff; line-height: 1.3;">
+                Your device is no longer compliant
+              </p>
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #8a8886; line-height: 1.5;">
+                User: <strong style="color: #c8c6c4;">{{email}}</strong>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                Tenant: <strong style="color: #c8c6c4;">{{entreprise}}</strong>
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #c8c6c4; line-height: 1.6;">
+                Hi <strong style="color: #ffffff;">{{prenom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #c8c6c4; line-height: 1.6;">
+                Microsoft Intune has detected that your enrolled device no longer meets
+                the security compliance requirements set by <strong style="color: #ffffff;">
+                {{entreprise}}</strong>'s IT policy. Your access to corporate resources
+                (Exchange, SharePoint, Teams, VPN) <strong style="color: #ffd335;">
+                will be revoked within 4 hours</strong> if this issue is not resolved.
+              </p>
+
+              <!-- Device info card -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #1e1e1e; border: 1px solid #3b3a39; margin-bottom: 24px;">
+                <tr>
+                  <td bgcolor="#292827" style="background-color: #292827; padding-top: 12px;
+                                               padding-bottom: 12px; padding-left: 20px;
+                                               padding-right: 20px; border-bottom: 1px solid #3b3a39;">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                 font-weight: 700; color: #8a8886; text-transform: uppercase;
+                                 letter-spacing: 0.5px;">
+                      Affected Device
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 16px; padding-bottom: 16px;
+                             padding-left: 20px; padding-right: 20px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="160" style="padding-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                                               font-size: 13px; color: #8a8886;">Device name:</td>
+                        <td style="padding-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                                   font-size: 13px; color: #c8c6c4; font-weight: 600;">
+                          {{prenom}}-LAPTOP-01
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="padding-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                                               font-size: 13px; color: #8a8886;">Device ID:</td>
+                        <td style="padding-bottom: 8px; font-family: 'Courier New', Courier, monospace;
+                                   font-size: 12px; color: #c8c6c4;">
+                          a3f7b2e1-4c89-4d5f-b6e2-1a2b3c4d5e6f
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="padding-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                                               font-size: 13px; color: #8a8886;">OS Version:</td>
+                        <td style="padding-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                                   font-size: 13px; color: #c8c6c4;">Windows 11 22H2 (10.0.22621)</td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="font-family: 'Segoe UI', Arial, sans-serif;
+                                               font-size: 13px; color: #8a8886;">Compliance state:</td>
+                        <td>
+                          <span style="display: inline-block; padding-top: 2px; padding-bottom: 2px;
+                                       padding-left: 10px; padding-right: 10px;
+                                       background-color: #3b1a1a; border: 1px solid #d13438;
+                                       font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                       font-weight: 600; color: #f1707b;">
+                            &#9679; Non-Compliant
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Failed policies -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #1e1e1e; border: 1px solid #3b3a39; margin-bottom: 28px;">
+                <tr>
+                  <td bgcolor="#292827" style="background-color: #292827; padding-top: 12px;
+                                               padding-bottom: 12px; padding-left: 20px;
+                                               padding-right: 20px; border-bottom: 1px solid #3b3a39;">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                 font-weight: 700; color: #8a8886; text-transform: uppercase;
+                                 letter-spacing: 0.5px;">
+                      Failed Compliance Checks (3)
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 16px; padding-bottom: 16px;
+                             padding-left: 20px; padding-right: 20px;">
+
+                    <!-- Policy 1 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="margin-bottom: 12px;">
+                      <tr>
+                        <td width="20" valign="top" style="padding-top: 1px; padding-right: 10px;">
+                          <span style="color: #d13438; font-size: 14px;">&#10006;</span>
+                        </td>
+                        <td>
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; font-weight: 600; color: #c8c6c4;">
+                            Windows Security Updates
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 12px; color: #8a8886;">
+                            Required: KB5034763 (Feb 2026) · Found: KB5030219 (Sep 2023)
+                          </p>
+                        </td>
+                        <td align="right" valign="top">
+                          <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+                                       color: #d13438; font-weight: 600;">CRITICAL</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Policy 2 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="margin-bottom: 12px;">
+                      <tr>
+                        <td width="20" valign="top" style="padding-top: 1px; padding-right: 10px;">
+                          <span style="color: #d13438; font-size: 14px;">&#10006;</span>
+                        </td>
+                        <td>
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; font-weight: 600; color: #c8c6c4;">
+                            Disk Encryption (BitLocker)
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 12px; color: #8a8886;">
+                            Required: Enabled on all drives · Found: Drive D:\ not encrypted
+                          </p>
+                        </td>
+                        <td align="right" valign="top">
+                          <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+                                       color: #d13438; font-weight: 600;">HIGH</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Policy 3 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="20" valign="top" style="padding-top: 1px; padding-right: 10px;">
+                          <span style="color: #ffd335; font-size: 14px;">&#9888;</span>
+                        </td>
+                        <td>
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; font-weight: 600; color: #c8c6c4;">
+                            Microsoft Defender Real-time Protection
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 12px; color: #8a8886;">
+                            Required: Active · Found: Disabled (last active 3 days ago)
+                          </p>
+                        </td>
+                        <td align="right" valign="top">
+                          <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px;
+                                       color: #ffd335; font-weight: 600;">MEDIUM</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA BUTTON -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 12px;">
+                <tr>
+                  <td bgcolor="#0078D4" style="background-color: #0078D4; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 13px; padding-bottom: 13px;
+                              padding-left: 32px; padding-right: 32px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #ffffff; text-decoration: none;">
+                      Resolve compliance issues now
+                    </a>
+                  </td>
+                  <td width="12">&nbsp;</td>
+                  <td style="border: 1px solid #3b3a39; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 13px; padding-bottom: 13px;
+                              padding-left: 20px; padding-right: 20px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #8a8886; text-decoration: none;">
+                      View in Intune Portal
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 20px; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #8a8886; line-height: 1.6;">
+                &#9201; Access to corporate resources will be revoked in
+                <strong style="color: #ffd335;">4 hours</strong> if these issues remain unresolved.
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #8a8886; line-height: 1.6;">
+                Need help? Contact IT security:
+                <a href="mailto:{{support}}" style="color: #0078D4; text-decoration: none;">
+                  {{support}}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SEPARATOR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #3b3a39; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER (dark) -->
+          <tr>
+            <td bgcolor="#1e1e1e" style="background-color: #1e1e1e; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #605e5c; line-height: 1.5;">
+                This compliance notification was sent to <strong style="color: #8a8886;">{{email}}</strong>
+                because your device is enrolled in <strong style="color: #8a8886;">{{entreprise}}</strong>'s
+                Microsoft Intune MDM policy.
+              </p>
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #605e5c; line-height: 1.5;">
+                Microsoft Corporation · One Microsoft Way · Redmond, WA 98052, USA
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #605e5c;">
+                <a href="{{lien}}" style="color: #605e5c; text-decoration: underline;">Privacy</a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #605e5c; text-decoration: underline;">Terms</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

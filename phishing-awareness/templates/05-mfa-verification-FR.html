@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 05 — Microsoft MFA : Vérification requise
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Moyen
+  THÈME       : Authentification multi-facteurs / Compte Microsoft
+  OBJET       : [Action requise] Votre méthode d'authentification Microsoft doit être mise à jour
+  EXPÉDITEUR  : Microsoft Account <mfa-security@microsoftaccount-verify[.]com>
+  LEVIERS     : Urgence, Autorité, Peur (perte d'accès), Action immédiate
+  INDICATEURS :
+    - Domaine expéditeur non-officiel (microsoftaccount-verify[.]com)
+    - Délai artificiel ("72 heures") — Microsoft ne suspend pas le MFA sans préavis
+    - Bouton "Mettre à jour" avec URL externe
+    - Code de vérification présent dans l'email (les vraies notifs n'envoient pas de code)
+    - Demande de cliquer sur un lien plutôt que d'utiliser l'app Authenticator
+    - Mention "équipe de sécurité" sans contact vérifiable
+  DÉBRIEF     : Voir metadata/templates.json — id: "05"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft — Mise à jour MFA requise</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f2f1; font-family: 'Segoe UI', Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f2f1">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 600px; background-color: #ffffff; border: 1px solid #e1dfdd;">
+
+          <!-- EN-TÊTE -->
+          <tr>
+            <td bgcolor="#0078D4" style="background-color: #0078D4; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
+              <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px;
+                           font-weight: 300; color: #ffffff;">
+                &#9632;&nbsp;&#9632;&nbsp;&#9632;&nbsp;&#9632;&nbsp;&nbsp;Microsoft
+              </span>
+            </td>
+          </tr>
+
+          <!-- BANDE INFO BLEUE -->
+          <tr>
+            <td bgcolor="#deecf9" style="background-color: #deecf9; padding-top: 12px;
+                                          padding-bottom: 12px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="24" valign="middle" style="padding-right: 10px;">
+                    <span style="font-size: 18px; color: #0078D4;">&#x1F512;</span>
+                  </td>
+                  <td valign="middle">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+                                 font-weight: 600; color: #004578;">
+                      Sécurité du compte · Authentification multi-facteurs
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 24px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 22px; font-weight: 600; color: #201f1e; line-height: 1.3;">
+                Votre méthode d'authentification doit être mise à jour
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 14px; color: #605e5c; line-height: 1.5;">
+                Compte : <strong>{{email}}</strong>
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Bonjour <strong>{{prenom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                L'équipe de sécurité de <strong>{{entreprise}}</strong> a détecté que votre
+                méthode d'authentification multi-facteurs (MFA) est <strong>obsolète</strong>
+                ou ne répond plus aux nouvelles exigences de sécurité de votre organisation.
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Pour maintenir l'accès à vos services Microsoft 365, vous devez mettre à jour
+                votre configuration MFA <strong>dans les 72 heures</strong>. Passé ce délai,
+                votre compte sera suspendu à titre préventif.
+              </p>
+
+              <!-- Étapes visuelles -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="margin-bottom: 28px; border: 1px solid #e1dfdd;">
+                <tr>
+                  <td style="padding-top: 16px; padding-bottom: 16px;
+                             padding-left: 20px; padding-right: 20px;">
+                    <p style="margin: 0 0 14px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 13px; font-weight: 700; color: #323130;
+                               text-transform: uppercase; letter-spacing: 0.5px;">
+                      Comment mettre à jour votre MFA
+                    </p>
+
+                    <!-- Étape 1 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="margin-bottom: 12px;">
+                      <tr>
+                        <td width="32" valign="top" style="padding-top: 1px; padding-right: 12px;">
+                          <table width="26" height="26" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td bgcolor="#0078D4" align="center" valign="middle"
+                                  style="background-color: #0078D4; border-radius: 50%; width: 26px;
+                                         height: 26px; font-family: 'Segoe UI', Arial, sans-serif;
+                                         font-size: 13px; font-weight: 700; color: #ffffff;">
+                                1
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td valign="top">
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 14px; font-weight: 600; color: #323130;">
+                            Cliquez sur le bouton ci-dessous
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; color: #605e5c;">
+                            Accédez au portail de mise à jour sécurisé Microsoft
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Étape 2 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="margin-bottom: 12px;">
+                      <tr>
+                        <td width="32" valign="top" style="padding-top: 1px; padding-right: 12px;">
+                          <table width="26" height="26" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td bgcolor="#0078D4" align="center" valign="middle"
+                                  style="background-color: #0078D4; border-radius: 50%; width: 26px;
+                                         height: 26px; font-family: 'Segoe UI', Arial, sans-serif;
+                                         font-size: 13px; font-weight: 700; color: #ffffff;">
+                                2
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td valign="top">
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 14px; font-weight: 600; color: #323130;">
+                            Vérifiez votre identité
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; color: #605e5c;">
+                            Utilisez votre code de vérification unique :
+                            <strong style="color: #0078D4; font-size: 16px; letter-spacing: 3px;">
+                              742-891
+                            </strong>
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Étape 3 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="32" valign="top" style="padding-top: 1px; padding-right: 12px;">
+                          <table width="26" height="26" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td bgcolor="#0078D4" align="center" valign="middle"
+                                  style="background-color: #0078D4; border-radius: 50%; width: 26px;
+                                         height: 26px; font-family: 'Segoe UI', Arial, sans-serif;
+                                         font-size: 13px; font-weight: 700; color: #ffffff;">
+                                3
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td valign="top">
+                          <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 14px; font-weight: 600; color: #323130;">
+                            Configurez votre nouvelle méthode
+                          </p>
+                          <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                                     font-size: 13px; color: #605e5c;">
+                            Authenticator app, SMS ou clé de sécurité FIDO2
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+
+              <!-- BOUTON CTA -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td bgcolor="#0078D4" style="background-color: #0078D4; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 13px; padding-bottom: 13px;
+                              padding-left: 32px; padding-right: 32px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #ffffff; text-decoration: none;">
+                      Mettre à jour mon authentification
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #605e5c; line-height: 1.6;">
+                Ce lien est valide <strong>72 heures</strong> uniquement. Si vous avez déjà
+                effectué cette mise à jour, ignorez ce message.
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #605e5c; line-height: 1.6;">
+                Besoin d'aide ? Contactez :
+                <a href="mailto:{{support}}" style="color: #0078D4; text-decoration: none;">
+                  {{support}}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #e1dfdd; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f3f2f1" style="background-color: #f3f2f1; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Notification de sécurité pour <strong>{{email}}</strong> géré par
+                <strong>{{entreprise}}</strong> via Microsoft Entra ID.
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d;">
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">Confidentialité</a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">Signaler un abus</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

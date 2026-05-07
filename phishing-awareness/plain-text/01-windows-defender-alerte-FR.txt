@@ -1,0 +1,46 @@
+De : Microsoft Security <security-alerts@microsoftsecurity-notify.com>
+Objet : [Action requise] Windows Defender a détecté une menace sur votre appareil
+
+================================================================================
+ALERTE DE SÉCURITÉ — ACTION IMMÉDIATE REQUISE
+================================================================================
+
+Une menace a été détectée sur votre appareil
+
+Bonjour {{prenom}},
+
+Microsoft Defender Antivirus a détecté et bloqué une menace de niveau élevé sur
+votre appareil professionnel enregistré auprès de {{entreprise}}.
+
+DÉTAILS DE LA MENACE DÉTECTÉE
+------------------------------
+Menace        : Trojan:Win32/Wacatac.B!ml
+Niveau        : Élevé
+Statut        : Bloqué — En attente de nettoyage
+Fichier       : C:\Users\{{prenom}}\AppData\Local\Temp\invoice_2026.exe
+Détecté le    : {{date}} à 08:47 UTC
+
+Pour finaliser la suppression de cette menace et protéger les données de
+{{entreprise}}, vous devez valider le nettoyage dans les 2 heures suivant la
+réception de ce message. Passé ce délai, votre accès aux ressources de
+l'entreprise pourra être suspendu à titre préventif.
+
+>> Lancer le nettoyage maintenant : {{lien}}
+
+Si vous ne reconnaissez pas cette activité, contactez immédiatement le support
+informatique de {{entreprise}} : {{support}}
+
+En savoir plus sur cette menace sur Microsoft Security Intelligence : {{lien}}
+
+================================================================================
+Ce message a été envoyé automatiquement par Microsoft Security pour le compte de
+{{entreprise}}. Merci de ne pas répondre directement à cet email.
+Microsoft Corporation · One Microsoft Way · Redmond, WA 98052, USA
+Politique de confidentialité | Gérer vos notifications | Se désabonner
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : microsoftsecurity-notify.com ≠ microsoft.com
+2. Délai 2h artificiel — Microsoft ne suspend pas l'accès aussi rapidement
+3. Le vrai Defender n'envoie pas de liens email pour nettoyer un appareil
+4. Lien CTA externe non-Microsoft

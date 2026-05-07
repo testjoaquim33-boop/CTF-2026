@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 03 — Microsoft Teams : Fichier confidentiel partagé
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Avancé
+  THÈME       : Microsoft Teams / Partage de fichier / Spear phishing
+  OBJET       : {{expediteur}} a partagé "Grille_salaires_2026.xlsx" avec vous
+  EXPÉDITEUR  : Microsoft Teams <notifications@teams-microsoft-share[.]net>
+  LEVIERS     : Curiosité, Autorité (expéditeur semblant interne), Confiance sociale
+  INDICATEURS :
+    - Domaine expéditeur non-officiel (teams-microsoft-share[.]net ≠ microsoft.com)
+    - Prénom d'expéditeur apparemment interne (levée de méfiance)
+    - Nom de fichier appâtant ("Grille_salaires_2026.xlsx") — curiosité maximale
+    - Aucun contenu de fichier réel visible dans l'email (prévisualisation tronquée)
+    - CTA "Ouvrir dans Teams" pointe vers un domaine externe
+    - Footer différent des vraies notifs Teams (pas d'ID de conversation réel)
+    - URL du bouton visible ≠ texte affiché
+  DÉBRIEF     : Voir metadata/templates.json — id: "03"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft Teams — Fichier partagé</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f2f1; font-family: 'Segoe UI', Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f2f1">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 600px; background-color: #ffffff; border: 1px solid #e1dfdd;">
+
+          <!-- EN-TÊTE TEAMS (violet) -->
+          <tr>
+            <td bgcolor="#6264A7" style="background-color: #6264A7; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <!-- Icône Teams stylisée en texte -->
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px;
+                                 font-weight: 300; color: #ffffff;">
+                      &#84;&#101;&#97;&#109;&#115;&nbsp;&nbsp;
+                      <span style="font-weight: 700; font-size: 14px; opacity: 0.85;">
+                        Microsoft Teams
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 8px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <!-- Avatar + nom expéditeur -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="margin-bottom: 20px;">
+                <tr>
+                  <td width="48" valign="top" style="padding-right: 14px;">
+                    <!-- Avatar texte (initiales) -->
+                    <table width="44" height="44" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td bgcolor="#6264A7" align="center" valign="middle"
+                            style="background-color: #6264A7; border-radius: 50%; width: 44px;
+                                   height: 44px; font-family: 'Segoe UI', Arial, sans-serif;
+                                   font-size: 16px; font-weight: 600; color: #ffffff;">
+                          <!-- Initiales de l'expéditeur fictif -->
+                          {{initiales_expediteur}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td valign="middle">
+                    <p style="margin: 0 0 2px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 15px; font-weight: 600; color: #201f1e;">
+                      {{expediteur}}
+                    </p>
+                    <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 13px; color: #605e5c;">
+                      a partagé un fichier avec vous
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Bonjour <strong>{{prenom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                <strong>{{expediteur}}</strong> vous a partagé un fichier via
+                <strong>Microsoft Teams</strong> et a ajouté un message :
+              </p>
+
+              <!-- Message de l'expéditeur -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #f8f8f8; border-left: 3px solid #6264A7;
+                            margin-bottom: 24px;">
+                <tr>
+                  <td style="padding-top: 14px; padding-bottom: 14px;
+                             padding-left: 18px; padding-right: 18px;">
+                    <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 14px; color: #323130; font-style: italic; line-height: 1.5;">
+                      "Bonjour {{prenom}}, comme convenu voici le document. Merci de le consulter
+                      avant notre réunion de vendredi et de me faire un retour rapide.
+                      <strong>Reste confidentiel svp.</strong>"
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Carte fichier -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="border: 1px solid #e1dfdd; margin-bottom: 28px;">
+                <tr>
+                  <td width="56" valign="top"
+                      style="padding-top: 16px; padding-bottom: 16px;
+                             padding-left: 16px; padding-right: 0;">
+                    <!-- Icône Excel stylisée -->
+                    <table width="40" height="40" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td bgcolor="#107C41" align="center" valign="middle"
+                            style="background-color: #107C41; width: 40px; height: 40px;
+                                   font-family: Arial, sans-serif; font-size: 11px;
+                                   font-weight: 700; color: #ffffff; border-radius: 3px;">
+                          XLS
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style="padding-top: 14px; padding-bottom: 14px;
+                             padding-left: 14px; padding-right: 16px;">
+                    <p style="margin: 0 0 4px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 14px; font-weight: 600; color: #0078D4;">
+                      Grille_salaires_2026.xlsx
+                    </p>
+                    <p style="margin: 0 0 4px 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 12px; color: #605e5c;">
+                      Feuille de calcul Microsoft Excel · 847 Ko
+                    </p>
+                    <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 12px; color: #a19f9d;">
+                      Partagé via Teams · {{date}}
+                    </p>
+                  </td>
+                </tr>
+                <!-- Prévisualisation tronquée -->
+                <tr>
+                  <td colspan="2" bgcolor="#f9f9f9"
+                      style="background-color: #f9f9f9; padding-top: 12px; padding-bottom: 12px;
+                             padding-left: 16px; padding-right: 16px; border-top: 1px solid #e1dfdd;">
+                    <table width="100%" cellpadding="4" cellspacing="0" border="1"
+                           bordercolor="#e1dfdd"
+                           style="border-collapse: collapse; font-family: 'Segoe UI', Arial, sans-serif;
+                                  font-size: 11px; color: #323130;">
+                      <tr bgcolor="#107C41" style="background-color: #107C41;">
+                        <td style="color: #ffffff; font-weight: 600; padding: 4px 8px;">Poste</td>
+                        <td style="color: #ffffff; font-weight: 600; padding: 4px 8px;">Niveau</td>
+                        <td style="color: #ffffff; font-weight: 600; padding: 4px 8px;">Salaire brut</td>
+                      </tr>
+                      <tr>
+                        <td style="padding: 4px 8px;">Développeur Senior</td>
+                        <td style="padding: 4px 8px;">N3</td>
+                        <td style="padding: 4px 8px; filter: blur(0);">█████ €</td>
+                      </tr>
+                      <tr bgcolor="#f3f9f5" style="background-color: #f3f9f5;">
+                        <td style="padding: 4px 8px;">Chef de projet</td>
+                        <td style="padding: 4px 8px;">N4</td>
+                        <td style="padding: 4px 8px;">█████ €</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" align="center"
+                            style="padding: 6px; color: #605e5c; font-style: italic;">
+                          Ouvrez le fichier pour voir le contenu complet...
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td bgcolor="#6264A7" style="background-color: #6264A7; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 12px; padding-bottom: 12px;
+                              padding-left: 28px; padding-right: 28px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #ffffff; text-decoration: none;">
+                      Ouvrir dans Teams
+                    </a>
+                  </td>
+                  <td width="12">&nbsp;</td>
+                  <td style="border: 1px solid #6264A7; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 12px; padding-bottom: 12px;
+                              padding-left: 20px; padding-right: 20px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #6264A7; text-decoration: none;">
+                      Télécharger
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #605e5c; line-height: 1.6;">
+                Ce fichier est accessible uniquement aux membres de <strong>{{entreprise}}</strong>.
+                Si vous n'attendiez pas ce partage, contactez
+                <a href="mailto:{{support}}" style="color: #6264A7; text-decoration: none;">
+                  le support IT
+                </a>.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px; padding-top: 24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #e1dfdd; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f3f2f1" style="background-color: #f3f2f1; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Vous recevez cette notification car <strong>{{email}}</strong> est membre de
+                l'espace Teams de <strong>{{entreprise}}</strong>.
+              </p>
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Référence de notification : TM-{{date}}-{{email}}
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d;">
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">
+                  Gérer mes notifications Teams
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">
+                  Aide &amp; Support
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

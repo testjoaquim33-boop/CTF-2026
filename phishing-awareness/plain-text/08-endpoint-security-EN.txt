@@ -1,0 +1,58 @@
+From: Microsoft Intune <endpoint-security@microsoft-intune-alerts.com>
+Subject: URGENT: Your device is no longer compliant — access will be revoked
+
+================================================================================
+Microsoft Intune · Endpoint Manager
+CRITICAL — CORPORATE RESOURCE ACCESS AT RISK
+Device Compliance Alert · Priority: High
+================================================================================
+
+Your device is no longer compliant
+
+User: {{email}} | Tenant: {{entreprise}}
+
+Hi {{prenom}},
+
+Microsoft Intune has detected that your enrolled device no longer meets the
+security compliance requirements set by {{entreprise}}'s IT policy. Your access
+to corporate resources (Exchange, SharePoint, Teams, VPN) WILL BE REVOKED
+WITHIN 4 HOURS if this issue is not resolved.
+
+AFFECTED DEVICE
+---------------
+Device name     : {{prenom}}-LAPTOP-01
+Device ID       : a3f7b2e1-4c89-4d5f-b6e2-1a2b3c4d5e6f
+OS Version      : Windows 11 22H2 (10.0.22621)
+Compliance state: Non-Compliant
+
+FAILED COMPLIANCE CHECKS (3)
+------------------------------
+[CRITICAL] Windows Security Updates
+  Required: KB5034763 (Feb 2026) · Found: KB5030219 (Sep 2023)
+
+[HIGH] Disk Encryption (BitLocker)
+  Required: Enabled on all drives · Found: Drive D:\ not encrypted
+
+[MEDIUM] Microsoft Defender Real-time Protection
+  Required: Active · Found: Disabled (last active 3 days ago)
+
+>> Resolve compliance issues now : {{lien}}
+>> View in Intune Portal : {{lien}}
+
+⏱ Access to corporate resources will be revoked in 4 HOURS if unresolved.
+
+Need help? Contact IT security: {{support}}
+
+================================================================================
+This compliance notification was sent to {{email}} because your device is
+enrolled in {{entreprise}}'s Microsoft Intune MDM policy.
+Microsoft Corporation · One Microsoft Way · Redmond, WA 98052, USA
+Privacy | Terms
+================================================================================
+
+--- PHISHING INDICATORS (educational use) ---
+1. Sender domain: microsoft-intune-alerts.com ≠ microsoft.com
+2. 4-hour revocation is unrealistically short (real grace period: 24-72h)
+3. Intune compliance is resolved via Company Portal app or endpoint.microsoft.com
+4. IT would contact via helpdesk ticket, not email link
+5. Device ID is fabricated (check real one in Company Portal or endpoint.microsoft.com)

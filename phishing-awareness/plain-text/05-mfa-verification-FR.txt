@@ -1,0 +1,42 @@
+De : Microsoft Account <mfa-security@microsoftaccount-verify.com>
+Objet : [Action requise] Votre méthode d'authentification Microsoft doit être mise à jour
+
+================================================================================
+Microsoft · Sécurité du compte · Authentification multi-facteurs
+Votre méthode d'authentification doit être mise à jour
+================================================================================
+
+Compte : {{email}}
+
+Bonjour {{prenom}},
+
+L'équipe de sécurité de {{entreprise}} a détecté que votre méthode
+d'authentification multi-facteurs (MFA) est OBSOLÈTE ou ne répond plus aux
+nouvelles exigences de sécurité de votre organisation.
+
+Pour maintenir l'accès à vos services Microsoft 365, vous devez mettre à jour
+votre configuration MFA DANS LES 72 HEURES. Passé ce délai, votre compte sera
+suspendu à titre préventif.
+
+COMMENT METTRE À JOUR VOTRE MFA
+---------------------------------
+Étape 1 : Cliquez sur le bouton ci-dessous (portail de mise à jour sécurisé)
+Étape 2 : Vérifiez votre identité avec le code : 742-891
+Étape 3 : Configurez votre nouvelle méthode (Authenticator app, SMS ou FIDO2)
+
+>> Mettre à jour mon authentification : {{lien}}
+
+Ce lien est valide 72 heures uniquement.
+
+Besoin d'aide ? {{support}}
+
+================================================================================
+Notification de sécurité pour {{email}} géré par {{entreprise}} via Microsoft
+Entra ID. | Confidentialité | Signaler un abus
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : microsoftaccount-verify.com ≠ microsoft.com
+2. Code "742-891" dans l'email : les vraies notifs MFA ne contiennent pas de code
+3. Délai 72h artificiel : Microsoft ne suspend pas le MFA sans procédure IT
+4. La config MFA se fait sur mysignins.microsoft.com, jamais via lien email

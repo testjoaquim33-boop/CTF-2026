@@ -1,0 +1,42 @@
+De : Microsoft 365 <noreply@microsoft365-account-notify.com>
+Objet : Votre mot de passe Microsoft 365 expire dans 24 heures
+
+================================================================================
+Microsoft 365
+Votre mot de passe expire dans 24 HEURES
+================================================================================
+
+Renouvelez votre mot de passe Microsoft 365
+
+Bonjour {{prenom}} {{nom}},
+
+Le mot de passe associé à votre compte Microsoft 365 ({{email}}) arrive à
+expiration. Pour éviter toute interruption de service et conserver l'accès à vos
+emails, documents et applications, vous devez le renouveler avant la date limite.
+
+EXPIRATION DANS : 24:00:00 (heures · minutes · secondes)
+
+Après expiration, vous ne pourrez plus vous connecter à Outlook, Teams,
+SharePoint ni aucun autre service Microsoft 365 de {{entreprise}}.
+
+>> Renouveler mon mot de passe : {{lien}}
+
+Ou copiez ce lien dans votre navigateur :
+https://account.microsoft365-account-notify.com/password/reset?token=eyJ0e...
+
+CONSEIL DE SÉCURITÉ : Choisissez un mot de passe d'au moins 12 caractères
+combinant majuscules, minuscules, chiffres et caractères spéciaux.
+
+Si vous n'avez pas demandé ce changement : {{support}}
+
+================================================================================
+Vous recevez ce message car votre compte {{email}} est géré par {{entreprise}}
+via Microsoft 365. Microsoft Corporation · One Microsoft Way · Redmond, WA 98052
+Confidentialité | Conditions d'utilisation | Se désabonner
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : microsoft365-account-notify.com ≠ microsoft.com
+2. Délai 24h : Microsoft donne 14 jours de préavis réel
+3. URL visible révèle le domaine non-officiel
+4. Lien "Se désabonner" absent des vraies alertes de sécurité

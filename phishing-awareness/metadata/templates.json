@@ -1,0 +1,401 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-05-07",
+  "usage": "INTERNAL AUTHORIZED USE ONLY — Security awareness campaigns",
+  "templates": [
+    {
+      "id": "01",
+      "file": "templates/01-windows-defender-alerte-FR.html",
+      "plain_text": "plain-text/01-windows-defender-alerte-FR.txt",
+      "langue": "fr",
+      "niveau": "moyen",
+      "theme": "Windows Defender — Menace détectée",
+      "objet": "[Action requise] Windows Defender a détecté une menace sur votre appareil",
+      "expediteur_affiche": "Microsoft Security",
+      "expediteur_email": "security-alerts@microsoftsecurity-notify.com",
+      "leviers_psychologiques": ["peur", "urgence", "autorité"],
+      "population_cible_recommandee": ["IT", "tous"],
+      "placeholders": ["{{prenom}}", "{{nom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoftsecurity-notify.com n'est pas un domaine Microsoft officiel. Le vrai domaine est microsoft.com."
+        },
+        {
+          "type": "urgence_artificielle",
+          "description": "Le délai de 2 heures est artificiel. Microsoft ne suspend jamais un accès aussi rapidement pour une menace détectée par Defender."
+        },
+        {
+          "type": "lien_CTA",
+          "description": "Le bouton 'Lancer le nettoyage' pointe vers un domaine externe. En réalité, Windows Defender se gère depuis l'application locale ou le portail Microsoft 365 Defender."
+        },
+        {
+          "type": "logo_texte",
+          "description": "Le logo Microsoft est reproduit en texte Unicode, pas en image vectorielle officielle."
+        },
+        {
+          "type": "action_demandée",
+          "description": "Microsoft ne demande jamais de cliquer sur un lien email pour nettoyer une menace Defender. L'action se fait depuis l'application Windows Security sur le poste."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Windows Defender agit localement sur votre machine. Il ne vous envoie jamais un email pour vous demander de cliquer sur un lien externe pour 'nettoyer' votre appareil. Si Defender détecte une menace, une notification apparaît directement dans Windows.",
+        "reflexes_a_adopter": [
+          "Vérifier le domaine de l'expéditeur (hover sur l'adresse email)",
+          "Ne jamais cliquer sur un lien d'email d'alerte sécurité — aller directement dans l'application",
+          "Signaler l'email au support IT via le bouton 'Signaler le phishing' ou par email",
+          "En cas de doute, appeler directement le support IT"
+        ],
+        "vrai_processus": "En cas d'alerte Defender réelle, ouvrez Sécurité Windows depuis le menu Démarrer > Virus et protection contre les menaces > voir les résultats de l'analyse."
+      },
+      "adaptation_par_cible": {
+        "IT": "Ajouter le nom exact du processus infecté et un hash SHA256 fictif pour augmenter la crédibilité auprès des techniciens.",
+        "Finance": "Remplacer 'invoice_2026.exe' par un fichier crédible pour la finance : 'Virement_SEPA_mars2026.pdf.exe'",
+        "RH": "Utiliser un fichier comme 'CV_candidat_CDI.pdf.exe' pour cibler le réflexe d'ouverture de CV",
+        "Direction": "Personnaliser avec le nom du poste et du RSSI pour un effet spear phishing"
+      }
+    },
+    {
+      "id": "02",
+      "file": "templates/02-m365-expiration-mdp-FR.html",
+      "plain_text": "plain-text/02-m365-expiration-mdp-FR.txt",
+      "langue": "fr",
+      "niveau": "facile",
+      "theme": "Microsoft 365 — Expiration de mot de passe",
+      "objet": "Votre mot de passe Microsoft 365 expire dans 24 heures",
+      "expediteur_affiche": "Microsoft 365",
+      "expediteur_email": "noreply@microsoft365-account-notify.com",
+      "leviers_psychologiques": ["urgence", "peur_perte_acces"],
+      "population_cible_recommandee": ["tous", "nouveaux_arrivants", "étudiants"],
+      "placeholders": ["{{prenom}}", "{{nom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoft365-account-notify.com n'est pas Microsoft. Les vraies notifications de mot de passe M365 viennent de microsoft.com ou du domaine de votre organisation."
+        },
+        {
+          "type": "urgence_artificielle",
+          "description": "Microsoft donne généralement 14 jours de préavis pour l'expiration d'un mot de passe, pas 24h."
+        },
+        {
+          "type": "lien_visible",
+          "description": "L'URL visible dans l'email (account.microsoft365-account-notify.com) révèle un domaine non-officiel. Survolez toujours les liens avant de cliquer."
+        },
+        {
+          "type": "lien_de_desinscription",
+          "description": "Les vraies alertes de sécurité de compte n'ont pas de lien 'Se désabonner'. Ce lien est caractéristique des emails marketing phishing."
+        },
+        {
+          "type": "compteur_visuel",
+          "description": "Le faux compteur '24:00:00' est une technique de manipulation visuelle pour créer l'urgence."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Pour changer votre mot de passe Microsoft 365, utilisez TOUJOURS le portail officiel de votre entreprise ou le raccourci Ctrl+Alt+Suppr > Modifier le mot de passe. Ne cliquez jamais sur un lien d'email pour le faire.",
+        "reflexes_a_adopter": [
+          "Survoler le lien pour voir la vraie URL de destination",
+          "Naviguer directement vers le portail officiel (signets/favoris) plutôt que cliquer",
+          "Vérifier que le délai d'expiration correspond à la politique réelle de l'entreprise",
+          "Signaler l'email au support IT"
+        ],
+        "vrai_processus": "Changement de mot de passe M365 : Ctrl+Alt+Suppr > Modifier le mot de passe, ou portail.office.com > Mon compte > Mot de passe."
+      },
+      "adaptation_par_cible": {
+        "tous": "Template de base idéal pour les campagnes initiales de sensibilisation.",
+        "étudiants": "Remplacer le contexte professionnel par un contexte universitaire (accès ENT, plateforme e-learning).",
+        "RH": "Mentionner l'accès au SIRH ou aux fiches de paie pour augmenter la pertinence."
+      }
+    },
+    {
+      "id": "03",
+      "file": "templates/03-teams-fichier-partage-FR.html",
+      "plain_text": "plain-text/03-teams-fichier-partage-FR.txt",
+      "langue": "fr",
+      "niveau": "avancé",
+      "theme": "Microsoft Teams — Fichier confidentiel partagé",
+      "objet": "{{expediteur}} a partagé 'Grille_salaires_2026.xlsx' avec vous",
+      "expediteur_affiche": "Microsoft Teams",
+      "expediteur_email": "notifications@teams-microsoft-share.net",
+      "leviers_psychologiques": ["curiosité", "autorité", "confiance_sociale"],
+      "population_cible_recommandee": ["RH", "Finance", "Direction", "tous"],
+      "placeholders": ["{{prenom}}", "{{expediteur}}", "{{initiales_expediteur}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "teams-microsoft-share.net n'est pas Microsoft. Les vraies notifications Teams viennent de microsoft.com (noreply@email.teams.microsoft.com)."
+        },
+        {
+          "type": "nom_fichier_appâtant",
+          "description": "'Grille_salaires_2026.xlsx' est un nom de fichier délibérément appâtant. C'est un signe classique d'ingénierie sociale par curiosité."
+        },
+        {
+          "type": "expéditeur_inconnu",
+          "description": "Même si l'expéditeur semble interne, vérifier qu'il s'agit bien d'un collègue connu avant d'ouvrir. Un nom familier peut être usurpé."
+        },
+        {
+          "type": "lien_CTA",
+          "description": "Le bouton 'Ouvrir dans Teams' devrait ouvrir l'application Teams directement, pas un lien web externe."
+        },
+        {
+          "type": "prévisualisation_incomplète",
+          "description": "La prévisualisation tronquée du fichier est une technique pour inciter à 'ouvrir pour voir le reste'."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Avant d'ouvrir un fichier partagé via Teams, vérifiez directement dans l'application Teams que le partage existe bien. Les vraies notifications Teams s'ouvrent dans l'app, pas dans un navigateur externe.",
+        "reflexes_a_adopter": [
+          "Vérifier le domaine expéditeur de la notification",
+          "Ouvrir Teams directement (pas via le lien email) pour vérifier le partage",
+          "Confirmer avec l'expéditeur par un autre canal (appel, message direct Teams)",
+          "Méfiance accrue si le nom du fichier est particulièrement intrigant"
+        ],
+        "vrai_processus": "Les vraies notifications de partage Teams apparaissent directement dans l'application Teams, dans l'onglet Activité. L'email de notification renvoie vers teams.microsoft.com, jamais vers un autre domaine."
+      },
+      "adaptation_par_cible": {
+        "RH": "Parfait tel quel avec 'Grille_salaires'. Nommer l'expéditeur fictif comme DRH ou un manager connu.",
+        "Finance": "Remplacer par 'Budget_previsionnel_2026.xlsx' ou 'Rapport_CA_Q1.xlsx'",
+        "Direction": "Utiliser 'Strategie_acquisition_confidentiel.pptx' pour un ciblage COMEX",
+        "IT": "Utiliser 'Rapport_pentest_infrastructure.pdf' pour cibler les équipes techniques"
+      }
+    },
+    {
+      "id": "04",
+      "file": "templates/04-onedrive-stockage-FR.html",
+      "plain_text": "plain-text/04-onedrive-stockage-FR.txt",
+      "langue": "fr",
+      "niveau": "facile",
+      "theme": "OneDrive — Stockage saturé",
+      "objet": "Votre stockage OneDrive est plein — vos fichiers sont en danger",
+      "expediteur_affiche": "OneDrive",
+      "expediteur_email": "onedrive-storage@microsoft-cloud-notify.com",
+      "leviers_psychologiques": ["urgence", "peur_perte_donnees", "action_immediate"],
+      "population_cible_recommandee": ["tous", "étudiants", "nouveaux_arrivants"],
+      "placeholders": ["{{prenom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoft-cloud-notify.com n'est pas Microsoft. Les vraies notifications OneDrive viennent de onedrive.com ou microsoft.com."
+        },
+        {
+          "type": "alarmisme_excessif",
+          "description": "'Vos fichiers sont en danger' est un vocabulaire alarmiste excessif pour une simple notification de stockage."
+        },
+        {
+          "type": "offre_gratuite_suspecte",
+          "description": "L'offre '100 Go supplémentaires gratuits' est suspecte. OneDrive n'offre pas d'espace gratuit supplémentaire via email."
+        },
+        {
+          "type": "barre_stockage",
+          "description": "La barre à 100% crée une pression visuelle artificielle. Vérifiez votre stockage réel dans l'application OneDrive ou onedrive.live.com."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Pour vérifier votre stockage OneDrive réel, cliquez sur l'icône OneDrive dans la barre des tâches ou rendez-vous sur onedrive.live.com. Ne cliquez jamais sur un lien email pour 'libérer de l'espace'.",
+        "reflexes_a_adopter": [
+          "Vérifier le stockage réel directement dans l'app OneDrive",
+          "Méfiance face aux offres 'gratuites' par email",
+          "Vérifier le domaine expéditeur",
+          "Signaler au support IT en cas de doute"
+        ],
+        "vrai_processus": "Stockage OneDrive : clic droit sur l'icône OneDrive dans la barre des tâches > Paramètres > onglet Compte, ou portail onedrive.com."
+      },
+      "adaptation_par_cible": {
+        "étudiants": "Remplacer OneDrive par Google Drive ou un service académique utilisé en interne.",
+        "tous": "Template efficace pour une première campagne grâce à sa simplicité.",
+        "IT": "Trop simple pour les équipes IT. Préférer les templates 01 ou 08."
+      }
+    },
+    {
+      "id": "05",
+      "file": "templates/05-mfa-verification-FR.html",
+      "plain_text": "plain-text/05-mfa-verification-FR.txt",
+      "langue": "fr",
+      "niveau": "moyen",
+      "theme": "MFA — Vérification supplémentaire requise",
+      "objet": "[Action requise] Votre méthode d'authentification Microsoft doit être mise à jour",
+      "expediteur_affiche": "Microsoft Account",
+      "expediteur_email": "mfa-security@microsoftaccount-verify.com",
+      "leviers_psychologiques": ["urgence", "autorité", "peur_perte_acces"],
+      "population_cible_recommandee": ["tous", "IT", "support_technique"],
+      "placeholders": ["{{prenom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoftaccount-verify.com n'est pas Microsoft. Les vraies notifications MFA viennent de account.microsoft.com ou de votre organisation."
+        },
+        {
+          "type": "code_dans_lemail",
+          "description": "Un code de vérification '742-891' dans l'email est suspect. Les vraies notifications MFA ne transmettent pas de code : c'est l'app Authenticator qui génère les codes."
+        },
+        {
+          "type": "délai_artificiel",
+          "description": "Microsoft Entra ne suspend pas le MFA en 72h sans une procédure IT formelle et plusieurs notifications préalables."
+        },
+        {
+          "type": "lien_vs_app",
+          "description": "La configuration MFA se fait via mysignins.microsoft.com ou le portail d'entreprise, jamais via un lien dans un email."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "La configuration MFA se gère toujours depuis mysignins.microsoft.com (accessible directement depuis votre navigateur) ou depuis le portail intranet. Aucune configuration MFA ne se fait via un lien reçu par email.",
+        "reflexes_a_adopter": [
+          "Ne jamais configurer le MFA via un lien email",
+          "Aller directement sur mysignins.microsoft.com",
+          "Contacter le support IT si vous avez un doute sur votre configuration MFA",
+          "Un code dans un email n'est jamais légitime pour une configuration MFA"
+        ],
+        "vrai_processus": "Gestion MFA Microsoft : naviguer directement vers mysignins.microsoft.com > Méthodes de vérification."
+      },
+      "adaptation_par_cible": {
+        "support_technique": "Très efficace car le support traite régulièrement des vraies demandes MFA. Insister sur la vérification du domaine en débrief.",
+        "direction": "Mentionner un contexte de déplacement professionnel pour justifier la 'mise à jour' MFA",
+        "Finance": "Lier à une obligation de conformité (SOX, PCI-DSS) pour augmenter la crédibilité de l'autorité"
+      }
+    },
+    {
+      "id": "06",
+      "file": "templates/06-suspicious-login-EN.html",
+      "plain_text": "plain-text/06-suspicious-login-EN.txt",
+      "langue": "en",
+      "niveau": "avancé",
+      "theme": "Suspicious login alert",
+      "objet": "Critical: Unusual sign-in detected on your Microsoft account",
+      "expediteur_affiche": "Microsoft Account Team",
+      "expediteur_email": "account-security@microsoft-securityalert.com",
+      "leviers_psychologiques": ["peur", "urgence", "autorité", "spécificité_géographique"],
+      "population_cible_recommandee": ["Direction", "Finance", "IT", "tous"],
+      "placeholders": ["{{prenom}}", "{{nom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}", "{{ip_fictive}}", "{{ville_fictive}}", "{{pays_fictif}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoft-securityalert.com n'est pas Microsoft. Les vraies alertes de connexion viennent de account-security-noreply@accountprotection.microsoft.com."
+        },
+        {
+          "type": "boutons_yes_no",
+          "description": "Les vraies alertes Microsoft ne proposent pas de bouton 'Yes, this was me' / 'No, secure my account' dans l'email. L'action se fait via le portail Microsoft Security."
+        },
+        {
+          "type": "lien_de_desinscription",
+          "description": "Une vraie alerte de sécurité de compte n'a pas de lien 'Unsubscribe'. Ce détail trahit l'email phishing."
+        },
+        {
+          "type": "données_géographiques_fictives",
+          "description": "Les données IP et de localisation sont inventées pour créer une fausse urgence. Toujours vérifier sur le portail officiel mysignins.microsoft.com."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Pour vérifier vos connexions Microsoft réelles, allez directement sur mysignins.microsoft.com > Recent activity. C'est le seul endroit fiable. Ne cliquez jamais sur 'Yes/No' dans un email d'alerte connexion.",
+        "reflexes_a_adopter": [
+          "Vérifier les activités réelles sur mysignins.microsoft.com",
+          "Ne jamais cliquer sur les boutons 'Was this you?' dans un email",
+          "Signaler l'email suspect via Outlook > Signaler le message > Hameçonnage",
+          "Si vous craignez une vraie compromission : changer le mot de passe directement sur le portail"
+        ],
+        "vrai_processus": "Activité de connexion réelle : mysignins.microsoft.com > 'My sign-ins'. Les alertes officielles Microsoft viennent de accountprotection.microsoft.com."
+      },
+      "adaptation_par_cible": {
+        "Direction": "Personnaliser avec une ville correspondant à un voyage récent de la cible pour maximiser l'effet de surprise. Requiert autorisation explicite RSSI.",
+        "Finance": "Ajouter contexte 'sign-in to Azure Finance portal' pour augmenter la pertinence.",
+        "IT": "Niveau avancé adapté. Ajouter de faux détails techniques (User-Agent string complet, ASN de l'IP)."
+      }
+    },
+    {
+      "id": "07",
+      "file": "templates/07-quarantaine-email-FR.html",
+      "plain_text": "plain-text/07-quarantaine-email-FR.txt",
+      "langue": "fr",
+      "niveau": "moyen",
+      "theme": "Exchange Online — Quarantaine d'emails",
+      "objet": "[Exchange] 4 messages retenus en quarantaine — libérez-les maintenant",
+      "expediteur_affiche": "Microsoft Exchange",
+      "expediteur_email": "quarantine@exchange-microsoft-security.com",
+      "leviers_psychologiques": ["curiosité", "urgence", "peur_perte"],
+      "population_cible_recommandee": ["tous", "support_technique", "Direction"],
+      "placeholders": ["{{prenom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "exchange-microsoft-security.com n'est pas Microsoft. Les vrais résumés de quarantaine Exchange viennent d'un domaine en *.microsoft.com."
+        },
+        {
+          "type": "délai_faux",
+          "description": "En Exchange Online réel, les messages en quarantaine sont conservés 30 jours (configurable), pas 48h. Ce délai artificiel crée une fausse urgence."
+        },
+        {
+          "type": "bouton_liberer_tout",
+          "description": "Un bouton 'Libérer tous les messages' dans un email est un signal d'alarme. Dans Exchange réel, la libération se fait message par message depuis protection.office.com."
+        },
+        {
+          "type": "noms_fichiers_appâtants",
+          "description": "Les objets des messages ('Rapport d'audit confidentiel', 'Réorganisation interne') sont délibérément choisis pour inciter à cliquer."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "La gestion de la quarantaine Exchange se fait uniquement via protection.office.com ou le lien officiel dans le portail Microsoft 365. Ne libérez jamais des messages depuis un lien email sans vérifier l'origine.",
+        "reflexes_a_adopter": [
+          "Accéder à la quarantaine directement via protection.office.com",
+          "Vérifier que le délai annoncé correspond à la politique réelle de votre organisation",
+          "Ne pas cliquer sur 'Libérer tout' — examiner chaque message individuellement",
+          "En cas de doute, contacter le support IT avant toute action"
+        ],
+        "vrai_processus": "Gestion quarantaine Exchange Online : protection.office.com > Révision > Quarantaine, ou le portail d'administration Microsoft 365."
+      },
+      "adaptation_par_cible": {
+        "Direction": "Les objets 'Réorganisation' et 'document à signer' sont particulièrement efficaces sur la direction. Attention aux implications éthiques : valider avec RSSI.",
+        "Finance": "Utiliser des objets comme 'Facture fournisseur bloquée' ou 'RIB mis à jour'",
+        "support_technique": "Ces profils traitent de vraies quarantaines quotidiennement, rendant ce template très efficace."
+      }
+    },
+    {
+      "id": "08",
+      "file": "templates/08-endpoint-security-EN.html",
+      "plain_text": "plain-text/08-endpoint-security-EN.txt",
+      "langue": "en",
+      "niveau": "avancé",
+      "theme": "Microsoft Intune — Endpoint compliance violation",
+      "objet": "URGENT: Your device is no longer compliant — access will be revoked",
+      "expediteur_affiche": "Microsoft Intune",
+      "expediteur_email": "endpoint-security@microsoft-intune-alerts.com",
+      "leviers_psychologiques": ["peur_perte_acces", "urgence", "autorité", "spécificité_technique"],
+      "population_cible_recommandee": ["IT", "Direction", "Finance"],
+      "placeholders": ["{{prenom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "microsoft-intune-alerts.com n'est pas Microsoft. Les vraies notifications Intune viennent de intune@microsoft.com ou du portail Endpoint Manager."
+        },
+        {
+          "type": "délai_irréaliste",
+          "description": "4 heures pour la révocation d'accès est irréaliste. Les politiques de conformité Intune donnent généralement un délai de grâce configurable (souvent 24-72h)."
+        },
+        {
+          "type": "lien_vs_portail",
+          "description": "La résolution de conformité Intune se fait depuis endpoint.microsoft.com (portail Intune) ou via l'application Company Portal, jamais depuis un lien email."
+        },
+        {
+          "type": "device_id_factice",
+          "description": "Le Device ID GUID présenté est fictif. Vérifiable depuis endpoint.microsoft.com > Devices > votre appareil."
+        },
+        {
+          "type": "thème_sombre",
+          "description": "L'utilisation d'un thème sombre imite l'interface Microsoft Security Center pour paraître plus technique et officiel."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "La conformité Intune se vérifie et se résout uniquement depuis l'application 'Company Portal' installée sur votre machine, ou depuis le portail endpoint.microsoft.com. Votre service IT vous contacterait via helpdesk, pas par email avec un lien.",
+        "reflexes_a_adopter": [
+          "Ouvrir l'application Company Portal pour voir l'état réel de conformité",
+          "Contacter le support IT via le canal officiel (ITSM/Helpdesk) pour tout problème de conformité",
+          "Ne jamais cliquer sur un lien email pour 'résoudre' un problème Intune",
+          "Vérifier l'existence du Device ID dans le portail Endpoint Manager"
+        ],
+        "vrai_processus": "Conformité Intune : ouvrir l'app Company Portal > Devices > sélectionner l'appareil > voir les exigences de conformité et les actions recommandées."
+      },
+      "adaptation_par_cible": {
+        "IT": "Idéal pour les équipes IT qui administrent Intune. Ajouter un faux numéro de ticket d'incident. Niveau de difficulté maximal.",
+        "Direction": "Rester sur ce template tel quel — la complexité technique est une arme car elle décourage la vérification.",
+        "Finance": "Lier à une exigence de conformité réglementaire (DORA, PCI-DSS) pour renforcer l'autorité."
+      }
+    }
+  ]
+}

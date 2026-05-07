@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 07 — Microsoft Exchange : Quarantaine d'emails
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Moyen
+  THÈME       : Exchange Online / Quarantaine / Microsoft 365 Defender
+  OBJET       : [Exchange] 4 messages retenus en quarantaine — libérez-les maintenant
+  EXPÉDITEUR  : Microsoft Exchange <quarantine@exchange-microsoft-security[.]com>
+  LEVIERS     : Curiosité (quels messages ?), Urgence, Peur de perte
+  INDICATEURS :
+    - Domaine expéditeur non-officiel (exchange-microsoft-security[.]com)
+    - Vrais résumés de quarantaine n'incluent pas de boutons "Libérer tout"
+    - Objets des messages fictifs mais crédibles pour déclencher curiosité
+    - Délai de suppression "48h" est faux (réel = 30 jours en Exchange Online)
+    - Lien de libération pointe vers domaine externe
+    - Manque de détails techniques réels (ID de message, score SCL)
+  DÉBRIEF     : Voir metadata/templates.json — id: "07"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft Exchange — Résumé de quarantaine</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f2f1; font-family: 'Segoe UI', Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f2f1">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 600px; background-color: #ffffff; border: 1px solid #e1dfdd;">
+
+          <!-- EN-TÊTE (bleu Microsoft) -->
+          <tr>
+            <td bgcolor="#0078D4" style="background-color: #0078D4; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;
+                                 font-weight: 300; color: rgba(255,255,255,0.75);">
+                      Microsoft 365 Defender
+                    </span><br />
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px;
+                                 font-weight: 600; color: #ffffff;">
+                      Résumé de quarantaine des emails
+                    </span>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 28px;
+                                 color: #ffffff; opacity: 0.9;">&#9993;</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BANDE COMPTE + DATE -->
+          <tr>
+            <td bgcolor="#deecf9" style="background-color: #deecf9; padding-top: 10px;
+                                          padding-bottom: 10px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                             color: #004578;">
+                    Compte : <strong>{{email}}</strong>
+                    &nbsp;·&nbsp;
+                    Rapport du {{date}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 28px; padding-bottom: 16px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Bonjour <strong>{{prenom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Microsoft Exchange a retenu <strong>4 messages</strong> dans votre quarantaine
+                de sécurité. Ces messages seront <strong>définitivement supprimés dans 48 heures</strong>
+                si vous ne les examinez pas. Veuillez revoir la liste ci-dessous et libérer
+                les messages légitimes.
+              </p>
+
+              <!-- TABLEAU DES MESSAGES EN QUARANTAINE -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="1"
+                     bordercolor="#e1dfdd"
+                     style="border-collapse: collapse; margin-bottom: 24px;">
+                <!-- En-tête tableau -->
+                <tr bgcolor="#f3f2f1" style="background-color: #f3f2f1;">
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 12px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; font-weight: 700; color: #323130;
+                             border-bottom: 2px solid #0078D4; text-transform: uppercase;
+                             letter-spacing: 0.3px;">
+                    Expéditeur
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 12px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; font-weight: 700; color: #323130;
+                             border-bottom: 2px solid #0078D4; text-transform: uppercase;
+                             letter-spacing: 0.3px;">
+                    Objet
+                  </td>
+                  <td width="80" style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                                         padding-right: 12px; font-family: 'Segoe UI', Arial, sans-serif;
+                                         font-size: 12px; font-weight: 700; color: #323130;
+                                         border-bottom: 2px solid #0078D4; text-transform: uppercase;
+                                         letter-spacing: 0.3px;">
+                    Raison
+                  </td>
+                  <td width="70" align="center"
+                      style="padding-top: 10px; padding-bottom: 10px; padding-left: 8px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; font-weight: 700; color: #323130;
+                             border-bottom: 2px solid #0078D4; text-transform: uppercase;
+                             letter-spacing: 0.3px;">
+                    Action
+                  </td>
+                </tr>
+
+                <!-- Message 1 -->
+                <tr>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    <span style="font-weight: 600;">RH - {{entreprise}}</span><br />
+                    <span style="color: #605e5c;">rh@{{entreprise}}.fr</span>
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    Confirmation de votre entretien annuel
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; border-bottom: 1px solid #e1dfdd;">
+                    <span style="color: #d83b01; font-weight: 600;">Spam</span>
+                  </td>
+                  <td align="center"
+                      style="padding-top: 10px; padding-bottom: 10px; padding-left: 8px;
+                             padding-right: 8px; border-bottom: 1px solid #e1dfdd;">
+                    <a href="{{lien}}" style="color: #0078D4; font-family: 'Segoe UI', Arial, sans-serif;
+                                              font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Libérer
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Message 2 -->
+                <tr bgcolor="#fef9f0" style="background-color: #fef9f0;">
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    <span style="font-weight: 600;">Cabinet Ernst &amp; Young</span><br />
+                    <span style="color: #605e5c;">audit@ey-external.com</span>
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    [CONFIDENTIEL] Rapport d'audit Q1 2026
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; border-bottom: 1px solid #e1dfdd;">
+                    <span style="color: #d13438; font-weight: 600;">Phishing</span>
+                  </td>
+                  <td align="center"
+                      style="padding-top: 10px; padding-bottom: 10px; padding-left: 8px;
+                             padding-right: 8px; border-bottom: 1px solid #e1dfdd;">
+                    <a href="{{lien}}" style="color: #0078D4; font-family: 'Segoe UI', Arial, sans-serif;
+                                              font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Libérer
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Message 3 -->
+                <tr>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    <span style="font-weight: 600;">IT Support</span><br />
+                    <span style="color: #605e5c;">it-helpdesk@{{entreprise}}.fr</span>
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130; border-bottom: 1px solid #e1dfdd;">
+                    Mise à jour obligatoire — Redémarrez votre PC ce soir
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; border-bottom: 1px solid #e1dfdd;">
+                    <span style="color: #d83b01; font-weight: 600;">Spam</span>
+                  </td>
+                  <td align="center"
+                      style="padding-top: 10px; padding-bottom: 10px; padding-left: 8px;
+                             padding-right: 8px; border-bottom: 1px solid #e1dfdd;">
+                    <a href="{{lien}}" style="color: #0078D4; font-family: 'Segoe UI', Arial, sans-serif;
+                                              font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Libérer
+                    </a>
+                  </td>
+                </tr>
+
+                <!-- Message 4 -->
+                <tr bgcolor="#fef9f0" style="background-color: #fef9f0;">
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130;">
+                    <span style="font-weight: 600;">Direction Générale</span><br />
+                    <span style="color: #605e5c;">dg@{{entreprise}}.fr</span>
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px; color: #323130;">
+                    Réorganisation interne — document à signer avant vendredi
+                  </td>
+                  <td style="padding-top: 10px; padding-bottom: 10px; padding-left: 12px;
+                             padding-right: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                             font-size: 12px;">
+                    <span style="color: #d13438; font-weight: 600;">Malware</span>
+                  </td>
+                  <td align="center"
+                      style="padding-top: 10px; padding-bottom: 10px; padding-left: 8px;
+                             padding-right: 8px;">
+                    <a href="{{lien}}" style="color: #0078D4; font-family: 'Segoe UI', Arial, sans-serif;
+                                              font-size: 12px; font-weight: 600; text-decoration: none;">
+                      Libérer
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- BOUTON LIBÉRER TOUT -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 12px;">
+                <tr>
+                  <td bgcolor="#0078D4" style="background-color: #0078D4; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 12px; padding-bottom: 12px;
+                              padding-left: 28px; padding-right: 28px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;
+                              font-weight: 600; color: #ffffff; text-decoration: none;">
+                      Libérer tous les messages
+                    </a>
+                  </td>
+                  <td width="12">&nbsp;</td>
+                  <td style="border: 1px solid #0078D4; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 12px; padding-bottom: 12px;
+                              padding-left: 20px; padding-right: 20px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;
+                              font-weight: 600; color: #0078D4; text-decoration: none;">
+                      Voir dans le portail
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 16px; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                &#9888; Les messages non examinés seront supprimés définitivement sous <strong>48h</strong>.
+                Support : <a href="mailto:{{support}}" style="color: #0078D4; text-decoration: none;">{{support}}</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #e1dfdd; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f3f2f1" style="background-color: #f3f2f1; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Résumé de quarantaine pour <strong>{{email}}</strong> ·
+                Politique Exchange de <strong>{{entreprise}}</strong>
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d;">
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">
+                  Gérer les notifications de quarantaine
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">
+                  Confidentialité
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

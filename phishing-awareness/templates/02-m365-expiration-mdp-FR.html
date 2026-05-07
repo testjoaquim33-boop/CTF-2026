@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 02 — Microsoft 365 : Expiration de mot de passe
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Facile
+  THÈME       : Microsoft 365 / Compte / Mot de passe
+  OBJET       : Votre mot de passe Microsoft 365 expire dans 24 heures
+  EXPÉDITEUR  : Microsoft 365 <noreply@microsoft365-account-notify[.]com>
+  LEVIERS     : Urgence, Peur perte d'accès
+  INDICATEURS :
+    - Domaine expéditeur non-officiel (microsoft365-account-notify[.]com)
+    - Urgence 24h artificiellement courte (Microsoft donne 14 jours en réalité)
+    - Bouton "Renouveler maintenant" avec URL externe
+    - Aucune personnalisation avancée (nom de l'appareil, etc.)
+    - Pas de mention de la méthode de réinitialisation habituelle de l'entreprise
+    - Lien de désinscription actif (inhabituel pour une alerte de sécurité)
+  DÉBRIEF     : Voir metadata/templates.json — id: "02"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Microsoft 365 — Votre mot de passe expire bientôt</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f2f1; font-family: 'Segoe UI', Arial, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f3f2f1"
+         style="background-color: #f3f2f1;">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 600px; background-color: #ffffff; border: 1px solid #e1dfdd;">
+
+          <!-- EN-TÊTE MICROSOFT 365 -->
+          <tr>
+            <td bgcolor="#0078D4" style="background-color: #0078D4; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px;
+                                 font-weight: 300; color: #ffffff;">
+                      &#9632;&nbsp;&#9632;&nbsp;&#9632;&nbsp;&#9632;&nbsp;&nbsp;Microsoft 365
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BARRE DE PROGRESSION (visuelle urgence) -->
+          <tr>
+            <td bgcolor="#fff4ce" style="background-color: #fff4ce; padding-top: 12px;
+                                          padding-bottom: 12px; padding-left: 30px; padding-right: 30px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td width="20" valign="middle" style="padding-right: 10px;">
+                    <span style="font-size: 18px; color: #d83b01;">&#9888;</span>
+                  </td>
+                  <td valign="middle">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+                                 font-weight: 600; color: #323130;">
+                      Votre mot de passe expire dans <span style="color: #d83b01;">24 heures</span>
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 24px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 22px; font-weight: 600; color: #201f1e; line-height: 1.3;">
+                Renouvelez votre mot de passe Microsoft 365
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Bonjour <strong>{{prenom}} {{nom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Le mot de passe associé à votre compte Microsoft 365
+                (<strong>{{email}}</strong>) arrive à expiration. Pour éviter toute
+                interruption de service et conserver l'accès à vos emails, documents et
+                applications, vous devez le renouveler avant la date limite.
+              </p>
+
+              <!-- Compteur visuel -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="margin-bottom: 28px; border: 1px solid #e1dfdd;">
+                <tr>
+                  <td align="center" style="padding-top: 20px; padding-bottom: 20px;
+                                             padding-left: 20px; padding-right: 20px;">
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px;
+                                 color: #605e5c; display: block; margin-bottom: 8px;">
+                      Expiration dans
+                    </span>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 36px;
+                                 font-weight: 700; color: #d83b01; display: block; line-height: 1;">
+                      24:00:00
+                    </span>
+                    <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px;
+                                 color: #a19f9d; display: block; margin-top: 6px;">
+                      heures · minutes · secondes
+                    </span>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 15px; color: #323130; line-height: 1.6;">
+                Après expiration, vous ne pourrez plus vous connecter à Outlook, Teams,
+                SharePoint ni aucun autre service Microsoft 365 de <strong>{{entreprise}}</strong>.
+              </p>
+
+              <!-- BOUTON CTA PRINCIPAL -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td bgcolor="#0078D4" style="background-color: #0078D4; border-radius: 2px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 13px; padding-bottom: 13px;
+                              padding-left: 32px; padding-right: 32px;
+                              font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;
+                              font-weight: 600; color: #ffffff; text-decoration: none;">
+                      Renouveler mon mot de passe
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Lien alternatif -->
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #605e5c; line-height: 1.6;">
+                Ou copiez ce lien dans votre navigateur :<br />
+                <span style="color: #0078D4; word-break: break-all;">
+                  https://account.microsoft365-account-notify.com/password/reset?token=eyJ0e...
+                </span>
+              </p>
+
+              <!-- Sécurité info -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #f3f9ff; border-left: 4px solid #0078D4;
+                            margin-bottom: 20px;">
+                <tr>
+                  <td style="padding-top: 14px; padding-bottom: 14px;
+                             padding-left: 16px; padding-right: 16px;">
+                    <p style="margin: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                               font-size: 13px; color: #323130; line-height: 1.5;">
+                      <strong>Conseil de sécurité Microsoft :</strong> Choisissez un mot de passe
+                      d'au moins 12 caractères combinant majuscules, minuscules, chiffres et
+                      caractères spéciaux. Ne réutilisez pas un mot de passe existant.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 13px; color: #605e5c; line-height: 1.6;">
+                Si vous n'avez pas demandé ce changement ou si vous rencontrez des difficultés,
+                contactez le support IT de <strong>{{entreprise}}</strong> :
+                <a href="mailto:{{support}}" style="color: #0078D4; text-decoration: none;">
+                  {{support}}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #e1dfdd; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f3f2f1" style="background-color: #f3f2f1; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Vous recevez ce message car votre compte <strong>{{email}}</strong> est géré
+                par <strong>{{entreprise}}</strong> via Microsoft 365.
+              </p>
+              <p style="margin-top: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d; line-height: 1.5;">
+                Microsoft Corporation · One Microsoft Way · Redmond, WA 98052
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 12px; color: #a19f9d;">
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">Confidentialité</a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">Conditions d'utilisation</a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #a19f9d; text-decoration: underline;">Se désabonner</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

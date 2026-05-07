@@ -1,0 +1,49 @@
+From: Microsoft Account Team <account-security@microsoft-securityalert.com>
+Subject: Critical: Unusual sign-in detected on your Microsoft account
+
+================================================================================
+Microsoft — SECURITY ALERT — REVIEW REQUIRED
+Unusual sign-in activity detected
+================================================================================
+
+Account: {{email}}
+
+Dear {{prenom}} {{nom}},
+
+We detected a sign-in to your Microsoft account from an UNFAMILIAR LOCATION.
+If this was you, you can safely ignore this message. If you did not sign in,
+your account may be compromised — please secure it immediately.
+
+SIGN-IN DETAILS
+---------------
+Date & Time    : {{date}} at 14:32 UTC
+Location       : {{ville_fictive}}, {{pays_fictif}} (approximate)
+IP Address     : {{ip_fictive}}
+Platform       : Windows 11 · Chrome 124
+Risk assessment: Medium risk
+
+WAS THIS YOU?
+
+>> Yes, this was me : {{lien}}
+>> No, secure my account : {{lien}}
+
+RECOMMENDED SECURITY ACTIONS:
+ ✓ Change your password immediately
+ ✓ Review and update your MFA settings
+ ✓ Sign out of all active sessions
+
+Questions? Contact your IT security team: {{support}}
+
+================================================================================
+This security notification was sent to {{email}} because your account is managed
+by {{entreprise}}.
+Microsoft Corporation · One Microsoft Way · Redmond, WA 98052, USA
+Privacy | Terms of use | Unsubscribe
+================================================================================
+
+--- PHISHING INDICATORS (educational use) ---
+1. Sender domain: microsoft-securityalert.com ≠ accountprotection.microsoft.com
+2. "Yes/No" buttons in email: real Microsoft alerts don't work this way
+3. "Unsubscribe" link: not present in real security alerts
+4. Location/IP data is fabricated to create urgency
+5. Verify real sign-ins at: mysignins.microsoft.com

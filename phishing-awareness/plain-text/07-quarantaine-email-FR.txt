@@ -1,0 +1,54 @@
+De : Microsoft Exchange <quarantine@exchange-microsoft-security.com>
+Objet : [Exchange] 4 messages retenus en quarantaine — libérez-les maintenant
+
+================================================================================
+Microsoft 365 Defender — Résumé de quarantaine des emails
+================================================================================
+Compte : {{email}} · Rapport du {{date}}
+================================================================================
+
+Bonjour {{prenom}},
+
+Microsoft Exchange a retenu 4 messages dans votre quarantaine de sécurité.
+Ces messages seront DÉFINITIVEMENT SUPPRIMÉS dans 48 heures si vous ne les
+examinez pas. Veuillez revoir la liste ci-dessous.
+
+MESSAGES EN QUARANTAINE
+------------------------
+
+1. Expéditeur : RH - {{entreprise}} <rh@{{entreprise}}.fr>
+   Objet      : Confirmation de votre entretien annuel
+   Raison     : Spam
+   >> Libérer : {{lien}}
+
+2. Expéditeur : Cabinet Ernst & Young <audit@ey-external.com>
+   Objet      : [CONFIDENTIEL] Rapport d'audit Q1 2026
+   Raison     : Phishing
+   >> Libérer : {{lien}}
+
+3. Expéditeur : IT Support <it-helpdesk@{{entreprise}}.fr>
+   Objet      : Mise à jour obligatoire — Redémarrez votre PC ce soir
+   Raison     : Spam
+   >> Libérer : {{lien}}
+
+4. Expéditeur : Direction Générale <dg@{{entreprise}}.fr>
+   Objet      : Réorganisation interne — document à signer avant vendredi
+   Raison     : Malware
+   >> Libérer : {{lien}}
+
+>> Libérer tous les messages : {{lien}}
+>> Voir dans le portail Exchange : {{lien}}
+
+⚠ Les messages non examinés seront supprimés définitivement sous 48h.
+Support : {{support}}
+
+================================================================================
+Résumé de quarantaine pour {{email}} · Politique Exchange de {{entreprise}}
+Gérer les notifications de quarantaine | Confidentialité
+================================================================================
+
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+1. Domaine expéditeur : exchange-microsoft-security.com ≠ microsoft.com
+2. Délai 48h faux : Exchange Online conserve 30 jours (configurable)
+3. Bouton "Libérer tous" : la quarantaine réelle se gère sur protection.office.com
+4. Objets des messages délibérément intrigants pour inciter à cliquer
