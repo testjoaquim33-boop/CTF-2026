@@ -396,6 +396,116 @@
         "Direction": "Rester sur ce template tel quel — la complexité technique est une arme car elle décourage la vérification.",
         "Finance": "Lier à une exigence de conformité réglementaire (DORA, PCI-DSS) pour renforcer l'autorité."
       }
+    },
+    {
+      "id": "09",
+      "file": "templates/09-sage-comptabilite-FR.html",
+      "plain_text": "plain-text/09-sage-comptabilite-FR.txt",
+      "langue": "fr",
+      "niveau": "avancé",
+      "theme": "SAGE 100cloud — Connexion suspecte / Données comptables",
+      "objet": "[Urgent] Connexion suspecte détectée sur votre espace SAGE 100cloud",
+      "expediteur_affiche": "SAGE Sécurité",
+      "expediteur_email": "security@sage100cloud-notifications.net",
+      "leviers_psychologiques": ["peur_données_comptables", "urgence_fiscale", "autorité", "spécificité_géographique"],
+      "population_cible_recommandee": ["Finance", "DAF", "comptabilité", "Direction"],
+      "placeholders": ["{{prenom}}", "{{nom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}", "{{ip_fictive}}", "{{ville_fictive}}", "{{pays_fictif}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "sage100cloud-notifications.net n'est pas Sage. Le domaine officiel est sage.com. Toute notification Sage vient d'un sous-domaine de sage.com."
+        },
+        {
+          "type": "référence_fictive",
+          "description": "La référence 'SGC-2026-{{date}}-4471' est inventée pour créer une fausse impression de suivi officiel. Sage n'utilise pas ce format de référence."
+        },
+        {
+          "type": "blocage_par_email",
+          "description": "Sage ne bloque jamais un espace comptable via un email. Les restrictions d'accès passent par l'interface administrateur locale ou l'assistance téléphonique Sage."
+        },
+        {
+          "type": "urgence_clôture_fiscale",
+          "description": "La mention de la clôture d'exercice et des exports FEC/DAS2 est conçue pour paniquer un comptable ou DAF en période sensible et forcer une action précipitée."
+        },
+        {
+          "type": "lien_connexion",
+          "description": "Sage 100cloud ne demande jamais de re-sécuriser son espace via un lien email. La connexion se fait toujours depuis le client SAGE ou le portail direct."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "Sage ne bloque et ne sécurise jamais un espace comptable via un lien email. En cas de doute sur un accès SAGE, contacter directement l'assistance Sage au numéro officiel ou l'administrateur système de votre entreprise.",
+        "reflexes_a_adopter": [
+          "Ne jamais cliquer sur un lien 'sécuriser mon espace' reçu par email",
+          "Vérifier le domaine expéditeur complet : seul sage.com est légitime",
+          "Se connecter directement à SAGE 100cloud pour voir si une alerte existe dans l'interface",
+          "Contacter le support Sage via le numéro officiel : 0 825 825 603",
+          "Signaler l'email au service informatique"
+        ],
+        "vrai_processus": "Gestion des accès SAGE 100cloud : console d'administration SAGE > Gestion des utilisateurs > Historique des connexions. Aucune action de sécurité ne se déclenche depuis un email."
+      },
+      "adaptation_par_cible": {
+        "Finance": "Template optimal pour les équipes comptables et DAF. Adapter la référence au logiciel réellement utilisé (SAGE 50, SAGE 100, SAGE X3).",
+        "Direction": "Réduire le jargon comptable (FEC, DAS2) pour rester accessible à un dirigeant non-comptable.",
+        "comptabilité": "Version la plus réaliste pour des comptables. Synchroniser l'envoi avec une vraie période de clôture pour maximiser l'impact pédagogique.",
+        "IT": "Peu adapté — préférer les templates 01 ou 08 pour les profils IT."
+      }
+    },
+    {
+      "id": "10",
+      "file": "templates/10-direction-bpi-depot-FR.html",
+      "plain_text": "plain-text/10-direction-bpi-depot-FR.txt",
+      "langue": "fr",
+      "niveau": "avancé",
+      "theme": "BPI France — Dossier de financement (Spear-phishing Direction)",
+      "objet": "[BPI France] Votre dossier de financement n°BPI-2026 requiert une validation — échéance 72h",
+      "expediteur_affiche": "BPI France — Espace Client",
+      "expediteur_email": "depot-dossier@bpifrance-espaceclient.fr",
+      "leviers_psychologiques": ["autorité_organisme_public", "peur_perte_financement", "urgence_délai_court", "spécificité_montant", "légitimité_jargon_financier"],
+      "population_cible_recommandee": ["Direction", "PDG", "DAF", "secrétariat_direction"],
+      "placeholders": ["{{prenom}}", "{{nom}}", "{{email}}", "{{entreprise}}", "{{lien}}", "{{support}}", "{{date}}"],
+      "indicateurs_a_reperer": [
+        {
+          "type": "domaine_expéditeur",
+          "description": "bpifrance-espaceclient.fr n'est pas BPI France. Le seul domaine officiel est bpifrance.fr. La technique du 'cousin domain' ajoute un mot (espaceclient) pour tromper."
+        },
+        {
+          "type": "lien_validation_par_email",
+          "description": "BPI France ne demande jamais de valider un dossier via un lien email. Le dépôt de pièces se fait sur espace-client.bpifrance.fr, accessible directement."
+        },
+        {
+          "type": "urgence_artificielle_72h",
+          "description": "Les délais BPI réels se comptent en semaines, voire en mois. Un délai de 72h pour une 'pré-approbation' est irréaliste et conçu pour empêcher la vérification."
+        },
+        {
+          "type": "chargé_affaires_non_vérifiable",
+          "description": "'Thomas Renaud' est un nom générique. Un vrai chargé BPI est joignable par téléphone avec un numéro direct fourni dans le courrier officiel sur papier en-tête."
+        },
+        {
+          "type": "collecte_documents_sensibles",
+          "description": "La demande de bilan comptable, prévisionnel financier et RIB via un portail externe vise à voler des données financières confidentielles."
+        },
+        {
+          "type": "absence_signature_certifiée",
+          "description": "Les courriers officiels BPI France comportent une signature numérique certifiée et des références à un conseiller joignable. Cet email n'en a pas."
+        }
+      ],
+      "debrief_pedagogique": {
+        "message_cle": "BPI France ne demande jamais de valider un dossier ou déposer des pièces via un lien reçu par email. Accédez toujours directement à espace-client.bpifrance.fr depuis votre navigateur, ou appelez le 0 969 370 240 pour vérifier l'état de votre dossier.",
+        "reflexes_a_adopter": [
+          "Vérifier le domaine expéditeur : seul bpifrance.fr est légitime",
+          "Ne jamais cliquer — taper directement espace-client.bpifrance.fr dans le navigateur",
+          "Appeler le 0 969 370 240 (numéro BPI France) pour confirmer l'état du dossier",
+          "Ne jamais envoyer de RIB, bilan ou prévisionnel par un canal non vérifié",
+          "Signaler immédiatement au DSI / RSSI de l'organisation"
+        ],
+        "vrai_processus": "Suivi dossier BPI France : espace-client.bpifrance.fr (connexion avec identifiants existants) > Mes dossiers. Tout contact BPI passe par votre chargé d'affaires dédié, joignable par téléphone avec un numéro direct."
+      },
+      "adaptation_par_cible": {
+        "Direction": "Template optimal pour PDG/DG. Peut être personnalisé avec le vrai nom du chargé BPI si disponible publiquement (site BPI, LinkedIn) pour un spear-phishing encore plus ciblé — requiert autorisation RSSI explicite.",
+        "DAF": "Ajouter contexte 'dossier PGE (Prêt Garanti par l'État)' ou 'French Tech' pour coller à l'actualité du financement.",
+        "secrétariat_direction": "Simplifier les éléments financiers. Insister sur l'aspect 'délégation de signature' pour que l'assistante transmette sans vérifier.",
+        "Finance": "Remplacer 'Prêt Développement Innovation' par 'financement de trésorerie court terme' ou 'garantie BPI' selon le secteur cible."
+      }
     }
   ]
 }

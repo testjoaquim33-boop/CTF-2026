@@ -1,0 +1,146 @@
+==============================================================================
+TEMPLATE 10 — BPI France : Dépôt dossier financement (FR · Avancé · Direction)
+==============================================================================
+OBJET    : [BPI France] Votre dossier de financement n°BPI-2026-{{entreprise}}
+           requiert une validation — échéance 72h
+EXPÉDITEUR AFFICHÉ : BPI France — Espace Client <depot-dossier@bpifrance-espaceclient.fr>
+==============================================================================
+
+De : BPI France — Espace Client <depot-dossier@bpifrance-espaceclient.fr>
+À : {{email}}
+Objet : [BPI France] Votre dossier de financement n°BPI-2026 requiert une
+        validation — échéance 72h
+
+----------------------------------------------------------------------
+  Banque Publique d'Investissement              Espace Client Entreprises
+  bpifrance
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+----------------------------------------------------------------------
+
+  N° Dossier : BPI-2026-IDF-088342  ·  Entreprise : {{entreprise}}
+  Date : {{date}}
+
+----------------------------------------------------------------------
+
+  Votre dossier de financement est disponible
+  Une action de votre part est requise avant validation définitive
+
+  Madame, Monsieur {{nom}},
+
+  Suite à l'instruction de votre demande de financement, nous avons le
+  plaisir de vous informer que votre dossier n° BPI-2026-IDF-088342 a
+  été pré-approuvé par notre comité régional Île-de-France.
+
+  Afin de finaliser le traitement et d'émettre la proposition de
+  financement officielle, nous vous demandons de vous connecter à votre
+  espace sécurisé pour valider les conditions et compléter les pièces
+  justificatives manquantes.
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  RÉCAPITULATIF DE VOTRE DOSSIER                                │
+  ├─────────────────────────────────────────────────────────────────┤
+  │  Type de financement  : Prêt Développement Innovation (PDI)   │
+  │  Montant accordé      : 150 000 €                              │
+  │  Durée                : 7 ans · dont 2 ans de franchise        │
+  │  Chargé d'affaires    : Thomas Renaud · Délégation IDF         │
+  │  Statut dossier       : ⚠ En attente de validation client      │
+  └─────────────────────────────────────────────────────────────────┘
+
+  Pièces justificatives manquantes (à déposer en ligne) :
+  ● Bilan comptable N-1 certifié (format PDF)
+  ● Prévisionnel financier 3 ans signé par le dirigeant
+  ● RIB de l'entreprise (domiciliation bancaire)
+  ○ Validation des conditions générales du prêt (signature électronique)
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  IMPORTANT : La pré-approbation de votre dossier est valable   │
+  │  72 heures. Passé ce délai, le dossier sera renvoyé en         │
+  │  instruction et la date de décaissement sera repoussée d'au    │
+  │  moins 6 semaines.                                              │
+  └─────────────────────────────────────────────────────────────────┘
+
+  [ ACCÉDER À MON ESPACE DOSSIER BPI ]  → {{lien}}
+
+  Pour toute question sur votre dossier, vous pouvez joindre votre
+  chargé d'affaires Thomas Renaud ou contacter notre support :
+  {{support}}
+
+  Référence : BPI-2026-IDF-088342 · {{entreprise}}
+  Décision du comité régional IDF
+
+----------------------------------------------------------------------
+  Ce message a été envoyé à {{email}} en tant que représentant(e) de
+  {{entreprise}} dans le cadre de votre demande de financement BPI France.
+  Bpifrance · 27-31, avenue du Général Leclerc · 94710 Maisons-Alfort
+  Politique de confidentialité | Mentions légales | Se désabonner
+----------------------------------------------------------------------
+
+==============================================================================
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+==============================================================================
+
+1. DOMAINE EXPÉDITEUR NON-OFFICIEL
+   depot-dossier@bpifrance-espaceclient.fr
+   → Le domaine officiel de BPI France est bpifrance.fr uniquement.
+   → "bpifrance-espaceclient.fr" est un domaine distinct enregistré pour
+     imiter BPI France — technique de "cousin domain" très répandue.
+
+2. BPI FRANCE N'ENVOIE PAS DE LIENS DE VALIDATION PAR EMAIL
+   → BPI France communique les étapes de dépôt de dossier via son portail
+     officiel (espace-client.bpifrance.fr) accessible directement.
+   → Un vrai email BPI contient des références à un chargé d'affaires
+     joignable par téléphone, pas un simple lien de connexion.
+
+3. URGENCE ARTIFICIELLE "72 HEURES"
+   → Les délais réels de traitement BPI se comptent en semaines, voire mois.
+   → Une "pré-approbation" ne tombe jamais à expiration en 72h — c'est
+     conçu pour forcer une action avant toute vérification.
+
+4. MONTANT CRÉDIBLE MAIS FICTIF (150 000 €)
+   → Le montant est choisi pour être réaliste (ni trop bas ni trop haut)
+     dans la fourchette des PDI BPI habituels.
+   → Il n'y a aucun moyen de vérifier ce montant sans appeler BPI.
+
+5. CHARGÉ D'AFFAIRES NOMMÉ MAIS NON VÉRIFIABLE
+   → "Thomas Renaud" est un prénom/nom français générique.
+   → La cible ne peut pas facilement vérifier si ce contact existe.
+   → Crée une fausse impression de relation commerciale existante.
+
+6. DEMANDE DE PIÈCES SENSIBLES
+   → Bilan N-1 certifié, prévisionnel, RIB — données confidentielles.
+   → Le faux portail collecterait ces documents + les identifiants BPI.
+
+7. LIENS FOOTER CLASSIQUES POUR TROMPER LES FILTRES
+   → "Politique de confidentialité", "Mentions légales", "Se désabonner"
+     ajoutent de la légitimité visuelle mais pointent tous vers le même
+     domaine frauduleux.
+
+8. PAS DE NUMÉRO DE TÉLÉPHONE DIRECT DU CHARGÉ D'AFFAIRES
+   → Un vrai email BPI France inclut toujours un numéro direct, une agence,
+     et souvent une signature numérique.
+
+RÉFLEXES ATTENDUS :
+  ✓ Vérifier le domaine expéditeur complet : bpifrance.fr et rien d'autre
+  ✓ Ne jamais cliquer — accéder directement à espace-client.bpifrance.fr
+  ✓ Appeler son chargé d'affaires BPI au numéro connu ou au 0 969 370 240
+  ✓ Signaler immédiatement au DSI / RSSI
+  ✓ Ne pas transmettre de documents comptables ou RIB par ce canal
+
+POPULATIONS CIBLES PRIORITAIRES :
+  → PDG / Directeur Général : décideurs sur les dossiers de financement
+  → DAF / Directeur Financier : interlocuteur habituel BPI, connaît le jargon
+  → Secrétariat de Direction : peut traiter les emails au nom du dirigeant
+  → Responsable Innovation / R&D : familier des dispositifs BPI
+
+NOTE PÉDAGOGIQUE — SPEAR-PHISHING DIRECTION :
+  Ce type d'attaque est très efficace contre les directions car :
+  - Les dirigeants sont souvent dans des procédures de financement réelles
+  - Ils font confiance aux organismes publics (BPI, URSSAF, DGFiP)
+  - La pression du délai + le montant en jeu paralysent le jugement critique
+  - Les assistantes/assistants transmettent sans toujours vérifier
+
+  En situation réelle, l'attaquant aurait recherché sur LinkedIn / Infogreffe
+  le nom du dirigeant, le secteur, des levées de fonds récentes — rendant
+  l'email encore plus personnalisé et crédible.
+
+==============================================================================

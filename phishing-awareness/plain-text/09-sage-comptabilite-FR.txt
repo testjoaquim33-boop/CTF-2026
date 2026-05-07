@@ -1,0 +1,115 @@
+==============================================================================
+TEMPLATE 09 — SAGE 100cloud : Accès suspect détecté (FR · Avancé)
+==============================================================================
+OBJET    : [Urgent] Connexion suspecte détectée sur votre espace SAGE 100cloud
+EXPÉDITEUR AFFICHÉ : SAGE Sécurité <security@sage100cloud-notifications.net>
+==============================================================================
+
+De : SAGE Sécurité <security@sage100cloud-notifications.net>
+À : {{email}}
+Objet : [Urgent] Connexion suspecte détectée sur votre espace SAGE 100cloud
+
+----------------------------------------------------------------------
+  Sage 100cloud                        [ ⚠ ALERTE SÉCURITÉ ]
+----------------------------------------------------------------------
+
+  ⚠ Connexion non reconnue détectée — Action immédiate requise
+
+----------------------------------------------------------------------
+
+  Activité suspecte sur votre espace comptable
+
+  Réf. dossier : SGC-2026-{{date}}-4471  ·  Compte : {{email}}
+
+  Bonjour {{prenom}} {{nom}},
+
+  Notre système de supervision a détecté une tentative de connexion
+  anormale sur votre espace SAGE 100cloud associé à l'entreprise
+  {{entreprise}}. Cette connexion provient d'un appareil et d'une
+  localisation non reconnus.
+
+  En raison de la sensibilité des données comptables et de paie
+  accessibles depuis votre espace (facturation, grand livre, journaux
+  de paie), nous avons temporairement restreint certaines
+  fonctionnalités d'export de votre compte à titre préventif.
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  DÉTAILS DE LA TENTATIVE DE CONNEXION                          │
+  ├─────────────────────────────────────────────────────────────────┤
+  │  Date et heure : {{date}} à 09:17 (heure de Paris)            │
+  │  Adresse IP    : {{ip_fictive}}                                 │
+  │  Localisation  : {{ville_fictive}}, {{pays_fictif}}             │
+  │  Navigateur    : Mozilla Firefox 124 · Windows 10              │
+  │  Statut        : ● Accès bloqué (connexion inconnue)           │
+  └─────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────┐
+  │  ⚠ PÉRIODE DE CLÔTURE COMPTABLE EN COURS                      │
+  │                                                                 │
+  │  Votre dossier comptable est actuellement en phase de clôture  │
+  │  d'exercice. La restriction préventive peut impacter vos       │
+  │  exports FEC, DAS2 et DADS. Résolvez ce point rapidement pour  │
+  │  éviter tout retard dans vos obligations déclaratives.         │
+  └─────────────────────────────────────────────────────────────────┘
+
+  [ SÉCURISER MON ESPACE SAGE ]         → {{lien}}
+  [ Ce n'était pas moi — signaler ]     → {{lien}}
+
+  Si vous avez des difficultés, contactez le support Sage :
+  {{support}}
+
+  Ce lien de vérification expire dans 48 heures.
+
+----------------------------------------------------------------------
+  Notification de sécurité envoyée à {{email}} · Dossier {{entreprise}}
+  Sage SAS · 10, rue Fructidor · 75834 Paris Cedex 17, France
+  Politique de confidentialité | Gérer mes alertes | Aide et support
+----------------------------------------------------------------------
+
+==============================================================================
+--- INDICATEURS DE PHISHING (usage pédagogique) ---
+==============================================================================
+
+1. DOMAINE EXPÉDITEUR SUSPECT
+   security@sage100cloud-notifications.net
+   → Le domaine officiel de Sage est sage.com. Tout autre domaine est frauduleux.
+   → "sage100cloud-notifications.net" est un domaine de phishing enregistré pour
+     imiter Sage.
+
+2. RÉFÉRENCE DE DOSSIER FICTIVE
+   "SGC-2026-{{date}}-4471" — Ce numéro ne correspond à aucun format Sage réel.
+   → Crée une fausse légitimité et donne l'impression d'un suivi personnalisé.
+
+3. URGENCE AMPLIFIÉE PAR CONTEXTE FISCAL
+   → La mention "clôture d'exercice" et "exports FEC, DAS2, DADS" est conçue pour
+     paniquer un comptable ou un DAF en période sensible.
+   → Sage ne bloque JAMAIS un compte via un email — tout blocage passe par
+     l'assistance téléphonique ou l'interface administrateur locale.
+
+4. DEMANDE DE CONNEXION VIA LIEN EMAIL
+   → Sage 100cloud se connecte via son propre client ou portail. Jamais via un
+     lien email envoyé suite à un "incident".
+   → Cliquer enverrait vos identifiants vers un faux portail.
+
+5. LIEN CTA POINTE VERS DOMAINE EXTERNE
+   → Survoler le bouton "Sécuriser mon espace SAGE" révèle un domaine différent
+     de sage.com.
+
+6. DÉLAI ARTIFICIEL DE 48 HEURES
+   → Sage n'impose pas de délais d'expiration de lien de sécurité de 48h.
+   → Ce délai vise à forcer une action rapide sans réflexion.
+
+RÉFLEXES ATTENDUS :
+  ✓ Vérifier le domaine expéditeur complet (pas juste le nom affiché)
+  ✓ Ne jamais cliquer sur un lien d'alerte de sécurité reçu par email
+  ✓ Contacter directement le support Sage au numéro officiel
+  ✓ Vérifier dans SAGE 100cloud directement si une alerte existe
+  ✓ Signaler l'email au service informatique
+
+CE QUE FAIT SAGE EN RÉALITÉ :
+  Sage ne bloque pas les comptes par email. En cas d'accès suspect, une
+  notification apparaît dans l'interface administrateur de SAGE 100cloud,
+  et l'équipe IT peut réinitialiser les accès depuis la console de gestion.
+  Sage ne demande jamais de valider ses identifiants via un lien email.
+
+==============================================================================

@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 10 — BPI France : Dossier de financement à valider (Spear-phishing Direction)
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Avancé (Spear-phishing ciblé Direction / DAF / PDG)
+  THÈME       : Financement public / BPI France / Dossier urgent
+  OBJET       : [BPI France] Votre dossier de financement n°BPI-2026-{{entreprise}} requiert
+                une validation — échéance 72h
+  EXPÉDITEUR  : BPI France — Espace Client <depot-dossier@bpifrance-espaceclient[.]fr>
+  LEVIERS     : Autorité (organisme public), Urgence (délai court), Peur (perte financement),
+                Spécificité (numéro de dossier, montant, chargé d'affaires nommé),
+                Légitimité (adresse réelle BPI, jargon financier)
+  INDICATEURS :
+    - Domaine non-officiel (bpifrance-espaceclient.fr ≠ bpifrance.fr)
+    - BPI France n'envoie jamais de lien de validation directe par email
+    - Numéro de dossier et montant fictifs mais crédibles
+    - Chargé d'affaires avec prénom/nom générique — non vérifiable facilement
+    - Urgence "72h" incohérente avec les délais réels BPI (plusieurs semaines)
+    - Lien "espace sécurisé" pointe vers domaine externe
+    - Demande de connexion avec identifiants BPI = vol de credentials
+    - Pas de signature numérique certifiée (courrier BPI officiel est toujours signé)
+  DÉBRIEF     : Voir metadata/templates.json — id: "10"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BPI France — Validation dossier de financement</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f0f2f5; font-family: Arial, Helvetica, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f0f2f5">
+    <tr>
+      <td align="center" style="padding-top: 28px; padding-bottom: 28px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="620" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 620px; background-color: #ffffff; border: 1px solid #d4d8e0;">
+
+          <!-- EN-TÊTE BPI FRANCE -->
+          <tr>
+            <td bgcolor="#005EA6" style="background-color: #005EA6; padding-top: 0;
+                                          padding-bottom: 0;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="padding-top: 18px; padding-bottom: 18px;
+                             padding-left: 32px; padding-right: 32px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td valign="middle">
+                          <!-- Logo BPI France textuel -->
+                          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 11px;
+                                       font-weight: 400; color: #a8c8e8; letter-spacing: 1px;
+                                       text-transform: uppercase; display: block; margin-bottom: 2px;">
+                            Banque Publique d'Investissement
+                          </span>
+                          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 24px;
+                                       font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">
+                            bpifrance
+                          </span>
+                        </td>
+                        <td align="right" valign="middle">
+                          <span style="font-family: Arial, Helvetica, sans-serif; font-size: 11px;
+                                       font-weight: 400; color: #a8c8e8;">
+                            Espace Client Entreprises
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <!-- Bande orange accent BPI -->
+                <tr>
+                  <td bgcolor="#FF6600" style="background-color: #FF6600; height: 4px;
+                                               font-size: 0; line-height: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BANDE INFO DOSSIER -->
+          <tr>
+            <td bgcolor="#EBF3FB" style="background-color: #EBF3FB; padding-top: 12px;
+                                          padding-bottom: 12px; padding-left: 32px; padding-right: 32px;
+                                          border-bottom: 1px solid #C5DCF0;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td>
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                 color: #004A8F; font-weight: 600;">
+                      N° Dossier :&nbsp;
+                    </span>
+                    <span style="font-family: 'Courier New', Courier, monospace; font-size: 13px;
+                                 color: #004A8F; font-weight: 700;">
+                      BPI-2026-IDF-088342
+                    </span>
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                 color: #666666; margin-left: 12px;">
+                      &nbsp;·&nbsp; Entreprise : <strong>{{entreprise}}</strong>
+                    </span>
+                  </td>
+                  <td align="right">
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 11px;
+                                 color: #888888;">
+                      {{date}}
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 32px; padding-bottom: 24px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 19px; font-weight: 700; color: #1a2a3a; line-height: 1.3;">
+                Votre dossier de financement est disponible
+              </p>
+              <p style="margin-top: 0; margin-bottom: 26px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #888888; line-height: 1.5;">
+                Une action de votre part est requise avant validation définitive
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 14px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #222222; line-height: 1.7;">
+                Madame, Monsieur <strong>{{nom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #333333; line-height: 1.7;">
+                Suite à l'instruction de votre demande de financement, nous avons le plaisir de
+                vous informer que votre dossier <strong>n°&nbsp;BPI-2026-IDF-088342</strong>
+                a été <strong>pré-approuvé</strong> par notre comité régional Île-de-France.
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #333333; line-height: 1.7;">
+                Afin de finaliser le traitement et d'émettre la <strong>proposition de
+                financement officielle</strong>, nous vous demandons de vous connecter à votre
+                espace sécurisé pour <strong>valider les conditions</strong> et compléter
+                les pièces justificatives manquantes.
+              </p>
+
+              <!-- Carte récapitulatif dossier -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="border: 1px solid #d4d8e0; margin-bottom: 24px;">
+                <tr>
+                  <td bgcolor="#f7f9fc" style="background-color: #f7f9fc; padding-top: 10px;
+                                               padding-bottom: 10px; padding-left: 20px; padding-right: 20px;
+                                               border-bottom: 1px solid #d4d8e0;">
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                 font-weight: 700; color: #444444; text-transform: uppercase;
+                                 letter-spacing: 0.4px;">
+                      Récapitulatif de votre dossier
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 16px; padding-bottom: 16px;
+                             padding-left: 20px; padding-right: 20px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="220" style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #777777; vertical-align: top;">
+                          Type de financement :
+                        </td>
+                        <td style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #1a1a1a; font-weight: 600;">
+                          Prêt Développement Innovation (PDI)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="220" style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #777777; vertical-align: top;">
+                          Montant accordé :
+                        </td>
+                        <td style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 16px; color: #005EA6; font-weight: 900;">
+                          150 000 €
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="220" style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #777777; vertical-align: top;">
+                          Durée :
+                        </td>
+                        <td style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #1a1a1a; font-weight: 600;">
+                          7 ans · dont 2 ans de franchise
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="220" style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #777777; vertical-align: top;">
+                          Chargé d'affaires :
+                        </td>
+                        <td style="padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #1a1a1a;">
+                          Thomas Renaud
+                          <span style="font-size: 12px; color: #888888;">· Délégation Île-de-France</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="220" style="font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #777777; vertical-align: top;">
+                          Statut dossier :
+                        </td>
+                        <td>
+                          <span style="display: inline-block; padding-top: 3px; padding-bottom: 3px;
+                                       padding-left: 10px; padding-right: 10px;
+                                       background-color: #FFF3CD; border: 1px solid #FFC107;
+                                       font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                       font-weight: 700; color: #856404;">
+                            &#9888;&nbsp;En attente de validation client
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Pièces à fournir -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #f7f9fc; border: 1px solid #d4d8e0;
+                            margin-bottom: 28px;">
+                <tr>
+                  <td style="padding-top: 14px; padding-bottom: 14px;
+                             padding-left: 18px; padding-right: 18px;">
+                    <p style="margin: 0 0 10px 0; font-family: Arial, Helvetica, sans-serif;
+                               font-size: 13px; font-weight: 700; color: #333333;">
+                      Pièces justificatives manquantes (à déposer en ligne) :
+                    </p>
+                    <table width="100%" cellpadding="0" cellspacing="2" border="0">
+                      <tr>
+                        <td width="18" valign="top" style="padding-top: 3px;">
+                          <span style="color: #FF6600; font-size: 12px; font-weight: 700;">&#9679;</span>
+                        </td>
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                                   color: #333333; padding-bottom: 5px;">
+                          Bilan comptable N-1 certifié (format PDF)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="18" valign="top" style="padding-top: 3px;">
+                          <span style="color: #FF6600; font-size: 12px; font-weight: 700;">&#9679;</span>
+                        </td>
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                                   color: #333333; padding-bottom: 5px;">
+                          Prévisionnel financier 3 ans signé par le dirigeant
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="18" valign="top" style="padding-top: 3px;">
+                          <span style="color: #FF6600; font-size: 12px; font-weight: 700;">&#9679;</span>
+                        </td>
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                                   color: #333333; padding-bottom: 5px;">
+                          RIB de l'entreprise (domiciliation bancaire)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="18" valign="top" style="padding-top: 3px;">
+                          <span style="color: #888888; font-size: 12px;">&#9679;</span>
+                        </td>
+                        <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                                   color: #888888;">
+                          Validation des conditions générales du prêt (signature électronique)
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Avertissement délai -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #FFF0E5; border-left: 4px solid #FF6600;
+                            margin-bottom: 28px;">
+                <tr>
+                  <td style="padding-top: 12px; padding-bottom: 12px;
+                             padding-left: 16px; padding-right: 16px;">
+                    <p style="margin: 0; font-family: Arial, Helvetica, sans-serif;
+                               font-size: 13px; color: #7a3300; line-height: 1.5;">
+                      <strong>Important :</strong> La pré-approbation de votre dossier est
+                      valable <strong>72 heures</strong>. Passé ce délai, le dossier sera
+                      renvoyé en instruction et la date de décaissement sera repoussée
+                      d'au moins <strong>6 semaines</strong>.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 20px;">
+                <tr>
+                  <td bgcolor="#005EA6" style="background-color: #005EA6; border-radius: 3px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 14px; padding-bottom: 14px;
+                              padding-left: 36px; padding-right: 36px;
+                              font-family: Arial, Helvetica, sans-serif; font-size: 15px;
+                              font-weight: 700; color: #ffffff; text-decoration: none;">
+                      Accéder à mon espace dossier BPI
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 13px; color: #666666; line-height: 1.6;">
+                Pour toute question sur votre dossier, vous pouvez joindre votre chargé d'affaires
+                <strong>Thomas Renaud</strong> ou contacter notre support :
+                <a href="mailto:{{support}}" style="color: #005EA6; text-decoration: none;">
+                  {{support}}
+                </a>
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 0; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px; color: #999999; line-height: 1.5;">
+                Référence : BPI-2026-IDF-088342 · {{entreprise}} · Décision du comité régional IDF
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #e4e8f0; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f7f9fc" style="background-color: #f7f9fc; padding-top: 20px;
+                                          padding-bottom: 20px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa; line-height: 1.5;">
+                Ce message a été envoyé à <strong>{{email}}</strong> en tant que
+                représentant(e) de <strong>{{entreprise}}</strong> dans le cadre de votre
+                demande de financement BPI France.
+              </p>
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa; line-height: 1.5;">
+                Bpifrance · 27-31, avenue du Général Leclerc · 94710 Maisons-Alfort Cedex · France
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa;">
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Politique de confidentialité
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Mentions légales
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Se désabonner
+                </a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- BARRE BAS -->
+          <tr>
+            <td bgcolor="#005EA6" style="background-color: #005EA6; height: 5px;
+                                          font-size: 0; line-height: 0;">&nbsp;</td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

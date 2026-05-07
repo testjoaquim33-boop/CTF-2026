@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+==============================================================================
+  TEMPLATE 09 — SAGE 100cloud : Accès suspect détecté
+==============================================================================
+  LANGUE      : Français
+  NIVEAU      : Avancé
+  THÈME       : Logiciel comptabilité / SAGE 100cloud / Accès non autorisé
+  OBJET       : [Urgent] Connexion suspecte détectée sur votre espace SAGE 100cloud
+  EXPÉDITEUR  : SAGE Sécurité <security@sage100cloud-notifications[.]net>
+  LEVIERS     : Peur (accès données comptables), Urgence (clôture fiscale), Autorité,
+                Spécificité (référence dossier, IP, date)
+  INDICATEURS :
+    - Domaine expéditeur non-officiel (sage100cloud-notifications.net ≠ sage.com)
+    - Référence de dossier fictive créant une fausse légitimité
+    - Urgence amplifiée par contexte fiscal ("période de clôture")
+    - Bouton "Sécuriser mon espace" pointe vers domaine externe
+    - SAGE ne bloque jamais un compte via un email — passage obligatoire par l'assistance
+    - Mention d'accès aux "données de paie et facturation" pour maximiser la peur
+    - IP géolocalisée à l'étranger pour déclencher l'alarme
+  DÉBRIEF     : Voir metadata/templates.json — id: "09"
+==============================================================================
+  USAGE STRICTEMENT INTERNE ET AUTORISÉ — SENSIBILISATION UNIQUEMENT
+==============================================================================
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAGE 100cloud — Alerte de sécurité</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, Helvetica, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f4">
+    <tr>
+      <td align="center" style="padding-top: 24px; padding-bottom: 24px;
+                                 padding-left: 10px; padding-right: 10px;">
+
+        <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff"
+               style="max-width: 600px; background-color: #ffffff; border: 1px solid #dcdcdc;
+                      border-top: 4px solid #00B247;">
+
+          <!-- EN-TÊTE SAGE -->
+          <tr>
+            <td bgcolor="#ffffff" style="background-color: #ffffff; padding-top: 22px;
+                                          padding-bottom: 22px; padding-left: 32px; padding-right: 32px;
+                                          border-bottom: 1px solid #eeeeee;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td valign="middle">
+                    <!-- Logo SAGE textuel -->
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 26px;
+                                 font-weight: 900; color: #00B247; letter-spacing: -1px;">
+                      Sage
+                    </span>
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                 font-weight: 400; color: #888888; margin-left: 6px;">
+                      100cloud
+                    </span>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span style="display: inline-block; padding-top: 4px; padding-bottom: 4px;
+                                 padding-left: 10px; padding-right: 10px;
+                                 background-color: #fde8e8; border: 1px solid #f5a5a5;
+                                 font-family: Arial, Helvetica, sans-serif; font-size: 11px;
+                                 font-weight: 700; color: #c0392b; letter-spacing: 0.3px;">
+                      &#9888;&nbsp;ALERTE SÉCURITÉ
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- BANNIÈRE ROUGE -->
+          <tr>
+            <td bgcolor="#c0392b" style="background-color: #c0392b; padding-top: 14px;
+                                          padding-bottom: 14px; padding-left: 32px; padding-right: 32px;">
+              <span style="font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                           font-weight: 700; color: #ffffff; letter-spacing: 0.3px;">
+                &#9888;&nbsp; Connexion non reconnue détectée — Action immédiate requise
+              </span>
+            </td>
+          </tr>
+
+          <!-- CORPS -->
+          <tr>
+            <td style="padding-top: 30px; padding-bottom: 24px;
+                       padding-left: 36px; padding-right: 36px;">
+
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 20px; font-weight: 700; color: #1a1a1a; line-height: 1.3;">
+                Activité suspecte sur votre espace comptable
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 13px; color: #777777; line-height: 1.5;">
+                Réf. dossier : <strong style="color: #444444;">SGC-2026-{{date}}-4471</strong>
+                &nbsp;·&nbsp; Compte : <strong style="color: #444444;">{{email}}</strong>
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 16px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 15px; color: #222222; line-height: 1.6;">
+                Bonjour <strong>{{prenom}} {{nom}}</strong>,
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 20px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #333333; line-height: 1.7;">
+                Notre système de supervision a détecté une <strong>tentative de connexion anormale</strong>
+                sur votre espace <strong>SAGE 100cloud</strong> associé à l'entreprise
+                <strong>{{entreprise}}</strong>. Cette connexion provient d'un appareil et d'une
+                localisation non reconnus.
+              </p>
+
+              <p style="margin-top: 0; margin-bottom: 24px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 14px; color: #333333; line-height: 1.7;">
+                En raison de la <strong>sensibilité des données comptables et de paie</strong>
+                accessibles depuis votre espace (facturation, grand livre, journaux de paie),
+                nous avons temporairement <strong>restreint certaines fonctionnalités d'export</strong>
+                de votre compte à titre préventif.
+              </p>
+
+              <!-- Carte détail connexion -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="border: 1px solid #e0e0e0; margin-bottom: 28px;">
+                <tr>
+                  <td bgcolor="#f9f9f9" style="background-color: #f9f9f9; padding-top: 10px;
+                                               padding-bottom: 10px; padding-left: 18px; padding-right: 18px;
+                                               border-bottom: 1px solid #e0e0e0;">
+                    <span style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                 font-weight: 700; color: #444444; text-transform: uppercase;
+                                 letter-spacing: 0.5px;">
+                      Détails de la tentative de connexion
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 14px; padding-bottom: 14px;
+                             padding-left: 18px; padding-right: 18px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="160" style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #888888; vertical-align: top;">
+                          Date et heure :
+                        </td>
+                        <td style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #222222; font-weight: 600;">
+                          {{date}} à 09:17 (heure de Paris)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #888888; vertical-align: top;">
+                          Adresse IP :
+                        </td>
+                        <td style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #222222; font-weight: 600;
+                                   font-family: 'Courier New', Courier, monospace;">
+                          {{ip_fictive}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #888888; vertical-align: top;">
+                          Localisation :
+                        </td>
+                        <td style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #222222; font-weight: 600;">
+                          {{ville_fictive}}, {{pays_fictif}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #888888; vertical-align: top;">
+                          Navigateur :
+                        </td>
+                        <td style="padding-bottom: 9px; font-family: Arial, Helvetica, sans-serif;
+                                   font-size: 13px; color: #222222;">
+                          Mozilla Firefox 124 · Windows 10
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="160" style="font-family: Arial, Helvetica, sans-serif;
+                                               font-size: 13px; color: #888888; vertical-align: top;">
+                          Statut :
+                        </td>
+                        <td>
+                          <span style="display: inline-block; padding-top: 3px; padding-bottom: 3px;
+                                       padding-left: 8px; padding-right: 8px;
+                                       background-color: #fde8e8; border: 1px solid #f5a5a5;
+                                       font-family: Arial, Helvetica, sans-serif; font-size: 12px;
+                                       font-weight: 700; color: #c0392b;">
+                            &#9679;&nbsp;Accès bloqué (connexion inconnue)
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Avertissement clôture fiscale -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="background-color: #fffbea; border-left: 4px solid #f0a500;
+                            margin-bottom: 28px;">
+                <tr>
+                  <td style="padding-top: 12px; padding-bottom: 12px;
+                             padding-left: 16px; padding-right: 16px;">
+                    <p style="margin: 0 0 6px 0; font-family: Arial, Helvetica, sans-serif;
+                               font-size: 13px; font-weight: 700; color: #7a5200;">
+                      &#9888;&nbsp; Période de clôture comptable en cours
+                    </p>
+                    <p style="margin: 0; font-family: Arial, Helvetica, sans-serif;
+                               font-size: 13px; color: #5a3d00; line-height: 1.5;">
+                      Votre dossier comptable est actuellement en phase de <strong>clôture
+                      d'exercice</strong>. La restriction préventive peut impacter vos exports
+                      FEC, DAS2 et DADS. Résolvez ce point rapidement pour éviter tout retard
+                      dans vos obligations déclaratives.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Bouton CTA -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 12px;">
+                <tr>
+                  <td bgcolor="#00B247" style="background-color: #00B247; border-radius: 3px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 13px; padding-bottom: 13px;
+                              padding-left: 32px; padding-right: 32px;
+                              font-family: Arial, Helvetica, sans-serif; font-size: 15px;
+                              font-weight: 700; color: #ffffff; text-decoration: none;">
+                      Sécuriser mon espace SAGE
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 28px;">
+                <tr>
+                  <td style="border: 1px solid #bbbbbb; border-radius: 3px;">
+                    <a href="{{lien}}"
+                       style="display: inline-block; padding-top: 10px; padding-bottom: 10px;
+                              padding-left: 24px; padding-right: 24px;
+                              font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+                              font-weight: 600; color: #444444; text-decoration: none;">
+                      Ce n'était pas moi — signaler l'incident
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 13px; color: #666666; line-height: 1.6;">
+                Si vous avez des difficultés, contactez le support Sage :
+                <a href="mailto:{{support}}" style="color: #00B247; text-decoration: none;">
+                  {{support}}
+                </a>
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 12px; color: #999999; line-height: 1.5;">
+                Ce lien de vérification expire dans <strong>48 heures</strong>.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SÉPARATEUR -->
+          <tr>
+            <td style="padding-left: 36px; padding-right: 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top: 1px solid #eeeeee; font-size: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- PIED DE PAGE -->
+          <tr>
+            <td bgcolor="#f8f8f8" style="background-color: #f8f8f8; padding-top: 18px;
+                                          padding-bottom: 18px; padding-left: 36px; padding-right: 36px;">
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa; line-height: 1.5;">
+                Notification de sécurité envoyée à <strong>{{email}}</strong> ·
+                Dossier entreprise <strong>{{entreprise}}</strong>
+              </p>
+              <p style="margin-top: 0; margin-bottom: 6px; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa; line-height: 1.5;">
+                Sage SAS · 10, rue Fructidor · 75834 Paris Cedex 17, France
+              </p>
+              <p style="margin-top: 0; margin-bottom: 0; font-family: Arial, Helvetica, sans-serif;
+                        font-size: 11px; color: #aaaaaa;">
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Politique de confidentialité
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Gérer mes alertes
+                </a>
+                &nbsp;|&nbsp;
+                <a href="{{lien}}" style="color: #aaaaaa; text-decoration: underline;">
+                  Aide et support
+                </a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
