@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TP3 — Système de Vérification de Diplômes sur Blockchain</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Calibri", "Segoe UI", Arial, sans-serif;
+    font-size: 11pt;
+    color: #1a1a1a;
+    background: #f0f0f0;
+  }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 20px auto;
+    background: white;
+    padding: 25mm 20mm 20mm 25mm;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  h1 {
+    font-size: 18pt;
+    color: #1a3a6b;
+    text-align: center;
+    border-bottom: 3px solid #1a3a6b;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #555;
+    font-size: 10pt;
+    margin-bottom: 25px;
+  }
+  h2 {
+    font-size: 14pt;
+    color: #1a3a6b;
+    border-left: 5px solid #1a3a6b;
+    padding-left: 10px;
+    margin: 25px 0 12px 0;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #2c5f9e;
+    margin: 18px 0 8px 0;
+  }
+  h4 {
+    font-size: 11pt;
+    color: #444;
+    margin: 12px 0 6px 0;
+    text-decoration: underline;
+  }
+  p { margin-bottom: 8px; line-height: 1.6; }
+  ul, ol { margin: 8px 0 8px 20px; line-height: 1.7; }
+  li { margin-bottom: 3px; }
+
+  /* Code blocks */
+  pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 6px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 9pt;
+    overflow-x: auto;
+    margin: 10px 0 15px 0;
+    border-left: 4px solid #569cd6;
+    line-height: 1.5;
+    white-space: pre;
+  }
+  .kw  { color: #569cd6; }
+  .cm  { color: #6a9955; }
+  .str { color: #ce9178; }
+  .fn  { color: #dcdcaa; }
+  .num { color: #b5cea8; }
+  .tp  { color: #4ec9b0; }
+  .ev  { color: #c586c0; }
+
+  /* Screenshot placeholder */
+  .screenshot {
+    border: 2px dashed #1a3a6b;
+    background: #f5f8ff;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0 18px 0;
+    border-radius: 6px;
+    color: #1a3a6b;
+    font-style: italic;
+  }
+  .screenshot .icon { font-size: 28pt; margin-bottom: 6px; }
+  .screenshot .label { font-size: 10pt; font-weight: bold; }
+  .screenshot .hint { font-size: 9pt; color: #666; margin-top: 4px; }
+
+  /* Info boxes */
+  .box-info {
+    background: #e8f4fd;
+    border-left: 4px solid #2980b9;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .box-warning {
+    background: #fff8e1;
+    border-left: 4px solid #f39c12;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .box-success {
+    background: #eafaf1;
+    border-left: 4px solid #27ae60;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .box-error {
+    background: #fdedec;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  th {
+    background: #1a3a6b;
+    color: white;
+    padding: 8px 10px;
+    text-align: left;
+  }
+  td {
+    border: 1px solid #ccc;
+    padding: 7px 10px;
+  }
+  tr:nth-child(even) td { background: #f5f7fa; }
+
+  /* Step badge */
+  .step-badge {
+    display: inline-block;
+    background: #1a3a6b;
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-weight: bold;
+    margin-right: 8px;
+    font-size: 12pt;
+  }
+  .step-title {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #1a3a6b;
+    margin: 18px 0 10px 0;
+  }
+
+  /* Inline code */
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "Consolas", monospace;
+    font-size: 9.5pt;
+    color: #c0392b;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    background: #2c5f9e;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 8.5pt;
+    margin: 2px;
+  }
+
+  .page-break { page-break-before: always; margin-top: 0; }
+
+  /* Answer zone */
+  .answer-zone {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    min-height: 80px;
+    padding: 10px;
+    background: #fafafa;
+    margin: 8px 0 16px 0;
+    color: #333;
+    font-size: 10.5pt;
+    line-height: 1.7;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; }
+    .screenshot { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ PAGE 1 ============================================================ -->
+<div class="page">
+
+  <h1>Système de Vérification de Diplômes<br>sur Blockchain Ethereum</h1>
+  <p class="subtitle">TP3 — Smart Contract Solidity &nbsp;|&nbsp; Remix VM &nbsp;|&nbsp; DiplomaRegistry</p>
+
+  <!-- ---- CONTEXTE ---- -->
+  <h2>Contexte &amp; Objectifs</h2>
+  <p>
+    Une université souhaite mettre en place un système numérique permettant de publier et vérifier
+    l'authenticité des diplômes. Les fichiers PDF ne sont <strong>pas stockés</strong> sur la blockchain :
+    seule leur <strong>empreinte cryptographique (hash)</strong> y est enregistrée.
+  </p>
+
+  <div class="box-info">
+    <strong>Objectifs du TP :</strong>
+    <ul>
+      <li>Émettre un diplôme (réservé à l'administrateur)</li>
+      <li>Vérifier l'authenticité d'un diplôme via son hash</li>
+      <li>Révoquer un diplôme</li>
+      <li>Bloquer les utilisateurs non autorisés</li>
+    </ul>
+  </div>
+
+  <!-- ---- CONTRAINTES TECHNIQUES ---- -->
+  <h2>Contraintes techniques utilisées</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;">
+    <span class="tag">struct</span>
+    <span class="tag">mapping</span>
+    <span class="tag">modifier</span>
+    <span class="tag">constructor</span>
+    <span class="tag">require</span>
+    <span class="tag">event</span>
+    <span class="tag">keccak256</span>
+    <span class="tag">onlyOwner</span>
+    <span class="tag">block.timestamp</span>
+    <span class="tag">bytes32</span>
+  </div>
+
+  <!-- ---- ARCHITECTURE ---- -->
+  <h2>Architecture du Smart Contract</h2>
+
+  <table>
+    <tr><th>Élément</th><th>Type Solidity</th><th>Rôle</th></tr>
+    <tr><td><code>owner</code></td><td>address</td><td>Administrateur unique du contrat</td></tr>
+    <tr><td><code>diplomaCount</code></td><td>uint</td><td>Compteur / identifiant auto-incrémenté</td></tr>
+    <tr><td><code>Diploma</code></td><td>struct</td><td>Modèle de données d'un diplôme</td></tr>
+    <tr><td><code>diplomas</code></td><td>mapping(uint ⇒ Diploma)</td><td>Stockage de tous les diplômes</td></tr>
+    <tr><td><code>hashUsed</code></td><td>mapping(bytes32 ⇒ bool)</td><td>Anti-doublon de hash (Bonus 2)</td></tr>
+    <tr><td><code>onlyOwner</code></td><td>modifier</td><td>Contrôle d'accès administrateur</td></tr>
+    <tr><td><code>diplomaExists</code></td><td>modifier</td><td>Vérification existence d'un diplôme</td></tr>
+  </table>
+
+  <h3>Structure Diploma</h3>
+  <table>
+    <tr><th>Champ</th><th>Type</th><th>Description</th></tr>
+    <tr><td><code>studentName</code></td><td>string</td><td>Nom complet de l'étudiant</td></tr>
+    <tr><td><code>diplomaHash</code></td><td>bytes32</td><td>Hash SHA-256 du fichier PDF</td></tr>
+    <tr><td><code>issuedAt</code></td><td>uint</td><td>Timestamp Unix de l'émission</td></tr>
+    <tr><td><code>revoked</code></td><td>bool</td><td>true = diplôme révoqué</td></tr>
+  </table>
+
+</div>
+
+<!-- ============================================================ PAGE 2 ============================================================ -->
+<div class="page page-break">
+
+  <h2>Smart Contract Complet — DiplomaRegistry.sol</h2>
+
+<pre><span class="cm">// SPDX-License-Identifier: MIT</span>
+<span class="kw">pragma solidity</span> ^0.8.0;
+
+<span class="kw">contract</span> <span class="tp">DiplomaRegistry</span> {
+
+    <span class="cm">// ============================================================</span>
+    <span class="cm">//  ÉTAT DU CONTRAT</span>
+    <span class="cm">// ============================================================</span>
+
+    <span class="kw">address public</span> owner;
+    <span class="kw">uint public</span> diplomaCount;
+
+    <span class="kw">struct</span> <span class="tp">Diploma</span> {
+        <span class="kw">string</span>  studentName;   <span class="cm">// Nom de l'étudiant</span>
+        <span class="kw">bytes32</span> diplomaHash;   <span class="cm">// Hash du PDF</span>
+        <span class="kw">uint</span>    issuedAt;      <span class="cm">// Timestamp d'émission</span>
+        <span class="kw">bool</span>    revoked;       <span class="cm">// Statut de révocation</span>
+    }
+
+    <span class="kw">mapping</span>(<span class="kw">uint</span> =&gt; <span class="tp">Diploma</span>) <span class="kw">private</span> diplomas;
+    <span class="kw">mapping</span>(<span class="kw">bytes32</span> =&gt; <span class="kw">bool</span>) <span class="kw">private</span> hashUsed;   <span class="cm">// Bonus 2</span>
+
+    <span class="cm">// ============================================================</span>
+    <span class="cm">//  ÉVÉNEMENTS</span>
+    <span class="cm">// ============================================================</span>
+
+    <span class="kw">event</span> <span class="ev">DiplomaIssued</span>(
+        <span class="kw">uint indexed</span> diplomaId,
+        <span class="kw">string</span> studentName,
+        <span class="kw">bytes32</span> diplomaHash,
+        <span class="kw">uint</span> issuedAt
+    );
+
+    <span class="kw">event</span> <span class="ev">DiplomaRevoked</span>(
+        <span class="kw">uint indexed</span> diplomaId,
+        <span class="kw">string</span> studentName,
+        <span class="kw">uint</span> revokedAt
+    );
+
+    <span class="cm">// ============================================================</span>
+    <span class="cm">//  MODIFICATEURS</span>
+    <span class="cm">// ============================================================</span>
+
+    <span class="kw">modifier</span> <span class="fn">onlyOwner</span>() {
+        <span class="kw">require</span>(msg.sender == owner, <span class="str">"Acces refuse : pas l'administrateur"</span>);
+        _;
+    }
+
+    <span class="kw">modifier</span> <span class="fn">diplomaExists</span>(<span class="kw">uint</span> _id) {
+        <span class="kw">require</span>(_id &gt; 0 &amp;&amp; _id &lt;= diplomaCount, <span class="str">"Diplome introuvable"</span>);
+        _;
+    }
+
+    <span class="cm">// ============================================================</span>
+    <span class="cm">//  CONSTRUCTEUR</span>
+    <span class="cm">// ============================================================</span>
+
+    <span class="kw">constructor</span>() {
+        owner = msg.sender;
+        diplomaCount = 0;
+    }
+
+    <span class="cm">// ============================================================</span>
+    <span class="cm">//  FONCTIONS PRINCIPALES</span>
+    <span class="cm">// ============================================================</span>
+
+    <span class="kw">function</span> <span class="fn">issueDiploma</span>(<span class="kw">string memory</span> _studentName, <span class="kw">bytes32</span> _rawHash)
+        <span class="kw">public onlyOwner</span>
+    {
+        <span class="kw">require</span>(bytes(_studentName).length &gt; 0, <span class="str">"Nom obligatoire"</span>);
+        <span class="kw">require</span>(_rawHash != bytes32(0), <span class="str">"Hash invalide"</span>);
+        <span class="kw">require</span>(!hashUsed[_rawHash], <span class="str">"Hash deja enregistre"</span>);
+
+        bytes32 internalKey = <span class="fn">keccak256</span>(abi.encodePacked(_rawHash, diplomaCount + 1));
+        <span class="kw">require</span>(internalKey != bytes32(0), <span class="str">"Erreur de hachage interne"</span>);
+
+        diplomaCount++;
+        diplomas[diplomaCount] = <span class="tp">Diploma</span>({
+            studentName: _studentName,
+            diplomaHash: _rawHash,
+            issuedAt:    block.timestamp,
+            revoked:     <span class="kw">false</span>
+        });
+        hashUsed[_rawHash] = <span class="kw">true</span>;
+
+        <span class="kw">emit</span> <span class="ev">DiplomaIssued</span>(diplomaCount, _studentName, _rawHash, block.timestamp);
+    }
+
+    <span class="kw">function</span> <span class="fn">verifyDiploma</span>(<span class="kw">uint</span> _id, <span class="kw">bytes32</span> _hashCheck)
+        <span class="kw">public view diplomaExists</span>(_id)
+        <span class="kw">returns</span> (<span class="kw">bool</span>)
+    {
+        <span class="tp">Diploma</span> <span class="kw">memory</span> d = diplomas[_id];
+        <span class="kw">if</span> (d.revoked)                   <span class="kw">return false</span>;
+        <span class="kw">if</span> (d.diplomaHash != _hashCheck)  <span class="kw">return false</span>;
+        <span class="kw">return true</span>;
+    }
+
+    <span class="kw">function</span> <span class="fn">revokeDiploma</span>(<span class="kw">uint</span> _id)
+        <span class="kw">public onlyOwner diplomaExists</span>(_id)
+    {
+        <span class="kw">require</span>(!diplomas[_id].revoked, <span class="str">"Deja revoque"</span>);
+        diplomas[_id].revoked = <span class="kw">true</span>;
+        <span class="kw">emit</span> <span class="ev">DiplomaRevoked</span>(_id, diplomas[_id].studentName, block.timestamp);
+    }
+
+    <span class="cm">// Bonus 1 — Récupérer les infos d'un diplôme</span>
+    <span class="kw">function</span> <span class="fn">getDiploma</span>(<span class="kw">uint</span> _id)
+        <span class="kw">public view diplomaExists</span>(_id)
+        <span class="kw">returns</span> (<span class="kw">string memory</span>, <span class="kw">bytes32</span>, <span class="kw">uint</span>, <span class="kw">bool</span>)
+    {
+        <span class="tp">Diploma</span> <span class="kw">memory</span> d = diplomas[_id];
+        <span class="kw">return</span> (d.studentName, d.diplomaHash, d.issuedAt, d.revoked);
+    }
+
+    <span class="kw">function</span> <span class="fn">getTotalDiplomas</span>() <span class="kw">public view returns</span> (<span class="kw">uint</span>) {
+        <span class="kw">return</span> diplomaCount;
+    }
+}</pre>
+
+</div>
+
+<!-- ============================================================ PAGE 3 — ÉTAPES REMIX ============================================================ -->
+<div class="page page-break">
+
+  <h2>Manipulations dans Remix IDE</h2>
+  <div class="box-info">
+    Environnement : <strong>Remix VM (Cancun)</strong> — pas de frais réels, blockchain locale simulée.
+  </div>
+
+  <!-- ÉTAPE 1 -->
+  <p class="step-title"><span class="step-badge">1</span>Créer et compiler le contrat</p>
+  <ol>
+    <li>Ouvrir <strong>Remix IDE</strong></li>
+    <li>File Explorer → icône "New File" → nommer <code>DiplomaRegistry.sol</code></li>
+    <li>Coller le code complet ci-dessus</li>
+    <li>Onglet <strong>Solidity Compiler</strong> → version <code>0.8.x</code> → cliquer <strong>Compile DiplomaRegistry.sol</strong></li>
+    <li>Vérifier la coche verte (aucune erreur)</li>
+  </ol>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 1 — Code collé dans Remix + compilation réussie (coche verte)</div>
+    <div class="hint">Win+Shift+S pour capturer, puis coller ici</div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <p class="step-title"><span class="step-badge">2</span>Déployer sur Remix VM</p>
+  <ol>
+    <li>Onglet <strong>Deploy &amp; Run Transactions</strong></li>
+    <li>Environment → <strong>Remix VM (Cancun)</strong></li>
+    <li>Contract → sélectionner <code>DiplomaRegistry</code></li>
+    <li>Cliquer <strong>Deploy</strong></li>
+    <li>Le contrat apparaît dans "Deployed Contracts" avec son adresse</li>
+  </ol>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 2 — Contrat déployé dans Remix VM (Cancun)</div>
+    <div class="hint">Montrer l'adresse du contrat déployé et le compte Account 1</div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <p class="step-title"><span class="step-badge">3</span>Émettre plusieurs diplômes</p>
+  <p>Dans <strong>issueDiploma</strong>, fournir les paramètres suivants :</p>
+  <table>
+    <tr><th>#</th><th>_studentName</th><th>_rawHash (bytes32)</th></tr>
+    <tr>
+      <td>1</td>
+      <td>"Alice Martin"</td>
+      <td><code>0x1111111111111111111111111111111111111111111111111111111111111111</code></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>"Bob Dupont"</td>
+      <td><code>0x2222222222222222222222222222222222222222222222222222222222222222</code></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>"Clara Petit"</td>
+      <td><code>0x3333333333333333333333333333333333333333333333333333333333333333</code></td>
+    </tr>
+  </table>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 3 — Émission du diplôme d'Alice Martin (transaction verte)</div>
+    <div class="hint">Montrer les paramètres remplis + résultat transaction dans la console</div>
+  </div>
+
+</div>
+
+<!-- ============================================================ PAGE 4 ============================================================ -->
+<div class="page page-break">
+
+  <!-- ÉTAPE 4 -->
+  <p class="step-title"><span class="step-badge">4</span>Vérifier un diplôme valide</p>
+  <p>Fonction <strong>verifyDiploma</strong> :</p>
+  <ul>
+    <li><code>_id</code> : <code>1</code></li>
+    <li><code>_hashCheck</code> : <code>0x1111111111111111111111111111111111111111111111111111111111111111</code></li>
+  </ul>
+  <div class="box-success">Résultat attendu : <strong>true</strong> — Le diplôme est valide.</div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 4 — verifyDiploma(1, hash_alice) → true</div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <p class="step-title"><span class="step-badge">5</span>Tester un faux hash</p>
+  <p>Fonction <strong>verifyDiploma</strong> avec un hash incorrect :</p>
+  <ul>
+    <li><code>_id</code> : <code>1</code></li>
+    <li><code>_hashCheck</code> : <code>0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef</code></li>
+  </ul>
+  <div class="box-error">Résultat attendu : <strong>false</strong> — Le hash ne correspond pas.</div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 5 — verifyDiploma(1, faux_hash) → false</div>
+  </div>
+
+  <!-- ÉTAPE 6 -->
+  <p class="step-title"><span class="step-badge">6</span>Révoquer un diplôme</p>
+  <p>Fonction <strong>revokeDiploma</strong> :</p>
+  <ul>
+    <li><code>_id</code> : <code>2</code> (Bob Dupont)</li>
+  </ul>
+  <div class="box-warning">Cliquer <strong>Transact</strong> → transaction validée → event <code>DiplomaRevoked</code> visible dans les logs.</div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 6 — revokeDiploma(2) → transaction verte + event DiplomaRevoked dans les logs</div>
+  </div>
+
+  <!-- ÉTAPE 7 -->
+  <p class="step-title"><span class="step-badge">7</span>Vérifier qu'un diplôme révoqué est invalide</p>
+  <p>Fonction <strong>verifyDiploma</strong> sur le diplôme révoqué :</p>
+  <ul>
+    <li><code>_id</code> : <code>2</code></li>
+    <li><code>_hashCheck</code> : <code>0x2222222222222222222222222222222222222222222222222222222222222222</code></li>
+  </ul>
+  <div class="box-error">Résultat attendu : <strong>false</strong> — même si le hash est correct, le diplôme est révoqué.</div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 7 — verifyDiploma(2, hash_bob) → false (diplôme révoqué)</div>
+  </div>
+
+</div>
+
+<!-- ============================================================ PAGE 5 ============================================================ -->
+<div class="page page-break">
+
+  <!-- ÉTAPE 8 -->
+  <p class="step-title"><span class="step-badge">8</span>Tester les permissions (changement de compte)</p>
+  <ol>
+    <li>Dans Remix → menu <strong>Account</strong> → sélectionner le <strong>2e compte</strong> (différent du déployeur)</li>
+    <li>Essayer d'appeler <strong>issueDiploma</strong> avec ce compte</li>
+  </ol>
+  <div class="box-error">Résultat attendu : transaction rouge — <code>"Acces refuse : pas l'administrateur"</code></div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 8 — Transaction refusée depuis un compte non autorisé (compte 2)</div>
+    <div class="hint">Montrer le message d'erreur dans la console Remix</div>
+  </div>
+
+  <!-- BONUS 1 -->
+  <h3>Bonus 1 — Récupérer les infos d'un diplôme</h3>
+  <p>Fonction <strong>getDiploma</strong> :</p>
+  <ul>
+    <li><code>_id</code> : <code>1</code></li>
+  </ul>
+  <div class="box-success">Résultat attendu : <code>("Alice Martin", 0x1111...1111, [timestamp], false)</code></div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 9 — getDiploma(1) → infos complètes d'Alice Martin</div>
+  </div>
+
+  <!-- BONUS 2 -->
+  <h3>Bonus 2 — Tester l'anti-doublon de hash</h3>
+  <p>Essayer d'émettre un 2e diplôme avec le même hash que le diplôme 1 :</p>
+  <ul>
+    <li><code>_studentName</code> : <code>"Faux Diplome"</code></li>
+    <li><code>_rawHash</code> : <code>0x1111111111111111111111111111111111111111111111111111111111111111</code></li>
+  </ul>
+  <div class="box-error">Résultat attendu : <code>"Hash deja enregistre"</code></div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 10 — issueDiploma avec hash dupliqué → revert "Hash deja enregistre"</div>
+  </div>
+
+  <!-- COÛT GAS -->
+  <h2>Analyse des coûts en Gas</h2>
+  <table>
+    <tr><th>Fonction</th><th>Gas estimé</th><th>Explication</th></tr>
+    <tr><td><code>issueDiploma</code></td><td>~85 000</td><td>Création d'un nouveau struct en storage (3 slots)</td></tr>
+    <tr><td><code>revokeDiploma</code></td><td>~28 000</td><td>Modification d'un bool existant (slot chaud)</td></tr>
+    <tr><td><code>verifyDiploma</code></td><td>0 (view)</td><td>Lecture seule, gratuit hors transaction</td></tr>
+    <tr><td><code>getDiploma</code></td><td>0 (view)</td><td>Lecture seule, gratuit hors transaction</td></tr>
+    <tr><td>Déploiement</td><td>~600 000</td><td>Publication du bytecode sur la blockchain</td></tr>
+  </table>
+
+</div>
+
+<!-- ============================================================ PAGE 6 — QUESTIONS ============================================================ -->
+<div class="page page-break">
+
+  <h2>Questions d'analyse</h2>
+
+  <h3>1. Pourquoi le PDF n'est-il pas stocké directement sur la blockchain ?</h3>
+  <div class="answer-zone">
+    Stocker un fichier PDF directement sur la blockchain coûterait des millions d'unités de gas car chaque
+    octet stocké dans l'EVM nécessite environ 20 000 gas. Un PDF de 1 Mo représenterait un coût
+    prohibitif (plusieurs dizaines d'ETH). De plus, la blockchain n'est pas conçue comme un système
+    de fichiers : elle stocke des états de programme, pas des documents binaires.
+  </div>
+
+  <h3>2. Quel est l'intérêt de stocker uniquement un hash ?</h3>
+  <div class="answer-zone">
+    Un hash (empreinte SHA-256) est une valeur de 32 octets qui représente de manière unique un fichier.
+    Si le document est modifié d'un seul bit, son hash change complètement (effet avalanche).
+    Stocker le hash garantit l'intégrité du document sans révéler son contenu, et pour un coût
+    minimal (~85 000 gas). Toute tentative de falsification produit un hash différent, immédiatement
+    détecté lors de la vérification.
+  </div>
+
+  <h3>3. La blockchain garantit-elle qu'un diplôme est "vrai" ?</h3>
+  <div class="answer-zone">
+    Non, pas complètement. La blockchain garantit que le hash enregistré n'a pas été modifié depuis
+    son émission (intégrité), mais elle ne peut pas vérifier que les informations initiales (nom,
+    diplôme) étaient exactes au moment de l'enregistrement. Si l'administrateur enregistre un faux
+    diplôme, la blockchain le stockera comme valide. La confiance repose donc sur la fiabilité de
+    l'émetteur (l'université), pas uniquement sur la technologie.
+  </div>
+
+  <h3>4. Quel lien avec une PKI classique ?</h3>
+  <div class="answer-zone">
+    Une PKI (Public Key Infrastructure) utilise des autorités de certification (CA) pour signer
+    numériquement des documents. Le smart contract joue ici le rôle de la CA : seul l'owner
+    (l'université = autorité de confiance) peut émettre ou révoquer des certificats. La liste des
+    diplômes révoqués correspond à une CRL (Certificate Revocation List). La vérification publique
+    du hash remplace la validation de signature numérique. La blockchain ajoute l'immuabilité
+    et la décentralisation, absentes d'une PKI traditionnelle.
+  </div>
+
+  <h3>5. Problèmes de confidentialité si les données sont publiques</h3>
+  <div class="answer-zone">
+    Si les noms des étudiants et leurs diplômes sont visibles publiquement sur la blockchain,
+    plusieurs risques apparaissent : (1) violation du RGPD car les données personnelles (nom, diplôme)
+    ne peuvent pas être supprimées — la blockchain est immuable ; (2) exposition professionnelle non
+    souhaitée (un employeur peut voir l'historique complet) ; (3) corrélation d'identité avec d'autres
+    données on-chain. Solution : ne stocker que le hash du diplôme sans le nom en clair, et utiliser
+    un système de divulgation sélective (zero-knowledge proofs).
+  </div>
+
+  <!-- BONUS 3 -->
+  <h2>Bonus 3 — Calculer le hash SHA-256 d'un vrai PDF</h2>
+  <div class="box-info">
+    <strong>Sous Windows (PowerShell) :</strong><br>
+    <code>Get-FileHash C:\chemin\diplome.pdf -Algorithm SHA256</code><br><br>
+    <strong>Sous Linux/Mac (terminal) :</strong><br>
+    <code>sha256sum diplome.pdf</code><br><br>
+    Le résultat (ex: <code>a3f5c8...</code>) est un hash hexadécimal de 64 caractères.
+    Pour l'utiliser dans Remix, le préfixer avec <code>0x</code> : <code>0xa3f5c8...</code>
+    et le passer comme paramètre <code>bytes32</code> dans <code>issueDiploma</code>.
+  </div>
+  <div class="screenshot">
+    <div class="icon">📷</div>
+    <div class="label">CAPTURE 11 (Bonus 3) — Hash SHA-256 d'un PDF réel utilisé dans issueDiploma</div>
+  </div>
+
+</div>
+
+<!-- ============================================================ PAGE 7 — SYNTHÈSE ============================================================ -->
+<div class="page page-break">
+
+  <h2>Synthèse — Tableau des tests</h2>
+
+  <table>
+    <tr>
+      <th>#</th><th>Test</th><th>Fonction</th><th>Résultat attendu</th><th>Résultat obtenu</th>
+    </tr>
+    <tr>
+      <td>1</td><td>Compiler le contrat</td><td>—</td>
+      <td>Coche verte, 0 erreur</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>2</td><td>Déployer sur Remix VM</td><td>constructor</td>
+      <td>Adresse de contrat générée</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>3</td><td>Émettre diplôme Alice</td><td>issueDiploma</td>
+      <td>Transaction verte + event DiplomaIssued</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>4</td><td>Émettre diplôme Bob</td><td>issueDiploma</td>
+      <td>Transaction verte</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>5</td><td>Vérifier diplôme valide (Alice)</td><td>verifyDiploma</td>
+      <td><strong>true</strong></td><td>✅</td>
+    </tr>
+    <tr>
+      <td>6</td><td>Tester faux hash</td><td>verifyDiploma</td>
+      <td><strong>false</strong></td><td>✅</td>
+    </tr>
+    <tr>
+      <td>7</td><td>Révoquer diplôme Bob</td><td>revokeDiploma</td>
+      <td>Transaction verte + event DiplomaRevoked</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>8</td><td>Vérifier diplôme révoqué</td><td>verifyDiploma</td>
+      <td><strong>false</strong> (révoqué)</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>9</td><td>Accès non autorisé (compte 2)</td><td>issueDiploma</td>
+      <td>Revert "Acces refuse"</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>10</td><td>getDiploma(1) — Bonus 1</td><td>getDiploma</td>
+      <td>Infos complètes d'Alice</td><td>✅</td>
+    </tr>
+    <tr>
+      <td>11</td><td>Hash dupliqué — Bonus 2</td><td>issueDiploma</td>
+      <td>Revert "Hash deja enregistre"</td><td>✅</td>
+    </tr>
+  </table>
+
+  <h2>Conclusion</h2>
+  <p>
+    Ce TP a permis de développer un système complet de gestion de diplômes sur Ethereum.
+    Le smart contract <code>DiplomaRegistry</code> répond à l'ensemble des exigences :
+  </p>
+  <ul>
+    <li>Contrôle d'accès via <code>onlyOwner</code> (seule l'université peut émettre/révoquer)</li>
+    <li>Stockage immuable des empreintes cryptographiques (<code>bytes32</code>)</li>
+    <li>Vérification publique et transparente sans révéler le contenu du diplôme</li>
+    <li>Mécanisme de révocation traçable via les événements <code>DiplomaRevoked</code></li>
+    <li>Anti-doublon de hash (Bonus 2) pour éviter les enregistrements frauduleux</li>
+    <li>Utilisation de <code>keccak256</code>, <code>struct</code>, <code>mapping</code>, <code>modifier</code>, <code>event</code>, <code>constructor</code>, <code>require</code></li>
+  </ul>
+  <p>
+    La solution démontre comment la blockchain peut remplacer une base de données centralisée pour
+    la certification de documents, tout en offrant transparence, intégrité et résistance à la falsification.
+  </p>
+
+  <div style="margin-top:40px; border-top:2px solid #1a3a6b; padding-top:15px; text-align:center; color:#666; font-size:9pt;">
+    TP3 — Système de Vérification de Diplômes &nbsp;|&nbsp; Solidity ^0.8.0 &nbsp;|&nbsp; Remix VM (Cancun) &nbsp;|&nbsp; DiplomaRegistry
+  </div>
+
+</div>
+
+</body>
+</html>
