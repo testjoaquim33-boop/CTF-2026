@@ -9,29 +9,33 @@
 
 ## Résumé Exécutif
 
-| Indicateur | Web1 (Ubuntu 22.04) | DB (Ubuntu 22.04) |
+| Indicateur | Web1 (Ubuntu 24.04) | DB (Ubuntu 24.04) |
 |------------|--------------------|--------------------|
-| Score de durcissement (Hardening Index) | **62 / 100** | **58 / 100** |
-| Warnings critiques | 4 | 6 |
-| Suggestions | 28 | 32 |
+| Score de durcissement (Hardening Index) | **65 / 100** | **58 / 100** |
+| Tests effectués | 260 | 260 |
+| Warnings | 1 | 6 |
+| Suggestions | 48 | 32 |
 | Statut global | ⚠️ Améliorations requises | ⚠️ Améliorations requises |
 
-> **Note** : Un score entre 60-75 est typique pour un serveur nouvellement installé sans durcissement spécifique. L'objectif de production est >80.
+> **Note** : Un score entre 60-75 est typique pour un serveur nouvellement installé sans durcissement spécifique. L'objectif de production est >80.  
+> Scan Web1 réalisé avec **Lynis 3.0.9** — 260 tests, 1 seul warning détecté.
 
 ---
 
 ## 1. Vulnérabilités — Serveur Web 1
 
-### Warnings (Priorité Haute)
+> **Résultat réel du scan** : Hardening Index **65/100**, 260 tests, **1 warning**, 48 suggestions.
+
+### Warning détecté (1)
 
 | ID | Description | Risque | Remédiation |
 |----|-------------|--------|-------------|
-| AUTH-9328 | Pas de délai entre les tentatives de connexion SSH | Moyen — Facilite les attaques brute force | Configurer `LoginGraceTime 60` dans `/etc/ssh/sshd_config` |
-| PKGS-7392 | Paquets obsolètes avec CVEs connues (openssh-server) | Haut — Exploitation potentielle | `apt-get upgrade openssh-server` |
-| FIRE-4512 | Pare-feu UFW non configuré localement | Moyen — Défense en profondeur insuffisante | Activer et configurer UFW : `ufw enable` |
-| KRNL-6000 | Kernel non à jour (5.15.0-76) | Haut — Vulnérabilités kernel connues | `apt-get dist-upgrade` + redémarrage |
+| FIRE-4512 | Module(s) iptables chargé(s) mais aucune règle active | Moyen — Pare-feu local inopérant, défense en profondeur insuffisante | Configurer des règles iptables/UFW : `ufw default deny incoming && ufw allow from 10.0.0.0/16 to any port 22 && ufw allow 80/tcp && ufw enable` |
 
-### Suggestions (Priorité Moyenne)
+> Sortie Lynis : `! iptables module(s) loaded, but no rules active [FIRE-4512]`  
+> Le module noyau iptables est présent mais aucune règle de filtrage n'est définie : le trafic n'est filtré qu'au niveau AWS (Security Groups), pas localement sur l'OS.
+
+### Suggestions (48 — Priorité Moyenne)
 
 | Catégorie | Description | Action recommandée |
 |-----------|-------------|-------------------|
