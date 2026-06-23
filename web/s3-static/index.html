@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SUP DE VINCI — Cloud Security</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #0a1628 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      padding: 60px 40px;
+      max-width: 700px;
+    }
+    .logo-wrapper {
+      margin-bottom: 30px;
+    }
+    .logo-wrapper img {
+      width: 220px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,115,187,0.4);
+      border: 2px solid rgba(0,115,187,0.5);
+    }
+    h1 {
+      font-size: 2.4em;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .subtitle {
+      font-size: 1.1em;
+      color: #7ecfff;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .quote-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(0,115,187,0.4);
+      border-radius: 16px;
+      padding: 30px 40px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 40px;
+    }
+    .quote {
+      font-size: 1.4em;
+      font-style: italic;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+    .quote-author {
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #7ecfff;
+    }
+    .badges {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .badge {
+      background: rgba(0,115,187,0.3);
+      border: 1px solid rgba(0,115,187,0.6);
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.85em;
+      color: #7ecfff;
+    }
+    .footer {
+      font-size: 0.8em;
+      color: rgba(255,255,255,0.4);
+      margin-top: 20px;
+    }
+    .aws-badge {
+      display: inline-block;
+      background: #ff9900;
+      color: #000;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-wrapper">
+      <img src="images/logo.png" alt="SUP DE VINCI Logo" onerror="this.style.display='none'" />
+    </div>
+
+    <h1>SUP DE VINCI</h1>
+    <p class="subtitle">Mastère Cloud Security — Projet Technique 2026</p>
+
+    <div class="quote-card">
+      <p class="quote">
+        "La sécurité n'est pas un produit, c'est un processus continu.
+        Dans le Cloud, chaque couche compte : réseau, accès, application."
+      </p>
+      <p class="quote-author">— Architecture TIER3 sécurisée sur AWS</p>
+    </div>
+
+    <div class="badges">
+      <span class="badge">AWS Free Tier</span>
+      <span class="badge">TIER3 Architecture</span>
+      <span class="badge">IAM Least Privilege</span>
+      <span class="badge">Load Balanced</span>
+      <span class="badge">S3 Static Hosting</span>
+    </div>
+
+    <div>
+      <span class="aws-badge">Hébergé sur Amazon S3</span>
+    </div>
+
+    <p class="footer">
+      Projet Technique — Configuration et sécurisation du CLOUD<br/>
+      Maître d'ouvrage : Mouhamad El Houssaini | 2026
+    </p>
+  </div>
+</body>
+</html>

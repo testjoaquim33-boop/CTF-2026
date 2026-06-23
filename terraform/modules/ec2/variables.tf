@@ -1,0 +1,12 @@
+variable "project_name" { type = string }
+variable "ami_ubuntu" { type = string }
+variable "instance_type" { type = string }
+variable "key_pair_name" { type = string }
+variable "public_subnet_id" { type = string }
+variable "private_app_subnet_ids" { type = list(string) }
+variable "private_db_subnet_id" { type = string }
+variable "sg_bastion_id" { type = string }
+variable "sg_web_id" { type = string }
+variable "sg_db_id" { type = string }
+variable "alb_target_group_arn" { type = string }
+variable "iam_instance_profile" { type = string }
