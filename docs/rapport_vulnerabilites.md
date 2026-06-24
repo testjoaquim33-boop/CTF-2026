@@ -11,14 +11,14 @@
 
 | Indicateur | Web1 (Ubuntu 24.04) | DB (Ubuntu 24.04) |
 |------------|--------------------|--------------------|
-| Score de durcissement (Hardening Index) | **65 / 100** | **58 / 100** |
+| Score de durcissement (Hardening Index) | **65 / 100** | **64 / 100** |
 | Tests effectués | 260 | 260 |
-| Warnings | 1 | 6 |
-| Suggestions | 48 | 32 |
+| Warnings | 1 | 1 |
+| Suggestions | 48 | 30+ |
 | Statut global | ⚠️ Améliorations requises | ⚠️ Améliorations requises |
 
 > **Note** : Un score entre 60-75 est typique pour un serveur nouvellement installé sans durcissement spécifique. L'objectif de production est >80.  
-> Scan Web1 réalisé avec **Lynis 3.0.9** — 260 tests, 1 seul warning détecté.
+> Scans réalisés avec **Lynis 3.0.9** — 260 tests par machine.
 
 ---
 
@@ -52,37 +52,42 @@
 
 ## 2. Vulnérabilités — Serveur DB
 
-### Warnings (Priorité Haute)
+> **Résultat réel du scan** : Hardening Index **64/100**, 260 tests, **1 warning**, 30+ suggestions.  
+> IP interne : 10.0.20.222 (subnet privé DB, aucun accès internet direct).
+
+### Warning détecté (1)
 
 | ID | Description | Risque | Remédiation |
 |----|-------------|--------|-------------|
-| AUTH-9328 | SSH brute force sans délai | Moyen | `LoginGraceTime 60` |
-| PKGS-7392 | MySQL non à jour (8.0.32 → 8.0.37) | Haut — CVE-2024-20963 | `apt-get upgrade mysql-server` |
-| FIRE-4512 | UFW non configuré | Moyen | Activer UFW |
-| KRNL-6000 | Kernel non à jour | Haut | `apt-get dist-upgrade` |
-| DBS-1816 | MySQL : comptes sans mot de passe | **Critique** | `ALTER USER ... IDENTIFIED BY '...'` |
-| DBS-1820 | MySQL : bind-address 0.0.0.0 | **Critique** — DB exposée sur toutes interfaces | Définir `bind-address = 10.0.20.x` dans my.cnf |
+| FIRE-4512 | Module(s) iptables chargé(s) mais aucune règle active | Moyen — Pare-feu local inopérant | `ufw default deny incoming && ufw allow from 10.0.0.0/16 to any port 22 && ufw allow from 10.0.10.0/24 to any port 3306 && ufw enable` |
 
-### Suggestions (Priorité Moyenne)
+> Même finding que Web1 : filtrage réseau assuré uniquement par les Security Groups AWS, pas au niveau OS.
 
-| Catégorie | Description | Action recommandée |
-|-----------|-------------|-------------------|
-| MySQL | Logs d'erreurs non configurés | `log_error = /var/log/mysql/error.log` |
-| MySQL | General log désactivé | Activer pour l'audit |
-| MySQL | `validate_password` plugin absent | `INSTALL PLUGIN validate_password USING 'validate_password.so'` |
-| Système | Mêmes suggestions SSH/kernel que Web1 | Voir tableau précédent |
-| Sauvegarde | Aucune politique de backup | Configurer mysqldump + S3 |
+### Suggestions notables (Priorité Moyenne)
+
+| ID | Catégorie | Description | Action recommandée |
+|----|-----------|-------------|-------------------|
+| DEB-0880 | Sécurité | fail2ban non installé | `apt-get install fail2ban` |
+| AUTH-9262 | Auth | Pas de plugin de complexité de mot de passe | Installer `libpam-pwquality` |
+| AUTH-9286 | Auth | Pas d'âge min/max de mot de passe | Configurer `/etc/login.defs` |
+| SSH-7408 | SSH | AllowTcpForwarding activé | Mettre `AllowTcpForwarding no` dans sshd_config |
+| SSH-7408 | SSH | LogLevel INFO (insuffisant) | Mettre `LogLevel VERBOSE` |
+| BOOT-5122 | Démarrage | Pas de mot de passe GRUB | Configurer password GRUB |
+| KRNL-5820 | Kernel | Core dumps non désactivés | Ajouter `* hard core 0` dans `/etc/security/limits.conf` |
+| NETW-3200 | Réseau | Protocoles inutiles actifs (dccp, sctp, rds, tipc) | Blacklister dans `/etc/modprobe.d/` |
 
 ---
 
 ## 3. Analyse par criticité
 
 ```
-CRITIQUE (2)     : ██░░░░░░░░  Comptes MySQL sans MDP, DB exposée sur 0.0.0.0
-HAUT (6)         : ██████░░░░  Kernel+OpenSSH non à jour, CVEs connues
-MOYEN (4)        : ████░░░░░░  Pare-feu local, SSH brute force
-FAIBLE (50+)     : ████████░░  Suggestions de durcissement
+CRITIQUE (0)     :             Aucune vulnérabilité critique détectée
+HAUT (0)         :             Aucun warning haute sévérité
+MOYEN (2)        : ██░░░░░░░░  FIRE-4512 sur Web1 et DB (iptables sans règles)
+FAIBLE (78+)     : ████████░░  Suggestions de durcissement (48 Web1 + 30+ DB)
 ```
+
+> **Résultat positif** : les scans ne révèlent aucune vulnérabilité critique, ce qui s'explique par l'architecture AWS (Security Groups assurant le filtrage réseau externe). Le seul warning commun aux deux machines est l'absence de règles iptables locales.
 
 ---
 
