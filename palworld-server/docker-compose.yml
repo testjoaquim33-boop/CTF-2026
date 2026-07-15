@@ -1,0 +1,49 @@
+services:
+  palworld:
+    image: thijsvanloef/palworld-server-docker:latest
+    container_name: palworld-server
+    restart: unless-stopped
+    # Laisse le conteneur le temps de sauvegarder proprement le monde à l'arrêt
+    stop_grace_period: 30s
+    ports:
+      - "8211:8211/udp"    # Port de jeu (obligatoire)
+      - "27015:27015/udp"  # Port "query" — nécessaire pour la liste des serveurs Steam
+      # - "25575:25575/tcp"  # RCON — décommente si tu administres le serveur à distance
+    environment:
+      # --- Système ---
+      PUID: 1000
+      PGID: 1000
+      TZ: "Europe/Paris"
+
+      # --- Réseau / Performances ---
+      PORT: 8211
+      PLAYERS: 16              # Nombre max de joueurs (16 conseillé, 32 max)
+      MULTITHREADING: true     # Recommandé au-delà de 4 joueurs
+
+      # --- Identité du serveur ---
+      SERVER_NAME: "Le serveur de mes potes"
+      SERVER_DESCRIPTION: "Serveur privé Palworld"
+      SERVER_PASSWORD: "change-moi"      # Mot de passe pour rejoindre
+      ADMIN_PASSWORD: "change-moi-aussi" # Mot de passe admin / RCON
+      COMMUNITY: false         # true = visible dans l'onglet "communauté" (nécessite SERVER_PASSWORD)
+
+      # --- RCON (administration à distance) ---
+      RCON_ENABLED: true
+      RCON_PORT: 25575
+
+      # --- Sauvegardes automatiques (optionnel) ---
+      BACKUP_ENABLED: true
+      BACKUP_CRON_EXPRESSION: "0 * * * *"   # Toutes les heures
+      DELETE_OLD_BACKUPS: true
+      OLD_BACKUP_DAYS: 7
+
+      # --- Règles de jeu (optionnel, décommente/ajuste selon tes envies) ---
+      # DIFFICULTY: "None"
+      # EXP_RATE: 1.0
+      # PAL_CAPTURE_RATE: 1.0
+      # DAY_TIME_SPEED_RATE: 1.0
+      # NIGHT_TIME_SPEED_RATE: 1.0
+      # ENABLE_PLAYER_TO_PLAYER_DAMAGE: false
+      # ENABLE_FRIENDLY_FIRE: false
+    volumes:
+      - ./palworld:/palworld/   # Données persistantes (monde, config, sauvegardes)
