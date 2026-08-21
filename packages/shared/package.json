@@ -6,10 +6,11 @@
   "types": "src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "node --test --experimental-strip-types 'src/**/*.test.ts'"
+    "test": "node --import tsx --test 'src/**/*.test.ts'"
   },
   "devDependencies": {
     "@types/node": "^22.20.1",
+    "tsx": "^4.23.12",
     "typescript": "^5.6.3"
   }
 }
