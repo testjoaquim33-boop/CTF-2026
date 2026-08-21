@@ -1,5 +1,5 @@
 import type { ExpoConfig, ConfigContext } from '@expo/config';
-import { BRANDING } from './src/constants/branding';
+import { BRANDING } from './app.branding.js';
 
 /**
  * Config Expo dynamique. Le nom/bundle proviennent de src/constants/branding.ts
