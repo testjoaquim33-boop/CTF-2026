@@ -56,7 +56,8 @@ export default function ExerciseDetailScreen() {
           </View>
         ) : null}
 
-        <Button label="Retour" variant="secondary" onPress={() => router.back()} style={{ marginTop: t.spacing.xl }} />
+        <Button label="🤖 Demander à l'AI Coach" onPress={() => router.push(`/coach/${data.id}`)} style={{ marginTop: t.spacing.xl }} />
+        <Button label="Retour" variant="secondary" onPress={() => router.back()} style={{ marginTop: t.spacing.md }} />
       </ScrollView>
     </SafeAreaView>
   );
