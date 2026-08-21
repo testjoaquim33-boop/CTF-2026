@@ -1,6 +1,7 @@
 import { supabase } from './supabase';
 import { detectNewPRs, type PersonalRecordType } from '@project_fit/shared';
 import type { ActiveExercise } from '../store/activeWorkout';
+import { awardWorkoutXp } from './gamification';
 
 export interface FinishResult {
   ok: boolean;
@@ -95,6 +96,9 @@ export async function finishWorkout(params: {
       prs.forEach((pr) => newPRs.push({ exerciseName: ex.name, ...pr }));
     }
   }
+
+  const workingSets = params.exercises.reduce((n, ex) => n + ex.sets.filter((s) => !s.isWarmup).length, 0);
+  await awardWorkoutXp({ userId, workingSets, newPRs: newPRs.length });
 
   return { ok: true, workoutId, newPRs };
 }

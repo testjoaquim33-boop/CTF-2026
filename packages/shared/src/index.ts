@@ -5,3 +5,4 @@ export * from './format';
 export * from './validators';
 export * from './onboarding';
 export * from './records';
+export * from './gamification';
