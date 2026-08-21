@@ -1,0 +1,2016 @@
+<title>Plan de Bataille Calyne</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+
+<style>
+:root{
+  --bg:#F3F4F0; --surface:#FFFFFF; --surface-2:#E9EBE4; --sunk:#0D2523;
+  --ink:#131A19; --muted:#57615E; --faint:#7E8783;
+  --line:#DCDED6; --line-strong:#C4C8BE;
+  --accent:#B4611A; --accent-ink:#8E4A11; --accent-soft:#F6E7D6;
+  --go:#2E7A4F; --go-soft:#DFEDE4;
+  --warn:#B4611A; --warn-soft:#F6E7D6;
+  --stop:#A33028; --stop-soft:#F6DFDC;
+  --on-sunk:#E9EDE8; --on-sunk-muted:#93A29E;
+  --shadow:0 1px 2px rgba(13,37,35,.05),0 8px 24px -12px rgba(13,37,35,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1413; --surface:#121D1B; --surface-2:#182524; --sunk:#08100F;
+    --ink:#E6EAE6; --muted:#9AA6A2; --faint:#7C8884;
+    --line:#24312F; --line-strong:#31403D;
+    --accent:#E08B3E; --accent-ink:#EFA45E; --accent-soft:#2A2119;
+    --go:#5FB587; --go-soft:#15251D;
+    --warn:#E0A040; --warn-soft:#2A2318;
+    --stop:#E0736A; --stop-soft:#2B1917;
+    --on-sunk:#E6EAE6; --on-sunk-muted:#8B9995;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1413; --surface:#121D1B; --surface-2:#182524; --sunk:#08100F;
+  --ink:#E6EAE6; --muted:#9AA6A2; --faint:#7C8884;
+  --line:#24312F; --line-strong:#31403D;
+  --accent:#E08B3E; --accent-ink:#EFA45E; --accent-soft:#2A2119;
+  --go:#5FB587; --go-soft:#15251D;
+  --warn:#E0A040; --warn-soft:#2A2318;
+  --stop:#E0736A; --stop-soft:#2B1917;
+  --on-sunk:#E6EAE6; --on-sunk-muted:#8B9995;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent-soft); color:var(--accent-ink)}
+
+/* ---------- shell ---------- */
+.shell{display:grid; grid-template-columns:1fr; max-width:1400px; margin:0 auto}
+@media(min-width:1060px){
+  .shell{grid-template-columns:258px minmax(0,1fr); gap:0}
+}
+.rail{display:none}
+@media(min-width:1060px){
+  .rail{
+    display:block; position:sticky; top:0; align-self:start;
+    height:100vh; overflow-y:auto; padding:34px 22px 60px 28px;
+    border-right:1px solid var(--line); background:var(--bg);
+  }
+}
+.rail-brand{font-family:"Newsreader",Georgia,serif; font-size:1.22rem; font-weight:600; letter-spacing:-.01em; margin:0 0 2px}
+.rail-sub{font-family:"IBM Plex Mono",monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin:0 0 26px}
+.rail nav{display:flex; flex-direction:column; gap:1px}
+.rail a{
+  display:grid; grid-template-columns:22px 1fr; gap:8px; align-items:baseline;
+  text-decoration:none; color:var(--muted); font-size:.815rem; line-height:1.34;
+  padding:6px 8px 6px 0; border-radius:4px; transition:color .15s;
+}
+.rail a .n{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--faint); font-variant-numeric:tabular-nums}
+.rail a:hover{color:var(--ink)}
+.rail a:hover .n{color:var(--accent)}
+.rail a.on{color:var(--ink); font-weight:600}
+.rail a.on .n{color:var(--accent)}
+.rail hr{border:0; border-top:1px solid var(--line); margin:14px 0}
+
+main{min-width:0; padding:0 20px 100px}
+@media(min-width:1060px){main{padding:0 56px 120px}}
+.col{max-width:70ch; margin:0 auto}
+.wide{max-width:none}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{text-wrap:balance; margin:0}
+h1{font-family:"Newsreader",Georgia,serif; font-weight:600; font-size:clamp(2.3rem,5.6vw,3.5rem); line-height:1.03; letter-spacing:-.022em}
+h2{font-family:"Newsreader",Georgia,serif; font-weight:600; font-size:clamp(1.65rem,3.4vw,2.15rem); line-height:1.12; letter-spacing:-.016em}
+h3{font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:1.03rem; line-height:1.35; letter-spacing:-.005em; margin-top:4px}
+h4{font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.68rem; letter-spacing:.13em; text-transform:uppercase; color:var(--faint)}
+p{margin:0}
+a{color:var(--accent-ink); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2.5px; text-decoration-color:color-mix(in srgb,var(--accent) 42%,transparent)}
+a:hover{text-decoration-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:3px}
+strong{font-weight:600}
+em{font-family:"Newsreader",Georgia,serif; font-style:italic; font-size:1.06em}
+
+section{border-top:1px solid var(--line); padding-top:34px; margin-top:56px}
+section:first-of-type{border-top:0}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:8px}
+.sec-n{
+  font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em;
+  color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);
+  padding:2px 7px; border-radius:3px; flex:none; font-variant-numeric:tabular-nums;
+}
+.lede{font-family:"Newsreader",Georgia,serif; font-size:1.16rem; line-height:1.52; color:var(--muted); margin-top:12px}
+.stack{display:flex; flex-direction:column; gap:16px}
+.stack-lg{display:flex; flex-direction:column; gap:26px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint)}
+
+ul,ol{margin:0; padding-left:1.15em; display:flex; flex-direction:column; gap:7px}
+li::marker{color:var(--accent)}
+ul.tight,ol.tight{gap:4px}
+ul.plain{list-style:none; padding-left:0}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 4px}
+.stamp{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:22px}
+.hero h1 em{font-size:1em}
+.hero-verdict{
+  margin-top:26px; padding:20px 22px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent);
+  box-shadow:var(--shadow);
+}
+
+/* ---------- countdown strip ---------- */
+.clock{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:1px;
+  background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;
+  margin-top:28px;
+}
+.clock div{background:var(--surface); padding:13px 14px}
+.clock .d{font-family:"IBM Plex Mono",monospace; font-size:1.32rem; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums; line-height:1.1}
+.clock .l{font-size:.74rem; color:var(--muted); margin-top:3px; line-height:1.3}
+.clock .dt{font-family:"IBM Plex Mono",monospace; font-size:.62rem; color:var(--faint); margin-top:1px}
+
+/* ---------- chips & tags ---------- */
+.tag{
+  display:inline-flex; align-items:center; gap:5px; font-family:"IBM Plex Mono",monospace;
+  font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:3px 7px;
+  border-radius:3px; white-space:nowrap; font-weight:500;
+}
+.t-ok{background:var(--go-soft); color:var(--go)}
+.t-warn{background:var(--warn-soft); color:var(--warn)}
+.t-stop{background:var(--stop-soft); color:var(--stop)}
+.t-neutral{background:var(--surface-2); color:var(--muted)}
+
+/* ---------- callouts ---------- */
+.call{padding:17px 19px; border-radius:7px; border:1px solid var(--line); background:var(--surface)}
+.call.go{border-left:3px solid var(--go)}
+.call.warn{border-left:3px solid var(--warn)}
+.call.stop{border-left:3px solid var(--stop)}
+.call.flat{border-left:3px solid var(--line-strong)}
+.call h3{margin-bottom:7px}
+.call > * + *{margin-top:9px}
+
+.sunk{background:var(--sunk); color:var(--on-sunk); border-radius:9px; padding:26px 26px; border:1px solid transparent}
+.sunk h2,.sunk h3{color:var(--on-sunk)}
+.sunk p,.sunk li{color:var(--on-sunk-muted)}
+.sunk strong{color:var(--on-sunk)}
+.sunk .eyebrow{color:var(--accent)}
+.sunk a{color:var(--accent-ink)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:.83rem; min-width:520px}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",monospace; font-size:.62rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--faint); font-weight:500; white-space:nowrap;
+  background:var(--surface-2); position:sticky; top:0;
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:color-mix(in srgb,var(--surface-2) 55%,transparent)}
+td.num,th.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+td.nm{font-weight:600; min-width:150px}
+.score{font-family:"IBM Plex Mono",monospace; font-weight:500; font-variant-numeric:tabular-nums}
+.s-hi{color:var(--go)} .s-mid{color:var(--warn)} .s-lo{color:var(--stop)}
+caption{caption-side:bottom; text-align:left; padding:9px 12px; font-size:.74rem; color:var(--faint); border-top:1px solid var(--line)}
+
+/* ---------- cards ---------- */
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:17px 18px}
+.card h3{margin-bottom:6px}
+.card > * + *{margin-top:8px}
+.card p, .card li{font-size:.875rem; color:var(--muted)}
+
+/* product cards */
+.pcard{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:16px 17px; display:flex; flex-direction:column; gap:10px}
+.pcard-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+.pcard-name{font-weight:600; font-size:.95rem; line-height:1.3}
+.pcard-note{font-family:"IBM Plex Mono",monospace; font-size:1.02rem; font-weight:500; font-variant-numeric:tabular-nums; flex:none}
+.pcard dl{display:grid; grid-template-columns:auto 1fr; gap:3px 11px; margin:0; font-size:.79rem}
+.pcard dt{font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); padding-top:3px}
+.pcard dd{margin:0; color:var(--muted)}
+.pcard dd b{color:var(--ink); font-weight:600}
+.pcard .money{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; color:var(--ink); font-weight:500}
+.pfilter{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px}
+.pfilter button{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem; letter-spacing:.08em; text-transform:uppercase;
+  padding:6px 11px; border-radius:4px; border:1px solid var(--line-strong); background:var(--surface);
+  color:var(--muted); cursor:pointer; transition:all .15s;
+}
+.pfilter button:hover{border-color:var(--accent); color:var(--ink)}
+.pfilter button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .pfilter button[aria-pressed="true"]{color:#1A1207}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .pfilter button[aria-pressed="true"]{color:#1A1207}}
+
+/* ---------- copy blocks (textes exacts) ---------- */
+.copyblock{
+  background:var(--surface-2); border:1px solid var(--line); border-radius:7px;
+  padding:15px 17px; font-family:"Newsreader",Georgia,serif; font-size:1.02rem; line-height:1.55;
+}
+.copyblock .lbl{
+  font-family:"IBM Plex Mono",monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--faint); display:block; margin-bottom:6px;
+}
+.copyblock > * + *{margin-top:11px}
+
+/* hooks list */
+.hooks{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.hooks div{background:var(--surface); padding:10px 13px; font-size:.85rem; display:grid; grid-template-columns:26px 1fr; gap:8px}
+.hooks div span{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--accent); font-variant-numeric:tabular-nums; padding-top:3px}
+
+/* script */
+.script{background:var(--surface); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.script > header{background:var(--surface-2); padding:10px 15px; border-bottom:1px solid var(--line)}
+.script > header b{font-size:.9rem}
+.script > header span{font-family:"IBM Plex Mono",monospace; font-size:.64rem; color:var(--faint); display:block; margin-top:2px}
+.script ol{list-style:none; padding:0; margin:0; gap:0}
+.script li{display:grid; grid-template-columns:66px 1fr; gap:12px; padding:9px 15px; border-bottom:1px solid var(--line); font-size:.86rem}
+.script li:last-child{border-bottom:0}
+.script li > b{font-family:"IBM Plex Mono",monospace; font-size:.66rem; color:var(--accent); font-weight:500; padding-top:3px; font-variant-numeric:tabular-nums}
+
+/* timeline */
+.days{display:flex; flex-direction:column; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface)}
+.days > div{display:grid; grid-template-columns:88px 1fr; gap:14px; padding:11px 15px; border-bottom:1px solid var(--line)}
+.days > div:last-child{border-bottom:0}
+.days .dh{font-family:"IBM Plex Mono",monospace; font-size:.68rem; color:var(--accent); font-variant-numeric:tabular-nums; line-height:1.4}
+.days .dh small{display:block; color:var(--faint); font-size:.92em}
+.days .db{font-size:.87rem}
+.days .db b{display:block; font-weight:600; color:var(--ink); margin-bottom:2px; font-size:.9rem}
+.days .db span{color:var(--muted)}
+
+/* decision matrix */
+.matrix{display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:14px}
+.mcol{border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--surface)}
+.mcol header{padding:11px 15px; font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; font-weight:500}
+.mcol.go header{background:var(--go-soft); color:var(--go)}
+.mcol.warn header{background:var(--warn-soft); color:var(--warn)}
+.mcol.stop header{background:var(--stop-soft); color:var(--stop)}
+.mcol ul{padding:13px 15px 15px 30px; font-size:.83rem; color:var(--muted)}
+
+code{font-family:"IBM Plex Mono",monospace; font-size:.86em; background:var(--surface-2); padding:1px 5px; border-radius:3px; color:var(--accent-ink)}
+small{font-size:.86em; color:var(--faint)}
+hr.rule{border:0; border-top:1px solid var(--line); margin:0}
+.foot{margin-top:70px; padding-top:26px; border-top:1px solid var(--line); font-size:.8rem; color:var(--faint)}
+.foot a{color:var(--muted)}
+.srcs{display:flex; flex-direction:column; gap:5px; margin-top:12px; font-size:.78rem}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important; scroll-behavior:auto!important}}
+html{scroll-behavior:smooth; scroll-padding-top:24px}
+</style>
+
+<div class="shell">
+<aside class="rail">
+  <p class="rail-brand">Plan de bataille</p>
+  <p class="rail-sub">Shopify FR · Août → Déc 2026</p>
+  <nav id="toc">
+    <a href="#s1"><span class="n">01</span><span>Bonne ou mauvaise idée&nbsp;?</span></a>
+    <a href="#s2"><span class="n">02</span><span>Les 5 meilleures niches</span></a>
+    <a href="#s3"><span class="n">03</span><span>Les 32 produits</span></a>
+    <a href="#s4"><span class="n">04</span><span>Le modèle de boutique</span></a>
+    <a href="#s5"><span class="n">05</span><span>Nom &amp; branding</span></a>
+    <a href="#s6"><span class="n">06</span><span>Architecture Shopify</span></a>
+    <a href="#s7"><span class="n">07</span><span>Fournisseurs &amp; automatisation</span></a>
+    <a href="#s8"><span class="n">08</span><span>TikTok / Instagram</span></a>
+    <a href="#s9"><span class="n">09</span><span>Système de test produit</span></a>
+    <a href="#s10"><span class="n">10</span><span>Stratégie Ads</span></a>
+    <a href="#s11"><span class="n">11</span><span>Modèle financier</span></a>
+    <a href="#s12"><span class="n">12</span><span>Stratégie rentrée</span></a>
+    <a href="#s13"><span class="n">13</span><span>Stratégie Halloween</span></a>
+    <a href="#s14"><span class="n">14</span><span>Le plan 30 jours</span></a>
+    <a href="#s15"><span class="n">15</span><span>La stack d'outils</span></a>
+    <a href="#s16"><span class="n">16</span><span>Risques, légal, décision</span></a>
+    <a href="#s17"><span class="n">17</span><span>Ton plan d'action exact</span></a>
+    <hr>
+    <a href="#sortie"><span class="n">→</span><span>De la revente à la marque</span></a>
+    <a href="#final"><span class="n">★</span><span>Si j'étais à ta place</span></a>
+    <a href="#sources"><span class="n">§</span><span>Sources &amp; méthode</span></a>
+  </nav>
+</aside>
+
+<main>
+<div class="col">
+
+<header class="hero">
+  <div class="stamp">
+    <span class="tag t-neutral">21 août 2026</span>
+    <span class="tag t-warn">3 faits nouveaux invalident le plan standard</span>
+  </div>
+  <h1>Ton idée tient debout.<br>Mais <em>pas</em> celle que tu as écrite.</h1>
+
+  <div class="hero-verdict stack">
+    <p><strong>Le modèle « boutique FR → organique TikTok → marque » : oui, valable.</strong> C'est le seul chemin réaliste avec un budget serré, et ta liste de critères produit est meilleure que celle de 90&nbsp;% des gens qui se lancent.</p>
+    <p><strong>Halloween comme porte d'entrée : non.</strong> Je détaille pourquoi en §01 — mais le résumé est que ça viole quatre de tes propres critères.</p>
+    <p><strong>La rentrée : la fenêtre est fermée.</strong> Nous sommes à J-11 du 1<sup>er</sup> septembre. Un produit commandé aujourd'hui en Chine arrive fin septembre.</p>
+    <p><strong>Et surtout :</strong> depuis le 1<sup>er</sup> juillet 2026, l'exonération douanière de 150&nbsp;€ n'existe plus dans l'UE. Le dropshipping direct Chine→France que décrit ton prompt a pris <strong>+3&nbsp;€ de coût par ligne tarifaire</strong> il y a sept semaines. Tout le calcul de marge de ce document en tient compte.</p>
+  </div>
+
+  <div class="clock">
+    <div><div class="d">J-11</div><div class="l">Rentrée</div><div class="dt">1 sept.</div></div>
+    <div><div class="d">J-71</div><div class="l">Halloween</div><div class="dt">31 oct.</div></div>
+    <div><div class="d">J-98</div><div class="l">Black Friday</div><div class="dt">27 nov.</div></div>
+    <div><div class="d">J-126</div><div class="l">Noël</div><div class="dt">25 déc.</div></div>
+    <div><div class="d">J-0</div><div class="l">Départ</div><div class="dt">aujourd'hui</div></div>
+  </div>
+
+  <p class="lede">Ce document répond aux 20 étapes de ton brief, dans les 17 sections que tu as demandées. Les chiffres marqués <span class="tag t-ok">Vérifié</span> viennent de sources citées en fin de page. Ceux marqués <span class="tag t-neutral">Estimation</span> sont mes hypothèses de travail — traite-les comme des hypothèses à valider, pas comme des données.</p>
+</header>
+
+<!-- ══════════════ 01 ══════════════ -->
+<section id="s1">
+  <div class="sec-head"><span class="sec-n">01</span><h2>Mon idée : bonne ou mauvaise ?</h2></div>
+  <p class="lede">Tu m'as demandé d'être franc et de ne pas te faire plaisir. Voici le verdict, point par point.</p>
+
+  <div class="stack-lg" style="margin-top:28px">
+
+    <div class="call go">
+      <h4>Verdict 1 — Le modèle général</h4>
+      <h3>Bon. Garde-le.</h3>
+      <p>Organique d'abord, pub ensuite, marque à la fin : c'est l'ordre correct. La plupart des gens font l'inverse, brûlent 1 500&nbsp;€ en Meta Ads sur un produit non validé, et arrêtent. Ta liste de critères produit (léger, non fragile, démontrable en vidéo, peu de retours, marge élevée) est exactement la bonne grille. Ne la lâche pas.</p>
+    </div>
+
+    <div class="call stop">
+      <h4>Verdict 2 — Halloween comme axe principal</h4>
+      <h3>Mauvais. Et tu le sais déjà, sans l'avoir formulé.</h3>
+      <p>Tu as écrit toi-même que tu voulais des produits <em>« peu susceptibles de générer des retours »</em> et <em>« avec une bonne marge »</em>. Puis tu as proposé les déguisements. Les deux sont incompatibles :</p>
+      <ol class="tight">
+        <li><strong>Les déguisements ont des tailles.</strong> Toute référence textile avec des tailles génère des retours à deux chiffres. Tu importes le seul problème que tu voulais éviter.</li>
+        <li><strong>Tu ne peux pas gagner sur le prix.</strong> Action, Gifi, Temu et Amazon vendent la déco Halloween basique à des prix où ta marge est négative après les 3&nbsp;€ de droit forfaitaire. Sur la déco générique, tu es structurellement battu.</li>
+        <li><strong>La fenêtre de vente réelle est de 3 semaines</strong> (≈ 10 → 31 octobre). Il te reste 71 jours pour partir de zéro compte, construire une audience, tester des produits et être crédible à l'achat. C'est jouable en payant. Ce n'est pas jouable en organique pur.</li>
+        <li><strong>Au 1<sup>er</sup> novembre, ton actif vaut zéro.</strong> Tu n'as ni audience réutilisable, ni marque, ni données produit — et Black Friday est dans 27 jours.</li>
+      </ol>
+      <p><strong>Ce que je garde de ton intuition :</strong> Halloween est un excellent <em>accélérateur de contenu</em>, pas une boutique. La déco d'ambiance d'octobre (lumière, bougies, atmosphère) explose sur TikTok et se vend avec de vraies marges — parce qu'on n'achète pas ça au prix du plastique. Voir §13.</p>
+    </div>
+
+    <div class="call warn">
+      <h4>Verdict 3 — La rentrée</h4>
+      <h3>Trop tard pour le sourcing. Encore utile pour le contenu.</h3>
+      <p>En France, l'achat de rentrée se fait entre le 10 et le 31 août. Nous sommes le 21. Si tu commandes un échantillon aujourd'hui chez un fournisseur chinois, tu le reçois vers le 5–20 septembre, tu tournes tes vidéos fin septembre, tu vends en octobre — quand plus personne ne cherche « rentrée ».</p>
+      <p><strong>Ce qui reste jouable :</strong> le thème <em>organisation / télétravail / bureau</em> ne meurt pas le 1<sup>er</sup> septembre. Il tourne jusqu'à fin octobre et repart en janvier. Traite septembre comme ton mois d'entraînement au contenu, pas comme ton mois de chiffre d'affaires. Voir §12.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:44px">Les trois faits qui invalident le plan « dropshipping classique »</h3>
+  <p style="margin-top:10px; color:var(--muted)">Ton brief a été écrit sur des hypothèses qui étaient vraies en 2023. Trois d'entre elles ne le sont plus. Ce sont les points les plus importants de ce document.</p>
+
+  <div class="stack" style="margin-top:20px">
+    <div class="call flat">
+      <div class="stamp" style="margin-bottom:8px"><span class="tag t-ok">Vérifié</span><span class="tag t-stop">Impact direct sur ta marge</span></div>
+      <h3>1. L'exonération douanière de 150&nbsp;€ est morte depuis le 1<sup>er</sup> juillet 2026</h3>
+      <p>L'UE a supprimé le seuil de minimis. Un droit de douane forfaitaire transitoire de <strong>3&nbsp;€ s'applique par ligne tarifaire</strong> (pas par colis) sur les envois B2C de moins de 150&nbsp;€ venant hors UE, jusqu'à la mise en service du Customs Data Hub prévue en 2028.</p>
+      <p><strong>Traduction concrète :</strong> sur un produit acheté 8&nbsp;€, tu viens de perdre 3&nbsp;€ — soit ~37&nbsp;% de coût en plus. Un colis « bundle » contenant 3 types de produits différents paie <strong>9&nbsp;€</strong>, pas 3&nbsp;€. Ça tue mécaniquement la stratégie de bundle multi-références expédiée depuis la Chine.</p>
+      <p><strong>Le piège opérationnel :</strong> si ton fournisseur expédie en DDU (droits non acquittés), c'est <em>ton client</em> qui reçoit la demande de paiement du transporteur. Résultat : colis refusé, litige, remboursement, avis négatif. <strong>Exige du DDP / IOSS auprès de tout fournisseur hors UE</strong>, ou passe par un entrepôt UE. C'est non négociable en 2026.</p>
+    </div>
+
+    <div class="call flat">
+      <div class="stamp" style="margin-bottom:8px"><span class="tag t-ok">Vérifié</span><span class="tag t-stop">Risque juridique personnel</span></div>
+      <h3>2. Le GPSR fait de toi le responsable produit</h3>
+      <p>Le règlement UE 2023/988 sur la sécurité générale des produits s'applique depuis le 13 décembre 2024. Il exige qu'une <strong>personne responsable établie dans l'UE</strong> soit identifiable pour la quasi-totalité des produits non alimentaires. Quand le fabricant chinois n'a aucun représentant dans l'UE — le cas par défaut en dropshipping — <strong>c'est le vendeur en ligne qui devient l'opérateur économique responsable</strong>.</p>
+      <p>Tu dois donc pouvoir produire, pour chaque référence : coordonnées du fabricant, documentation technique, analyse de risque, et l'affichage de ces informations sur la fiche produit. Un fournisseur qui ne peut pas te les fournir est un fournisseur que tu ne peux pas vendre légalement.</p>
+    </div>
+
+    <div class="call flat">
+      <div class="stamp" style="margin-bottom:8px"><span class="tag t-ok">Vérifié</span><span class="tag t-warn">Spécifique France</span></div>
+      <h3>3. En France, tu es responsable de plein droit de la livraison</h3>
+      <p>Le droit français assimile le dropshipper au vendeur : tu es responsable de plein droit de la bonne exécution du contrat vis-à-vis de l'acheteur, même si tu ne touches jamais le colis. Tu dois aussi communiquer les caractéristiques essentielles du bien, le délai de livraison réel, et <strong>l'identité du fournisseur</strong>.</p>
+      <p>Concrètement : afficher « livraison 3–5 jours » quand ton fournisseur met 18 jours n'est pas une approximation marketing, c'est une pratique commerciale trompeuse. C'est le premier motif de signalement DGCCRF sur ce secteur.</p>
+    </div>
+  </div>
+
+  <div class="sunk" style="margin-top:32px">
+    <p class="eyebrow">Conséquence stratégique</p>
+    <h3 style="margin-top:8px; font-size:1.15rem">Ces trois faits pointent tous dans la même direction : sourcing européen.</h3>
+    <p style="margin-top:10px">Avant juillet 2026, l'écart de coût entre AliExpress (8&nbsp;€, 14 jours) et un entrepôt UE (11&nbsp;€, 3 jours) rendait la Chine évidente. Avec +3&nbsp;€ de droit, l'écart tombe à ~0. <strong>Tu paies désormais presque le même prix pour un délai 4× plus court, un tracking lisible, moins de retours, et la conformité GPSR.</strong> Le calcul a basculé. La plupart des tutos que tu liras en ligne n'ont pas encore intégré ça.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 02 ══════════════ -->
+<section id="s2">
+  <div class="sec-head"><span class="sec-n">02</span><h2>Les 5 meilleures niches</h2></div>
+  <p class="lede">J'ai noté les 18 catégories de ta liste sur les 11 critères que tu as demandés. Une seule règle de lecture : <strong>10 = favorable pour toi</strong>. Donc 10 en « Concurrence » veut dire <em>peu</em> de concurrence, et 10 en « Retours » veut dire <em>peu</em> de retours.</p>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:24px">
+  <div class="tw">
+  <table>
+    <thead><tr>
+      <th>Catégorie</th><th class="num">Dem.</th><th class="num">Conc.</th><th class="num">Marge</th><th class="num">Contenu</th>
+      <th class="num">Retours</th><th class="num">Logist.</th><th class="num">TikTok</th><th class="num">Insta</th>
+      <th class="num">Shopping</th><th class="num">Marque</th><th class="num">Saison</th><th class="num">Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="nm">Déco d'ambiance &amp; lumière</td><td class="num">8</td><td class="num">6</td><td class="num">8</td><td class="num">10</td><td class="num">8</td><td class="num">7</td><td class="num">10</td><td class="num">9</td><td class="num">7</td><td class="num">9</td><td class="num">9</td><td class="num score s-hi">8,6</td></tr>
+      <tr><td class="nm">Cadeaux / objets à offrir</td><td class="num">9</td><td class="num">5</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">8</td><td class="num">9</td><td class="num">8</td><td class="num">9</td><td class="num score s-hi">8,2</td></tr>
+      <tr><td class="nm">Organisation / bureau / télétravail</td><td class="num">7</td><td class="num">6</td><td class="num">7</td><td class="num">8</td><td class="num">9</td><td class="num">8</td><td class="num">8</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">6</td><td class="num score s-hi">7,5</td></tr>
+      <tr><td class="nm">Accessoires animaux <small>(hors alim./véto)</small></td><td class="num">8</td><td class="num">5</td><td class="num">7</td><td class="num">9</td><td class="num">7</td><td class="num">7</td><td class="num">9</td><td class="num">8</td><td class="num">7</td><td class="num">8</td><td class="num">5</td><td class="num score s-hi">7,3</td></tr>
+      <tr><td class="nm">Accessoires lifestyle / cocooning</td><td class="num">7</td><td class="num">5</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">7</td><td class="num">8</td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num score s-mid">7,0</td></tr>
+      <tr><td class="nm">Maison / ustensiles malins</td><td class="num">8</td><td class="num">4</td><td class="num">6</td><td class="num">8</td><td class="num">7</td><td class="num">7</td><td class="num">9</td><td class="num">7</td><td class="num">7</td><td class="num">6</td><td class="num">5</td><td class="num score s-mid">6,7</td></tr>
+      <tr><td class="nm">Accessoires soirée / party</td><td class="num">6</td><td class="num">5</td><td class="num">6</td><td class="num">8</td><td class="num">8</td><td class="num">7</td><td class="num">8</td><td class="num">7</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num score s-mid">6,0</td></tr>
+      <tr><td class="nm">Accessoires voiture</td><td class="num">7</td><td class="num">4</td><td class="num">6</td><td class="num">7</td><td class="num">6</td><td class="num">8</td><td class="num">7</td><td class="num">5</td><td class="num">7</td><td class="num">4</td><td class="num">5</td><td class="num score s-mid">6,0</td></tr>
+      <tr><td class="nm">Accessoires mode <small>(hors taille)</small></td><td class="num">8</td><td class="num">2</td><td class="num">6</td><td class="num">7</td><td class="num">4</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">6</td><td class="num">6</td><td class="num">5</td><td class="num score s-mid">5,9</td></tr>
+      <tr><td class="nm">Déco Halloween</td><td class="num">8</td><td class="num">4</td><td class="num">4</td><td class="num">9</td><td class="num">7</td><td class="num">6</td><td class="num">9</td><td class="num">7</td><td class="num">5</td><td class="num">3</td><td class="num">1</td><td class="num score s-mid">5,7</td></tr>
+      <tr><td class="nm">Accessoires enfants <small>(⚠ dir. jouets)</small></td><td class="num">7</td><td class="num">4</td><td class="num">6</td><td class="num">7</td><td class="num">6</td><td class="num">7</td><td class="num">7</td><td class="num">7</td><td class="num">6</td><td class="num">6</td><td class="num">5</td><td class="num score s-mid">5,6</td></tr>
+      <tr><td class="nm">Gadgets électroniques <small>(⚠ CE/DEEE)</small></td><td class="num">8</td><td class="num">3</td><td class="num">5</td><td class="num">8</td><td class="num">3</td><td class="num">6</td><td class="num">8</td><td class="num">6</td><td class="num">6</td><td class="num">4</td><td class="num">5</td><td class="num score s-mid">5,6</td></tr>
+      <tr><td class="nm">Accessoires étudiants</td><td class="num">6</td><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">8</td><td class="num">8</td><td class="num">6</td><td class="num">5</td><td class="num">6</td><td class="num">5</td><td class="num">2</td><td class="num score s-mid">5,6</td></tr>
+      <tr><td class="nm">Produits viraux TikTok <small>(pur)</small></td><td class="num">9</td><td class="num">2</td><td class="num">5</td><td class="num">10</td><td class="num">5</td><td class="num">6</td><td class="num">10</td><td class="num">7</td><td class="num">3</td><td class="num">2</td><td class="num">2</td><td class="num score s-mid">5,5</td></tr>
+      <tr><td class="nm">Rentrée / papeterie</td><td class="num">6</td><td class="num">3</td><td class="num">4</td><td class="num">5</td><td class="num">9</td><td class="num">8</td><td class="num">5</td><td class="num">5</td><td class="num">6</td><td class="num">5</td><td class="num">1</td><td class="num score s-lo">5,2</td></tr>
+      <tr><td class="nm">Produits pour couples</td><td class="num">5</td><td class="num">3</td><td class="num">6</td><td class="num">6</td><td class="num">7</td><td class="num">8</td><td class="num">6</td><td class="num">6</td><td class="num">4</td><td class="num">3</td><td class="num">3</td><td class="num score s-lo">5,2</td></tr>
+      <tr><td class="nm">Beauté « non réglementée » <small>(⚠ mythe)</small></td><td class="num">9</td><td class="num">2</td><td class="num">8</td><td class="num">8</td><td class="num">5</td><td class="num">7</td><td class="num">9</td><td class="num">9</td><td class="num">5</td><td class="num">7</td><td class="num">5</td><td class="num score s-lo">5,0</td></tr>
+      <tr><td class="nm">Déguisements</td><td class="num">8</td><td class="num">3</td><td class="num">4</td><td class="num">7</td><td class="num">1</td><td class="num">5</td><td class="num">7</td><td class="num">5</td><td class="num">5</td><td class="num">2</td><td class="num">1</td><td class="num score s-lo">4,0</td></tr>
+    </tbody>
+    <caption>Notation 1–10, 10 = favorable pour toi dans tous les cas (Concurrence 10 = concurrence faible ; Retours 10 = retours rares ; Logistique 10 = expédition simple). Note globale pondérée : Marge ×2, Contenu ×2, Retours ×2, Marque ×1,5, le reste ×1. <span class="tag t-neutral">Estimation</span> — c'est mon jugement d'arbitrage, pas une étude de marché.</caption>
+  </table>
+  </div>
+</div>
+
+<div class="col">
+  <h3 style="margin-top:40px">Le podium, et pourquoi</h3>
+
+  <div class="stack" style="margin-top:18px">
+    <div class="card">
+      <div class="pcard-top"><h3>1 — Déco d'ambiance &amp; lumière</h3><span class="pcard-note s-hi">8,6</span></div>
+      <p>Lampes sans fil, projecteurs d'ambiance, chauffe-bougies, veilleuses, guirlandes. <strong>C'est la seule catégorie qui coche tes onze critères en même temps.</strong> Aucune taille, donc aucun retour de taille. La lumière se filme : une vidéo de 6 secondes « lumière éteinte → lumière allumée » est un format qui fonctionne indéfiniment sans script, sans voix et sans montage. Et la saisonnalité joue <em>pour</em> toi : la demande d'ambiance monte de septembre à décembre exactement quand tu montes en puissance.</p>
+      <p><strong>Le risque :</strong> certaines références (sunset lamp, lampe coucher de soleil) sont saturées depuis 2022. Tu dois choisir les objets de la catégorie qui n'ont pas encore été brûlés — voir §03.</p>
+    </div>
+
+    <div class="card">
+      <div class="pcard-top"><h3>2 — Cadeaux &amp; objets à offrir</h3><span class="pcard-note s-hi">8,2</span></div>
+      <p>Ce n'est pas une catégorie de produits, c'est un <strong>angle de vente</strong> — et c'est justement sa force. Le même objet vendu « pour toi » à 24,90&nbsp;€ se vend « à offrir, emballé » à 39,90&nbsp;€. L'acheteur d'un cadeau compare moins les prix, achète plus vite, et retourne moins (parce que le retour est socialement gênant). C'est le multiplicateur de panier moyen le plus fiable qui existe, et il culmine sur exactement tes deux fenêtres restantes : Black Friday et Noël.</p>
+    </div>
+
+    <div class="card">
+      <div class="pcard-top"><h3>3 — Organisation / bureau / télétravail</h3><span class="pcard-note s-hi">7,5</span></div>
+      <p>Le meilleur taux de retour de toute la liste (9/10) et une vraie durée de vie : ça marche de septembre à octobre, puis explose en janvier avec les résolutions. Marges plus faibles que la lumière, contenu moins spectaculaire, mais c'est un socle stable. À utiliser comme catégorie secondaire, pas comme cœur de marque.</p>
+    </div>
+
+    <div class="card">
+      <div class="pcard-top"><h3>4 — Accessoires animaux (hors alimentaire et vétérinaire)</h3><span class="pcard-note s-hi">7,3</span></div>
+      <p>La meilleure audience organique qui existe : engagement très élevé, coût d'acquisition faible, communauté qui partage. Le piège est réglementaire — dès que tu touches à l'alimentation, aux compléments ou à quoi que ce soit de « santé animale », tu entres dans un régime lourd. Reste sur l'accessoire pur (couchage, jouet, toilettage mécanique, transport).</p>
+      <p><strong>Pourquoi pas n°1 :</strong> peu de synergie saisonnière avec Black Friday/Noël, et beaucoup de références ont des tailles (harnais, paniers).</p>
+    </div>
+
+    <div class="card">
+      <div class="pcard-top"><h3>5 — Accessoires lifestyle / cocooning</h3><span class="pcard-note s-mid">7,0</span></div>
+      <p>Plaids, mugs isothermes, chaussons, coussins chauffants, rituels du soir. Marge correcte, retours faibles, et une cohérence naturelle avec la n°1 — c'est le même client, le même moment de la journée, le même univers visuel. C'est ce qui va te permettre de faire du panier moyen sans casser la ligne éditoriale.</p>
+    </div>
+  </div>
+
+  <div class="call stop" style="margin-top:26px">
+    <h4>Les trois pièges de ta liste</h4>
+    <ul class="tight">
+      <li><strong>« Beauté non réglementée » n'existe pas.</strong> Tout ce qui s'applique sur la peau est un cosmétique au sens du règlement UE 1223/2009 : il faut une personne responsable dans l'UE, un dossier d'information produit et une notification au portail CPNP. Un accessoire de beauté (brosse, rouleau, miroir) n'est pas un cosmétique — mais dès que c'est une crème, un sérum ou un masque, tu es hors de ta zone de compétence.</li>
+      <li><strong>« Produits viraux TikTok » n'est pas une niche.</strong> C'est une caractéristique. En faire ta catégorie, c'est construire une boutique dont la cohérence change tous les 15 jours — exactement l'effet AliExpress que tu veux éviter.</li>
+      <li><strong>Les gadgets électroniques importés</strong> t'imposent marquage CE, déclaration UE de conformité, directive DEEE (éco-organisme + éco-contribution) et un SAV sur produits défectueux. Le rapport bénéfice/complexité est mauvais pour un premier lancement.</li>
+    </ul>
+  </div>
+
+  <div class="sunk" style="margin-top:26px">
+    <p class="eyebrow">La combinaison que je retiens</p>
+    <h3 style="margin-top:8px; font-size:1.15rem">Déco d'ambiance &amp; lumière (cœur) × Cadeau (angle de vente) × Cocooning (extension de panier)</h3>
+    <p style="margin-top:10px">Ces trois-là ne sont pas trois niches, c'est <strong>une seule marque</strong> : le même client, le même univers photo, le même moment de vie. Tu peux tester 30 produits différents à l'intérieur sans jamais donner l'impression d'un bazar. Et la courbe de demande monte pile de septembre à décembre.</p>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 03 ══════════════ -->
+<section id="s3">
+  <div class="sec-head"><span class="sec-n">03</span><h2>Les 32 produits que je testerais</h2></div>
+  <p class="lede">Tu en demandais 30. En voici 32, avec les 16 champs demandés. <strong>Toutes les marges sont calculées avec le nouveau droit de douane de 3&nbsp;€ inclus</strong> — c'est pour ça qu'elles sont plus basses que ce que tu liras ailleurs.</p>
+
+  <div class="call flat" style="margin-top:20px">
+    <h4>Formule de marge utilisée</h4>
+    <p style="font-family:'IBM Plex Mono',monospace; font-size:.82rem; margin-top:8px">marge = (prix de vente ÷ 1,20) − coût produit − 2,50 € de port − 3,00 € de droit forfaitaire</p>
+    <p style="margin-top:8px">C'est la marge <em>avant</em> frais de paiement, publicité, retours et frais fixes. Les prix d'achat sont des <span class="tag t-neutral">Estimation</span> d'ordres de grandeur constatés sur les catalogues fournisseurs — <strong>tu dois les revalider toi-même avant de bâtir quoi que ce soit dessus.</strong> Un produit sourcé en entrepôt UE coûte typiquement 25–40&nbsp;% plus cher à l'achat mais économise les 3&nbsp;€ : le résultat net est souvent équivalent, avec 10 jours de délai en moins.</p>
+  </div>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:26px">
+  <div class="pfilter" role="group" aria-label="Filtrer les produits">
+    <button type="button" data-f="all" aria-pressed="true">Tous · 32</button>
+    <button type="button" data-f="evergreen" aria-pressed="false">Evergreen · 12</button>
+    <button type="button" data-f="saison" aria-pressed="false">Saisonniers · 12</button>
+    <button type="button" data-f="viral" aria-pressed="false">Viraux · 8</button>
+  </div>
+  <div class="grid2" id="pgrid"></div>
+</div>
+
+<script>
+const PRODUITS = [
+/* ===== EVERGREEN ===== */
+{c:"evergreen",n:"Chauffe-bougie électrique (lampe)",a:10,v:39.90,
+ pb:"Fait fondre la bougie par le haut, sans flamme : pas de fumée, pas de suie, pas de risque d'incendie, et la bougie dure 2 à 3 fois plus longtemps.",
+ ci:"Femmes 25–45 ans, appartement, propriétaires de chats, parents de jeunes enfants.",
+ an:"« Tu ne rallumeras plus jamais une bougie. » — l'objet remplace un geste quotidien, il ne s'ajoute pas.",
+ tk:"Plan fixe sur la bougie. On allume la lampe. Timelapse de la cire qui fond et du parfum qui « part ». Texte : « pourquoi personne ne connaît ça ».",
+ ig:"Reel routine du soir en 5 plans : rideaux, plaid, lampe, livre, tasse. Aucune parole, musique lo-fi.",
+ vi:8,sa:"Fort de sept. à janv., pic Noël",co:"Moyenne",lo:"Facile",re:"Faible",bu:"Excellent (× bougies parfumées, éteignoir)",no:9.0},
+
+{c:"evergreen",n:"Lampe champignon rechargeable sans fil",a:7,v:29.90,
+ pb:"Une lumière d'ambiance déplaçable sans prise ni câble : table de chevet, salle de bain, terrasse, table du dîner.",
+ ci:"18–35 ans, premier appartement, colocation, étudiants.",
+ an:"« La lampe qui n'a besoin d'aucune prise. » Le sans-fil est le bénéfice, pas la forme.",
+ tk:"Une main pose la lampe dans 6 endroits improbables en 8 secondes, coupe sèche à chaque plan.",
+ ig:"Carrousel « 6 endroits où poser ta lampe » puis Reel du même contenu.",
+ vi:8,sa:"Toute l'année, +30 % en hiver",co:"Moyenne-forte",lo:"Très facile",re:"Faible",bu:"Bon (× 2 ou 3, coloris différents)",no:8.5},
+
+{c:"evergreen",n:"Diffuseur d'ambiance à flamme LED",a:13,v:44.90,
+ pb:"Humidifie et parfume la pièce avec une fausse flamme réaliste : l'effet cheminée sans cheminée.",
+ ci:"25–50 ans, salon, télétravailleurs, amateurs d'aromathérapie.",
+ an:"« L'ambiance d'un feu de cheminée dans 12 cm. » Vendre l'atmosphère, jamais la fiche technique.",
+ tk:"Pièce sombre, on pose l'objet, la flamme démarre. 4 secondes. Pas de texte. La vidéo se regarde en boucle.",
+ ig:"Reel ASMR : bruit d'eau, lumière, plaid. Format vertical, une seule prise.",
+ vi:8,sa:"Pic oct.–janv.",co:"Moyenne",lo:"Moyenne (liquide, fragile)",re:"Moyen",bu:"Excellent (× huiles essentielles)",no:8.0},
+
+{c:"evergreen",n:"Projecteur d'ambiance aurore boréale",a:12,v:44.90,
+ pb:"Transforme n'importe quelle chambre en décor en 3 secondes, sans travaux ni installation.",
+ ci:"16–30 ans, chambres, gamers, créateurs de contenu.",
+ an:"« Ta chambre en 3 secondes. » L'avant/après fait tout le travail.",
+ tk:"Chambre banale, on appuie, plafond en aurore. Le contraste EST la vidéo.",
+ ig:"Reel « POV : tu rentres chez toi » avec transition lumière.",
+ vi:9,sa:"Pic automne-hiver",co:"Forte",lo:"Facile",re:"Moyen",bu:"Moyen",no:7.8},
+
+{c:"evergreen",n:"Boîte à bijoux miroir à LED",a:13,v:44.90,
+ pb:"Range, éclaire et sert de miroir : trois objets en un sur une table de nuit encombrée.",
+ ci:"Femmes 20–40 ans. Très fort en cadeau.",
+ an:"Objet-cadeau par excellence : cher à l'œil, léger au portefeuille.",
+ tk:"Déballage lent, ouverture, la LED s'allume. Plan sur les bijoux rangés un par un.",
+ ig:"Reel « range avec moi » de 20 secondes, avant/après du désordre.",
+ vi:7,sa:"Pic Noël et fête des Mères",co:"Moyenne",lo:"Moyenne (fragile, miroir)",re:"Moyen",bu:"Bon (× coffret cadeau)",no:7.6},
+
+{c:"evergreen",n:"Lampe de bureau pliable sans fil",a:11,v:34.90,
+ pb:"Se plie à plat, se recharge en USB-C, trois températures de lumière : pour bureau, lit et voyage.",
+ ci:"Étudiants, télétravailleurs, 20–40 ans.",
+ an:"« La lampe qui tient dans un sac. » Angle mobilité, pas angle éclairage.",
+ tk:"Dépliage en une main, 3 clics = 3 ambiances. Rythme rapide, son de clic conservé.",
+ ig:"Reel setup bureau : 4 objets posés, la lampe en dernier.",
+ vi:6,sa:"Sept.–janv.",co:"Moyenne",lo:"Facile",re:"Faible",bu:"Bon (× organisateur bureau)",no:7.5},
+
+{c:"evergreen",n:"Plaid à capuche polaire (taille unique)",a:11,v:39.90,
+ pb:"Une couverture qu'on peut porter debout : on garde les mains libres pour la tasse et la télécommande.",
+ ci:"16–40 ans, cadeau, colocation, familles.",
+ an:"« Le plaid dont tu ne sors plus. » Humour, pas fonctionnel.",
+ tk:"Sketch : on essaie de faire 5 choses enroulé dans un plaid classique, puis avec celui-ci.",
+ ig:"Reel cocooning en couple ou entre amis, ambiance dimanche pluvieux.",
+ vi:7,sa:"Oct.–févr., très fort Noël",co:"Forte",lo:"Moyenne (volume)",re:"Faible (taille unique)",bu:"Bon (× chaussons, mug)",no:7.5},
+
+{c:"evergreen",n:"Coussin chauffant micro-ondes (graines)",a:7,v:24.90,
+ pb:"30 secondes au micro-ondes, 45 minutes de chaleur : nuque, ventre, pieds. Sans électricité, sans risque.",
+ ci:"Femmes 20–50 ans, douleurs menstruelles, cervicales, personnes frileuses.",
+ an:"Problème → solution très concret. Le seul produit de la liste avec un bénéfice physique immédiat.",
+ tk:"Format témoignage caméra face : « ce truc à 25 € a remplacé mon bouillotte et mon Doliprane ». (Ne jamais formuler de promesse médicale.)",
+ ig:"Reel « mon kit de survie de règles » — 4 objets, celui-ci en premier.",
+ vi:7,sa:"Oct.–mars",co:"Faible",lo:"Facile",re:"Faible",bu:"Excellent (× tisane, chaussons)",no:7.5},
+
+{c:"evergreen",n:"Veilleuse nuage à télécommande",a:9,v:34.90,
+ pb:"Éclaire doucement la chambre d'enfant et change de couleur sans se lever du lit.",
+ ci:"Parents 25–40 ans d'enfants de 1 à 8 ans.",
+ an:"« Elle s'endort en 5 minutes. » Le bénéfice est le sommeil du parent, pas la lumière.",
+ tk:"Plan sur l'enfant qui choisit sa couleur. Émotion + démonstration en même temps.",
+ ig:"Reel chambre d'enfant, ambiance douce, voix off d'un parent.",
+ vi:7,sa:"Pic Noël",co:"Moyenne",lo:"Moyenne (volume)",re:"Faible",bu:"Bon",no:7.4},
+
+{c:"evergreen",n:"Organisateur de bureau modulaire bois/feutre",a:10,v:34.90,
+ pb:"Range câbles, carnets et téléphone en un seul bloc au lieu de six accessoires dépareillés.",
+ ci:"Télétravailleurs, 25–45 ans, cadeau de collègue.",
+ an:"Avant/après. La catégorie entière vit de cette mécanique.",
+ tk:"Timelapse d'un bureau catastrophique qui devient net en 15 secondes.",
+ ig:"Carrousel « mon setup à 120 € », l'objet est le héros du plan large.",
+ vi:6,sa:"Sept.–oct. puis janv.",co:"Moyenne",lo:"Moyenne",re:"Faible",bu:"Excellent (× lampe, tapis de souris)",no:7.2},
+
+{c:"evergreen",n:"Mug isotherme inox + paille",a:8,v:27.90,
+ pb:"Garde chaud 6 h, froid 12 h, ne fuit pas dans le sac, ne laisse pas de goût.",
+ ci:"18–40 ans, bureau, transports, sport.",
+ an:"Objet du quotidien à fort potentiel de personnalisation → passerelle vers la marque (§sortie).",
+ tk:"Test destructif : on le renverse dans un sac plein. Rien ne coule.",
+ ig:"Reel « ce que j'emmène tous les matins » — 5 objets.",
+ vi:6,sa:"Toute l'année",co:"Forte",lo:"Très facile",re:"Faible",bu:"Bon",no:7.0},
+
+{c:"evergreen",n:"Guirlande photo à clips + pinces",a:5,v:19.90,
+ pb:"Accroche 30 photos sans cadre, sans clou et sans abîmer le mur — cible les locataires.",
+ ci:"16–30 ans, étudiants, colocation, cadeau d'anniversaire.",
+ an:"Produit d'appel à 19,90 € destiné à faire monter le panier, pas à porter la boutique.",
+ tk:"Montage accéléré du mur, révélation finale au ralenti sur les photos.",
+ ig:"Reel « déco de chambre sans percer un seul trou ».",
+ vi:6,sa:"Sept. (rentrée) et Noël",co:"Forte",lo:"Très facile",re:"Faible",bu:"Excellent (produit d'appel de bundle)",no:6.8},
+
+/* ===== SAISONNIERS ===== */
+{c:"saison",n:"Projecteur de flocons de Noël",a:14,v:44.90,
+ pb:"Décore toute une façade ou tout un salon avec un seul objet, sans guirlande à installer.",
+ ci:"Familles 30–55 ans, propriétaires, maisons individuelles.",
+ an:"« Une prise, toute la maison décorée. » Anti-effort, anti-échelle, anti-nœuds.",
+ tk:"Nuit, maison sombre, on branche, la façade s'anime. Zéro parole.",
+ ig:"Reel famille qui découvre la façade depuis la rue.",
+ vi:8,sa:"15 nov. → 20 déc. uniquement",co:"Forte",lo:"Moyenne (IP extérieur)",re:"Moyen",bu:"Bon",no:8.0},
+
+{c:"saison",n:"Lampe « flamme de cheminée » LED",a:12,v:39.90,
+ pb:"L'effet feu de bois dans un appartement sans cheminée, sans chaleur ni odeur.",
+ ci:"25–50 ans, appartements urbains, ambiance salon.",
+ an:"Nostalgie + confort. Vendre le samedi soir d'hiver, pas la LED.",
+ tk:"Plan fixe 8 secondes sur la flamme, dézoom qui révèle un salon parisien.",
+ ig:"Reel bande-son crépitement de feu, ambiance très sombre.",
+ vi:7,sa:"Oct. → févr.",co:"Moyenne",lo:"Facile",re:"Faible",bu:"Excellent (× plaid, chauffe-bougie)",no:8.0},
+
+{c:"saison",n:"Projecteur d'animations Halloween (fantômes)",a:12,v:39.90,
+ pb:"Décore fenêtres et murs pour une soirée entière sans coller ni accrocher quoi que ce soit.",
+ ci:"25–45 ans qui organisent une soirée, parents.",
+ an:"« Ta déco Halloween en 30 secondes. » Vise l'organisateur pressé, pas le passionné.",
+ tk:"Fenêtre normale → fantômes qui traversent. Réaction filmée des voisins ou des enfants.",
+ ig:"Reel préparation de soirée en 15 secondes, l'objet en climax.",
+ vi:8,sa:"1er → 31 oct. strictement",co:"Moyenne",lo:"Facile",re:"Moyen",bu:"Bon (× guirlande, lanterne)",no:7.6},
+
+{c:"saison",n:"Calendrier de l'avent réutilisable en bois",a:16,v:54.90,
+ pb:"On le remplit soi-même et on le garde 10 ans, au lieu d'un carton jeté le 25 décembre.",
+ ci:"Parents 30–45 ans, sensibles au durable, panier élevé.",
+ an:"Anti-jetable. C'est le produit le plus « marque » de toute la liste.",
+ tk:"On le remplit case par case en voix off : « ce que je mets dedans cette année ».",
+ ig:"Carrousel de 24 idées à mettre dedans → engagement en commentaires.",
+ vi:6,sa:"1er → 25 nov. (achat avant le 1er déc.)",co:"Moyenne",lo:"Difficile (lourd, volumineux)",re:"Faible",bu:"Excellent",no:7.5},
+
+{c:"saison",n:"Lanterne citrouille LED (céramique/résine)",a:10,v:32.90,
+ pb:"L'esthétique de la citrouille sculptée sans le pourrissement, la découpe ni l'odeur — et ça ressert chaque année.",
+ ci:"25–45 ans, déco soignée, style « cottagecore ».",
+ an:"Le seul produit Halloween que le client garde. Positionne-le comme déco d'automne, pas comme Halloween.",
+ tk:"Plan lumière tamisée, table en bois, café. Ambiance octobre plus qu'Halloween.",
+ ig:"Reel « déco d'automne qui reste jolie après le 31 octobre ».",
+ vi:6,sa:"Sept. → nov. (plus large qu'Halloween)",co:"Moyenne",lo:"Moyenne (fragile)",re:"Faible",bu:"Excellent",no:7.2},
+
+{c:"saison",n:"Boule de Noël photo personnalisable (POD)",a:8,v:29.90,
+ pb:"Un souvenir imprimé, offert, qu'on ressort chaque décembre — impossible à comparer sur le prix.",
+ ci:"Familles, jeunes parents, couples. Cadeau émotionnel.",
+ an:"Impression à la demande : aucun stock, aucun retour possible (personnalisé), marge très élevée.",
+ tk:"On dévoile la boule avec la photo de famille dessus. Réaction sincère filmée.",
+ ig:"Reel « le cadeau à 30 € qui fait pleurer ta mère ».",
+ vi:7,sa:"5 nov. → 15 déc. (limite d'impression)",co:"Moyenne",lo:"Facile (POD UE)",re:"Très faible",bu:"Bon",no:7.5},
+
+{c:"saison",n:"Bougie sculptée fantôme / silhouette",a:7,v:24.90,
+ pb:"Déco d'octobre haut de gamme à petit prix, très photogénique, offrable.",
+ ci:"20–35 ans, esthétique soignée, Pinterest/Instagram.",
+ an:"Produit à photographier, pas à expliquer. Il se vend à l'image seule.",
+ tk:"Timelapse de la bougie qui fond et se déforme — hypnotique, très fort taux de rétention.",
+ ig:"Photo carrousel table d'automne, très travaillée.",
+ vi:6,sa:"Sept. → nov.",co:"Faible",lo:"Moyenne (fragile, chaleur)",re:"Faible",bu:"Excellent (lot de 2 ou 3)",no:7.0},
+
+{c:"saison",n:"Lampe de lecture à pince rechargeable",a:6,v:21.90,
+ pb:"Lire au lit sans réveiller l'autre, sans lampe de chevet, avec une lumière chaude non agressive.",
+ ci:"Lecteurs 18–45 ans, communauté BookTok très active.",
+ an:"BookTok est l'une des audiences organiques les plus faciles à atteindre en France.",
+ tk:"POV : il est 23 h, tu veux finir ton chapitre. Plan sur le livre + clip.",
+ ig:"Reel « mon setup lecture du soir ».",
+ vi:7,sa:"Sept. → févr.",co:"Moyenne",lo:"Très facile",re:"Faible",bu:"Excellent (× marque-page, plaid)",no:7.0},
+
+{c:"saison",n:"Guirlande LED citrouilles / chauves-souris",a:6,v:22.90,
+ pb:"Habille une pièce entière pour une soirée à moins de 25 €.",
+ ci:"18–35 ans, soirées étudiantes, colocations.",
+ an:"Produit d'appel Halloween pour construire le panier, pas pour porter la saison.",
+ tk:"Montage de la déco d'une pièce en 10 secondes, musique rythmée.",
+ ig:"Reel « prépare ma soirée avec moi ».",
+ vi:5,sa:"Oct. seulement",co:"Forte",lo:"Très facile",re:"Faible",bu:"Excellent",no:6.4},
+
+{c:"saison",n:"Tableau planificateur magnétique (frigo)",a:6,v:22.90,
+ pb:"Menus, courses et planning de la semaine visibles par toute la famille, sans application.",
+ ci:"Parents 30–45 ans, colocations, charge mentale.",
+ an:"Angle « charge mentale » : très puissant en France, très partagé.",
+ tk:"Plan du frigo avant/après. Voix off d'une mère qui explique son système.",
+ ig:"Carrousel « mon organisation de semaine en 4 photos ».",
+ vi:5,sa:"Sept. et janv.",co:"Moyenne",lo:"Facile",re:"Faible",bu:"Bon",no:6.5},
+
+{c:"saison",n:"Trousse-organisateur dépliable debout",a:6,v:22.90,
+ pb:"Se déplie et tient debout : on voit tous ses stylos au lieu de fouiller dans un sac.",
+ ci:"Étudiants, lycéens, illustrateurs.",
+ an:"Démonstration mécanique parfaite en 3 secondes.",
+ tk:"Un seul geste : on tire la ficelle, la trousse se dresse. Boucle.",
+ ig:"Reel « restock ma trousse » — format très consommé par les 15–22 ans.",
+ vi:6,sa:"15 août → 30 sept.",co:"Forte",lo:"Très facile",re:"Faible",bu:"Bon",no:6.2},
+
+{c:"saison",n:"Repose-pieds ergonomique de bureau",a:14,v:44.90,
+ pb:"Soulage le bas du dos en télétravail sur une chaise non réglable.",
+ ci:"Télétravailleurs 28–50 ans.",
+ an:"Bénéfice fonctionnel réel, mais contenu peu spectaculaire — ne compte pas dessus pour l'organique.",
+ tk:"Vue de côté de la posture avant/après. Peu viral, mais crédible.",
+ ig:"Carrousel « 5 erreurs de posture en télétravail ».",
+ vi:3,sa:"Sept. et janv.",co:"Moyenne",lo:"Difficile (volume)",re:"Moyen",bu:"Moyen",no:6.0},
+
+/* ===== VIRAUX ===== */
+{c:"viral",n:"Lampe à lévitation magnétique (lune)",a:22,v:69.90,
+ pb:"Ne résout aucun problème. C'est un objet de fascination — et le panier moyen le plus élevé de la liste.",
+ ci:"Cadeau 20–40 ans, geeks, décoration de bureau.",
+ an:"« Comment est-ce que ça tient ? » La question EST le moteur de la vidéo.",
+ tk:"Plan fixe, la lune tourne, on passe la main en dessous pour prouver l'absence de support.",
+ ig:"Reel sombre, rotation lente, une seule prise de 12 secondes.",
+ vi:9,sa:"Pic Noël",co:"Moyenne",lo:"Moyenne (fragile, aimant)",re:"Moyen (casse, réglage)",bu:"Faible",no:7.6},
+
+{c:"viral",n:"Cadre lumineux photo + code musique (POD)",a:9,v:32.90,
+ pb:"Transforme une photo et une chanson en objet physique offrable et unique.",
+ ci:"Couples, cadeaux d'anniversaire, 18–35 ans.",
+ an:"Personnalisé = incomparable en prix, non retournable, marge maximale, zéro stock.",
+ tk:"Déballage + scan du code + la chanson démarre dans la vidéo. Émotion garantie.",
+ ig:"Reel réaction cadeau filmée. Le format le plus partagé en story.",
+ vi:8,sa:"Noël, Saint-Valentin, anniversaires (toute l'année)",co:"Forte",lo:"Facile (POD UE)",re:"Très faible",bu:"Bon",no:7.6},
+
+{c:"viral",n:"Lampe bloc de verre gravée au laser",a:11,v:36.90,
+ pb:"Un objet déco premium à moins de 40 €, personnalisable, très photogénique.",
+ ci:"Cadeau 20–45 ans, déco de bureau.",
+ an:"Effet « ça coûte 3 fois plus cher que ça n'en a l'air ».",
+ tk:"Lumière éteinte → allumée. Le motif apparaît dans le verre. 4 secondes, boucle parfaite.",
+ ig:"Photo produit très léchée, fond sombre, un seul point de lumière.",
+ vi:7,sa:"Noël, fête des Pères",co:"Moyenne",lo:"Moyenne (verre)",re:"Moyen (casse transport)",bu:"Bon",no:7.5},
+
+{c:"viral",n:"Veilleuse projecteur de constellations",a:11,v:34.90,
+ pb:"Endort les enfants et décore une chambre d'adulte : deux marchés pour une référence.",
+ ci:"Parents, mais aussi 16–25 ans pour leur chambre.",
+ an:"Deux angles de vente distincts pour le même produit = deux fois plus de créations vidéo.",
+ tk:"Plafond nu → ciel étoilé. Réaction d'enfant en champ-contrechamp.",
+ ig:"Reel « POV : ta chambre à 23 h ».",
+ vi:7,sa:"Pic Noël",co:"Forte",lo:"Facile",re:"Moyen",bu:"Bon",no:7.0},
+
+{c:"viral",n:"Aquarium méduse LED",a:17,v:54.90,
+ pb:"Objet hypnotique de bureau ou de salon — le rétention-vidéo le plus élevé de la catégorie.",
+ ci:"20–45 ans, bureau, cadeau original, chambres d'ado.",
+ an:"Objet à regarder. Les vidéos tournent seules en boucle, ce qui gonfle le temps de visionnage.",
+ tk:"Plan fixe 10 secondes, changement de couleur. Le rétention fait le travail à ta place.",
+ ig:"Reel ASMR, très sombre, sans coupe.",
+ vi:8,sa:"Pic Noël",co:"Moyenne",lo:"Moyenne (liquide, fragile)",re:"Moyen (fuites)",bu:"Faible",no:7.0},
+
+{c:"viral",n:"Réveil simulateur d'aube",a:19,v:59.90,
+ pb:"Réveil progressif par la lumière : se lever l'hiver quand il fait nuit à 8 h.",
+ ci:"25–45 ans, troubles du réveil, hiver du nord de la France.",
+ an:"Bénéfice réel et saisonnier parfait (novembre-février). ⚠ Électronique : marquage CE, DEEE, SAV.",
+ tk:"Timelapse d'une chambre de nuit à jour en 20 secondes.",
+ ig:"Reel « comment j'ai arrêté de détester les matins d'hiver ».",
+ vi:6,sa:"Nov. → févr.",co:"Moyenne",lo:"Moyenne",re:"Élevé (électronique)",bu:"Faible",no:6.8},
+
+{c:"viral",n:"Peluche chauffante micro-ondes",a:8,v:27.90,
+ pb:"Chaleur + réconfort pour un enfant ou un adulte anxieux. ⚠ Si visée enfants : directive jouets 2009/48/CE.",
+ ci:"Parents, mais aussi 18–30 ans (marché « comfort object » adulte réel).",
+ an:"Cible plutôt l'adulte pour éviter la réglementation jouets. Angle sommeil/anxiété, jamais santé.",
+ tk:"Format doux, voix off calme, plan sur le micro-ondes puis sur le lit.",
+ ig:"Reel « mon rituel avant de dormir ».",
+ vi:6,sa:"Oct. → févr.",co:"Faible",lo:"Facile",re:"Faible",bu:"Excellent",no:6.6},
+
+{c:"viral",n:"Lampe « coucher de soleil » — À ÉVITER",a:6,v:22.90,
+ pb:"Projette un halo orange. Le produit fonctionne. Le marché, non.",
+ ci:"16–25 ans, créateurs de contenu.",
+ an:"Saturé depuis 2022 : des milliers de vendeurs, des vidéos identiques déjà vues par ton audience, un prix effondré, aucune marge après les 3 € de droit. Je le liste pour que tu le reconnaisses et que tu ne le prennes pas.",
+ tk:"Aucune idée qui n'ait pas déjà été faite 50 000 fois.",
+ ig:"Idem.",
+ vi:2,sa:"Éteinte",co:"Extrême",lo:"Facile",re:"Moyen",bu:"Faible",no:3.5}
+];
+
+(function(){
+  const grid=document.getElementById('pgrid');
+  const eur=n=>n.toFixed(2).replace('.',',')+' €';
+  const cls=n=>n>=7.4?'s-hi':(n>=6?'s-mid':'s-lo');
+  const LAB={evergreen:'Evergreen',saison:'Saisonnier',viral:'Viral'};
+  function marge(p){return p.v/1.2 - p.a - 2.5 - 3;}
+  function render(f){
+    grid.innerHTML='';
+    PRODUITS.filter(p=>f==='all'||p.c===f).forEach(p=>{
+      const m=marge(p), pct=Math.round(m/(p.v/1.2)*100);
+      const el=document.createElement('article');
+      el.className='pcard';
+      el.innerHTML=
+        '<div class="pcard-top"><span class="pcard-name">'+p.n+'</span>'+
+        '<span class="pcard-note '+cls(p.no)+'">'+p.no.toFixed(1).replace('.',',')+'</span></div>'+
+        '<div><span class="tag t-neutral">'+LAB[p.c]+'</span></div>'+
+        '<dl>'+
+        '<dt>Problème</dt><dd>'+p.pb+'</dd>'+
+        '<dt>Cible</dt><dd>'+p.ci+'</dd>'+
+        '<dt>Achat</dt><dd class="money">'+eur(p.a)+'</dd>'+
+        '<dt>Vente</dt><dd class="money">'+eur(p.v)+'</dd>'+
+        '<dt>Marge</dt><dd><b class="money">'+eur(m)+'</b> <span style="color:var(--faint)">· '+pct+' % du HT</span></dd>'+
+        '<dt>Angle</dt><dd>'+p.an+'</dd>'+
+        '<dt>TikTok</dt><dd>'+p.tk+'</dd>'+
+        '<dt>Reel IG</dt><dd>'+p.ig+'</dd>'+
+        '<dt>Viral</dt><dd>'+p.vi+'/10</dd>'+
+        '<dt>Saison</dt><dd>'+p.sa+'</dd>'+
+        '<dt>Concur.</dt><dd>'+p.co+'</dd>'+
+        '<dt>Logist.</dt><dd>'+p.lo+'</dd>'+
+        '<dt>Retours</dt><dd>'+p.re+'</dd>'+
+        '<dt>Bundle</dt><dd>'+p.bu+'</dd>'+
+        '</dl>';
+      grid.appendChild(el);
+    });
+  }
+  document.querySelectorAll('.pfilter button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.pfilter button').forEach(x=>x.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');
+      render(b.dataset.f);
+    });
+  });
+  render('all');
+})();
+</script>
+
+<div class="col">
+<!-- ══════════════ 04 ══════════════ -->
+<section id="s4">
+  <div class="sec-head"><span class="sec-n">04</span><h2>Le modèle de boutique</h2></div>
+  <p class="lede">Tu proposais quatre options. Je prends la <strong>D, mais bornée</strong> — une marque lifestyle sur un territoire défini, pas une marque lifestyle qui suit les tendances.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h3>A · Mono-produit</h3><p><strong>Non.</strong> Tu n'as pas encore de produit gagnant. Construire une boutique entière autour d'un produit non validé, c'est parier tout ton temps sur un pari à 20 % de réussite. Le mono-produit est une <em>conséquence</em> du succès, pas un point de départ.</p></div>
+    <div class="card"><h3>B · Niche stricte</h3><p><strong>Trop étroit.</strong> Une boutique « lampes champignon » plafonne à 3 références et interdit le panier moyen. Tu te prives de la mécanique de bundle qui fait ta rentabilité.</p></div>
+    <div class="card"><h3>C · Multi-produits cohérente</h3><p><strong>Presque.</strong> C'est la bonne architecture, mais sans identité au-dessus, ça devient une boutique généraliste en six mois. Il manque la couche marque.</p></div>
+    <div class="card" style="border-color:var(--accent); border-width:1.5px"><h3>D · Marque lifestyle bornée <span class="tag t-ok">Retenu</span></h3><p><strong>Oui — avec un territoire écrit et non négociable.</strong> « Tout ce qui rend un intérieur plus chaleureux le soir. » Cette phrase autorise 200 produits et en interdit 10 000. C'est exactement le bon niveau de contrainte.</p></div>
+  </div>
+
+  <h3 style="margin-top:34px">L'architecture en trois couches</h3>
+  <p style="margin-top:8px; color:var(--muted)">C'est le point technique qui résout ton problème : tester vite sans ressembler à AliExpress.</p>
+
+  <div class="stack" style="margin-top:18px">
+    <div class="call go"><h4>Couche 1 — Le Cœur · 6 à 10 produits</h4><p>Tes références permanentes, photographiées par toi, avec de vrais avis et des fiches longues. <strong>C'est tout ce que voit un nouveau visiteur.</strong> Cette couche seule doit donner l'impression d'une marque installée.</p></div>
+    <div class="call warn"><h4>Couche 2 — La Saison · 8 à 15 produits</h4><p>Une collection datée qui s'ouvre et se ferme : « Octobre », « Noël », « Janvier ». Elle est <em>attendue</em> comme temporaire, donc sa disparition ne dégrade pas la marque — au contraire, elle crée l'urgence. C'est ici que vit Halloween.</p></div>
+    <div class="call flat"><h4>Couche 3 — Le Labo · illimité, invisible</h4><p>Les produits en test. <strong>Publiés mais dépubliés du menu, absents des collections, absents du sitemap.</strong> Ils n'existent que par le lien direct de ta bio TikTok. Un visiteur qui arrive par la home ne les voit jamais.</p><p>Résultat : tu peux tester 15 produits par mois pendant que ta boutique publique en montre 12. C'est la réponse exacte à ta question « tester vite sans donner l'impression d'une boutique AliExpress ».</p></div>
+  </div>
+
+  <div class="call stop" style="margin-top:20px">
+    <h4>La règle qui fait vivre le système</h4>
+    <p><strong>Un produit ne monte du Labo au Cœur qu'après 10 ventes organiques et 2 avis clients réels.</strong> Sans cette règle, le Labo déborde dans la boutique en trois semaines et tu retrouves exactement le bazar que tu voulais éviter.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 05 ══════════════ -->
+<section id="s5">
+  <div class="sec-head"><span class="sec-n">05</span><h2>Le nom et le branding</h2></div>
+  <p class="lede">Dix noms, prononçables en français, courts, exportables en Europe, et assez premium pour justifier 39,90 € sur un objet qui en coûte 11.</p>
+
+  <div class="call warn" style="margin-top:20px">
+    <h4>Avertissement — à lire avant de t'attacher à un nom</h4>
+    <p>La colonne « Risque » ci-dessous est mon <span class="tag t-neutral">Estimation</span> de la probabilité qu'un nom soit déjà pris, fondée sur sa banalité linguistique. <strong>Ce n'est pas une recherche d'antériorité.</strong> Avant d'acheter quoi que ce soit, tu dois vérifier toi-même : base marques de l'INPI, base TMview de l'EUIPO (classes 11 — luminaires, 20 — meubles/décoration, 21 — ustensiles, 35 — vente au détail), disponibilité du .fr et du .com, et les handles Instagram et TikTok. Le nom, le domaine et les handles doivent être libres <em>tous les quatre</em>, sinon tu changes de nom.</p>
+  </div>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:22px">
+<div class="tw"><table>
+<thead><tr><th>Nom</th><th>Slogan</th><th>Registre</th><th>Risque d'antériorité</th></tr></thead>
+<tbody>
+<tr><td class="nm">CALYNE <span class="tag t-ok">Recommandé</span></td><td>Le calme, en objets.</td><td>Inventé · évoque « câline » et « calme »</td><td><span class="tag t-ok">Faible</span></td></tr>
+<tr><td class="nm">ORVELLE</td><td>L'atmosphère, chez vous.</td><td>Inventé · sonorité chaude, féminine</td><td><span class="tag t-ok">Faible</span></td></tr>
+<tr><td class="nm">NOCTALE</td><td>Vos soirées ont une lumière.</td><td>Inventé · racine « nocturne »</td><td><span class="tag t-ok">Faible</span></td></tr>
+<tr><td class="nm">AMBRIS</td><td>La chaleur, toute l'année.</td><td>Inventé · racine « ambre »</td><td><span class="tag t-ok">Faible</span></td></tr>
+<tr><td class="nm">HALOME</td><td>Un halo, et la pièce change.</td><td>Inventé · halo + home</td><td><span class="tag t-warn">Moyen</span></td></tr>
+<tr><td class="nm">FOYÈRE</td><td>Rentrer chez soi, vraiment.</td><td>Inventé · racine « foyer », très français</td><td><span class="tag t-warn">Moyen</span> — s'exporte mal hors francophonie</td></tr>
+<tr><td class="nm">SOLINE</td><td>La douceur d'un intérieur.</td><td>Prénom existant</td><td><span class="tag t-warn">Moyen</span></td></tr>
+<tr><td class="nm">VELOURA</td><td>Le confort a une couleur.</td><td>Racine « velours »</td><td><span class="tag t-warn">Moyen</span> — proche de marques cosmétiques</td></tr>
+<tr><td class="nm">BRAISE</td><td>La maison qui réchauffe.</td><td>Mot courant français</td><td><span class="tag t-stop">Élevé</span> — mot du dictionnaire, dépôt difficile</td></tr>
+<tr><td class="nm">LUMÉA</td><td>La lumière qui fait la maison.</td><td>Racine « lumen »</td><td><span class="tag t-stop">Élevé</span> — très proche d'une marque grand public existante</td></tr>
+</tbody>
+<caption>Un nom inventé est plus long à faire connaître, mais protégeable, disponible en domaine, et non ambigu en référencement. Sur un projet où tu veux finir en marque, ça vaut largement le surcoût initial.</caption>
+</table></div>
+</div>
+
+<div class="col">
+<div class="sunk" style="margin-top:26px">
+  <p class="eyebrow">Identité retenue</p>
+  <h2 style="margin-top:6px; font-size:1.6rem">CALYNE — <em>Le calme, en objets.</em></h2>
+  <p style="margin-top:14px">Deux syllabes, lisible en français, en allemand, en espagnol et en italien. Aucune ambiguïté de prononciation. Assez doux pour la décoration, assez neutre pour ne pas t'enfermer dans une seule catégorie de produits.</p>
+</div>
+
+<div class="grid2" style="margin-top:20px">
+  <div class="card"><h4>Positionnement</h4><p>« Les objets qui rendent un intérieur plus chaleureux quand la nuit tombe. » Pas de la déco. Pas du gadget. <strong>Un moment de la journée.</strong> C'est ce cadrage qui te permet de vendre une lampe, un plaid et une bougie sans incohérence.</p></div>
+  <div class="card"><h4>Cible</h4><p>Femmes 25–40 ans en priorité, appartement ou petite maison, urbaines et périurbaines, actives, sensibles à l'esthétique de leur intérieur, très présentes sur Instagram et TikTok. Cible secondaire : l'acheteur de cadeau, 25–55 ans, tous genres, entre le 10 novembre et le 20 décembre.</p></div>
+  <div class="card"><h4>Ton</h4><p>Calme, adulte, jamais promotionnel. Tutoiement sur les réseaux, vouvoiement sur le site (le vouvoiement fait monter la perception de prix en France). <strong>Zéro superlatif, zéro emoji dans les fiches produit, zéro « ⚡ OFFRE FLASH ⚡ ».</strong> C'est ce qui te sépare visuellement de 100 % des boutiques dropshipping.</p></div>
+  <div class="card"><h4>Couleurs</h4><p>Fond blanc cassé légèrement gris <code>#F4F4F1</code>. Texte encre très sombre <code>#1A1A18</code>. Un seul accent : ocre chaud <code>#B4611A</code>. Un vert profond <code>#28453F</code> pour les blocs de réassurance. <strong>Une seule couleur d'accent. C'est la règle la plus rentable du branding low-cost.</strong></p></div>
+  <div class="card"><h4>Typographie</h4><p>Titres en serif à contraste (Newsreader, Fraunces ou Instrument Serif — toutes gratuites sur Google Fonts). Textes en sans-serif neutre (Inter ou IBM Plex Sans). Deux polices, jamais trois. Le serif fait la moitié du travail de perception premium.</p></div>
+  <div class="card"><h4>Style photo</h4><p>Lumière naturelle rasante, fin d'après-midi. Intérieurs réels et légèrement imparfaits — un livre ouvert, une tasse à moitié vide. <strong>Jamais de fond blanc de studio :</strong> c'est la signature visuelle d'AliExpress et ton client la reconnaît sans savoir la nommer.</p></div>
+  <div class="card"><h4>Style vidéo</h4><p>Vertical, une seule source lumineuse, plans lents, pas de zoom brusque, pas de voix criée. Sous-titres en blanc pur, police bâton, en bas de l'image. Musique instrumentale douce. <strong>Le contraste avec le rythme habituel de TikTok est en soi un signal de qualité.</strong></p></div>
+  <div class="card"><h4>Style publicitaire</h4><p>UGC brut en priorité (visage réel, téléphone à la main, intérieur réel). Aucune bannière, aucun prix barré, aucun compte à rebours dans le créatif. Le prix apparaît sur le site, pas dans la publicité. Les créatifs « catalogue » sont réservés à Google Shopping.</p></div>
+</div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 06 ══════════════ -->
+<section id="s6">
+  <div class="sec-head"><span class="sec-n">06</span><h2>L'architecture Shopify</h2></div>
+  <p class="lede">Le plan de site complet, la structure de la page d'accueil bloc par bloc avec les textes exacts, et la page produit optimisée. Thème : <strong>Dawn</strong> (gratuit, officiel Shopify, rapide). Ne paie pas 300 € de thème premium avant d'avoir 100 commandes.</p>
+
+  <h3 style="margin-top:30px">Plan de site</h3>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:14px">
+<div class="tw"><table>
+<thead><tr><th>Page</th><th>Rôle</th><th>Point critique</th></tr></thead>
+<tbody>
+<tr><td class="nm">Accueil</td><td>Convaincre en 5 secondes qu'on n'est pas sur du dropshipping</td><td>La première image doit être un intérieur réel, pas un packshot</td></tr>
+<tr><td class="nm">Collections</td><td>3 collections publiques max : <em>Lumière &amp; ambiance</em>, <em>Cocooning</em>, <em>Idées cadeaux</em></td><td>Une 4ᵉ collection datée s'ajoute en saison, puis disparaît</td></tr>
+<tr><td class="nm">Page produit</td><td>Là où se joue 90 % de la conversion</td><td>Structure détaillée ci-dessous</td></tr>
+<tr><td class="nm">Panier</td><td>Rassurer et monter le panier</td><td>Barre « plus que X € pour la livraison offerte » + 1 cross-sell max</td></tr>
+<tr><td class="nm">Checkout</td><td>Encaisser</td><td>Ne le personnalise pas. Active Shop Pay, PayPal, CB. Un champ de code promo visible fait fuir vers Google : mets-le replié</td></tr>
+<tr><td class="nm">Notre histoire</td><td>Justifier le prix</td><td>Obligatoire. C'est la page que lit l'acheteur hésitant à 40 €</td></tr>
+<tr><td class="nm">FAQ</td><td>Désamorcer avant l'achat</td><td>Doit répondre au délai de livraison en premier, honnêtement</td></tr>
+<tr><td class="nm">Livraison</td><td>Délais réels par zone</td><td>Annoncer un délai plus court que la réalité est une pratique trompeuse (§16)</td></tr>
+<tr><td class="nm">Retours &amp; rétractation</td><td>Obligation légale + réassurance</td><td>14 jours minimum. Beaucoup de marques affichent 30 : ça convertit mieux et ça coûte peu sur ces catégories</td></tr>
+<tr><td class="nm">Mentions légales</td><td>Obligation légale</td><td>Identité, SIREN, hébergeur, directeur de publication</td></tr>
+<tr><td class="nm">CGV</td><td>Obligation légale</td><td>À faire relire. Ne copie pas celles d'un concurrent : tu hérites de ses erreurs</td></tr>
+<tr><td class="nm">Confidentialité + cookies</td><td>RGPD</td><td>Bandeau avec refus aussi simple que l'acceptation — exigence CNIL</td></tr>
+<tr><td class="nm">Contact</td><td>Obligation légale + confiance</td><td>Adresse e-mail réelle, relevée. Pas seulement un formulaire</td></tr>
+<tr><td class="nm">Suivi de commande</td><td>Réduire les tickets support</td><td>Page de suivi intégrée : divise les e-mails « où est ma commande » par 3</td></tr>
+</tbody>
+</table></div>
+</div>
+
+<div class="col">
+  <h3 style="margin-top:36px">Page d'accueil — les 9 blocs, avec les textes exacts</h3>
+  <p style="margin-top:8px; color:var(--muted)">Textes prêts à coller, écrits pour CALYNE. Adapte le nom si tu changes.</p>
+
+  <div class="stack" style="margin-top:20px">
+
+    <div class="copyblock"><span class="lbl">1 · Hero</span>
+      <p style="font-size:1.5rem; line-height:1.2"><strong>Il fait nuit à 17 h. Autant que ce soit beau.</strong></p>
+      <p>Des objets simples qui réchauffent une pièce — et une soirée.</p>
+      <p style="font-family:'IBM Plex Sans'; font-size:.82rem; color:var(--faint)">Bouton : <strong>Découvrir la collection</strong> · Visuel : un salon en fin de journée, une seule lampe allumée, plaid froissé. Photo prise chez toi, au téléphone, en lumière naturelle.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">2 · Proposition de valeur — bandeau 3 colonnes</span>
+      <p><strong>Expédié depuis l'Europe</strong> — Livré en 3 à 5 jours ouvrés, droits et taxes inclus. Rien à payer à la réception.</p>
+      <p><strong>Choisi, pas catalogué</strong> — Douze références. Chacune testée chez nous avant d'être mise en ligne.</p>
+      <p><strong>30 jours pour changer d'avis</strong> — Si l'objet ne va pas dans votre intérieur, il repart.</p>
+      <p style="font-family:'IBM Plex Sans'; font-size:.82rem; color:var(--faint)">⚠ N'écris la première ligne que si c'est vrai. C'est le bénéfice le plus fort du marché en 2026 — et le plus risqué à mentir.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">3 · Produits populaires</span>
+      <p><strong>Ce que nos clients emportent le plus</strong></p>
+      <p>4 produits en grille. Pas 12. Trop de choix sur la page d'accueil fait chuter le taux de clic — et te fait ressembler à un catalogue.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">4 · Preuves sociales</span>
+      <p><strong>« Je l'ai acheté pour moi. J'en ai racheté deux pour Noël. »</strong></p>
+      <p>Trois avis vérifiés avec prénom, ville et photo client. <em>Si tu n'as pas encore de client, ce bloc n'existe pas.</em> Un faux avis en France, c'est jusqu'à 300 000 € d'amende et deux ans d'emprisonnement pour pratique commerciale trompeuse. Ce bloc s'active à ta 5ᵉ commande, pas avant.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">5 · Bénéfices — bloc éditorial image + texte</span>
+      <p><strong>Une pièce ne change pas de meubles. Elle change de lumière.</strong></p>
+      <p>On a passé six mois à chercher des objets qui font ça sans en faire trop : pas de télécommande à 14 boutons, pas de plastique brillant, pas d'application à installer. On les allume, et la pièce n'est plus la même.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">6 · UGC — mur de vidéos</span>
+      <p><strong>Chez vous</strong></p>
+      <p>Grille de 6 vidéos verticales clients ou créateurs, muettes, en lecture automatique. C'est le bloc qui fait la différence entre « boutique » et « marque ». Au démarrage : tes propres vidéos TikTok, recadrées.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">7 · Collections</span>
+      <p><strong>Par envie</strong></p>
+      <p>Trois tuiles : <em>Lumière &amp; ambiance</em> · <em>Cocooning</em> · <em>Idées cadeaux</em>. En saison, une quatrième s'ajoute en première position : <em>Octobre</em>, puis <em>Noël</em>.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">8 · FAQ — accordéon 5 questions</span>
+      <p><strong>En combien de temps je reçois ma commande ?</strong><br>3 à 5 jours ouvrés en France métropolitaine, 4 à 7 jours dans le reste de l'UE. Vous recevez un numéro de suivi dès l'expédition.</p>
+      <p><strong>D'où partent les colis ?</strong><br>De notre entrepôt partenaire en Europe. Vous n'aurez aucun frais de douane à régler à la livraison.</p>
+      <p><strong>Et si l'objet ne me plaît pas ?</strong><br>Vous avez 30 jours pour nous le renvoyer, dans son état d'origine. On vous rembourse sous 14 jours après réception.</p>
+      <p><strong>Les produits sont-ils garantis ?</strong><br>Deux ans de garantie légale de conformité, comme le prévoit le droit français. En cas de défaut, on remplace sans discuter.</p>
+      <p><strong>Comment vous joindre ?</strong><br>Par e-mail à bonjour@[domaine].fr. On répond sous 24 h ouvrées, par un humain.</p>
+    </div>
+
+    <div class="copyblock"><span class="lbl">9 · CTA final</span>
+      <p style="font-size:1.3rem"><strong>Commencez par une lampe.</strong></p>
+      <p>C'est en général comme ça que ça commence.</p>
+      <p style="font-family:'IBM Plex Sans'; font-size:.82rem; color:var(--faint)">Bouton : <strong>Voir les best-sellers</strong></p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:40px">La page produit — structure de conversion</h3>
+  <p style="margin-top:8px; color:var(--muted)">Dans l'ordre exact d'apparition. Les quatre premiers blocs doivent tenir au-dessus de la ligne de flottaison sur mobile.</p>
+
+  <div class="script" style="margin-top:18px">
+    <header><b>Ordre de la page produit</b><span>≈ 85 % de ton trafic sera mobile — conçois pour le pouce, valide sur ordinateur ensuite</span></header>
+    <ol>
+      <li><b>01</b><div><b>Titre — bénéfice, pas description</b><span>« Chauffe-bougie Calyne — la bougie sans flamme ». Pas « Lampe chauffante LED E14 dimmable 3 coloris ».</span></div></li>
+      <li><b>02</b><div><b>Sous-titre — la promesse en une phrase</b><span>« Votre bougie dure 3 fois plus longtemps. Sans fumée, sans suie, sans risque. »</span></div></li>
+      <li><b>03</b><div><b>Galerie — 7 visuels dans cet ordre</b><span>1 objet en situation · 2 détail matière · 3 échelle avec une main · 4 le contenu du colis · 5 avant/après · 6 photo client · 7 tableau de dimensions.</span></div></li>
+      <li><b>04</b><div><b>Vidéo de 15 s en boucle, muette, autoplay</b><span>Placée en 2ᵉ position de la galerie sur mobile. C'est le seul élément qui fait bouger le taux d'ajout au panier de plusieurs points.</span></div></li>
+      <li><b>05</b><div><b>Prix, variantes, bouton</b><span>Un seul bouton, texte « Ajouter au panier ». Pas de « Acheter maintenant » en concurrence : deux boutons divisent l'attention.</span></div></li>
+      <li><b>06</b><div><b>Bundle — juste sous le bouton</b><span>« Seul 39,90 € · Avec 3 bougies 54,90 € (au lieu de 62,70) · Duo cadeau 74,90 € ». L'option du milieu doit être visuellement pré-sélectionnée.</span></div></li>
+      <li><b>07</b><div><b>Réassurance — 3 pictos en ligne</b><span>Expédié d'Europe · 30 jours pour changer d'avis · Paiement sécurisé.</span></div></li>
+      <li><b>08</b><div><b>Problème → solution</b><span>Trois lignes. « La flamme noircit vos murs. » → « Pas de flamme. » Format court, pas de paragraphe.</span></div></li>
+      <li><b>09</b><div><b>Bénéfices illustrés</b><span>4 blocs image + une phrase. Un bénéfice par image. Jamais de liste à puces de 12 lignes.</span></div></li>
+      <li><b>10</b><div><b>Démonstration</b><span>GIF ou vidéo courte du mécanisme. Sur cette catégorie, c'est ce qui remplace le fait de tenir l'objet en magasin.</span></div></li>
+      <li><b>11</b><div><b>Avis clients</b><span>Note globale + 5 avis avec photos. Affiche aussi les 3 et 4 étoiles : une page 100 % 5 étoiles est perçue comme fausse et convertit moins.</span></div></li>
+      <li><b>12</b><div><b>Livraison &amp; garantie</b><span>Délai réel, transporteur, garantie légale de 2 ans, procédure de retour en 3 étapes.</span></div></li>
+      <li><b>13</b><div><b>FAQ produit — 5 questions</b><span>Écrite à partir des vraies questions reçues en commentaires TikTok. C'est ta meilleure source.</span></div></li>
+      <li><b>14</b><div><b>Urgence honnête</b><span>« Expédié aujourd'hui si commandé avant 14 h » ou « Il reste 9 pièces en entrepôt France ». Vrai, vérifiable, et donc utilisable. Voir l'avertissement ci-dessous.</span></div></li>
+      <li><b>15</b><div><b>Cross-sell</b><span>2 produits complémentaires maximum, en bas de page. Jamais en haut : tu ferais sortir le client de la fiche qu'il est en train de lire.</span></div></li>
+      <li><b>16</b><div><b>CTA de rappel + conformité GPSR</b><span>Bouton flottant sur mobile. Et en pied de fiche : identité et adresse du fabricant, obligation GPSR (§16).</span></div></li>
+    </ol>
+  </div>
+
+  <div class="call stop" style="margin-top:22px">
+    <h4>Les 10 erreurs qui tuent la conversion — et deux qui te coûtent une amende</h4>
+    <ol class="tight">
+      <li><strong>Le compte à rebours qui se réinitialise au rechargement.</strong> En France, c'est une pratique commerciale trompeuse. Pas un « growth hack » : une infraction. Idem pour « plus que 3 en stock » quand tu n'as aucun stock.</li>
+      <li><strong>Le faux prix barré.</strong> Un prix de référence doit correspondre à un prix réellement pratiqué. Afficher « 79,90 € barré → 39,90 € » sur un produit jamais vendu 79,90 € est sanctionnable.</li>
+      <li>Description traduite automatiquement depuis l'anglais. Le client le voit en une phrase et part.</li>
+      <li>Photos sur fond blanc de studio prises du catalogue fournisseur, identiques à 400 autres boutiques.</li>
+      <li>Un mur de texte au lieu de blocs image + phrase.</li>
+      <li>Sept variantes de couleur qui paralysent la décision. Trois maximum.</li>
+      <li>Frais de port découverts au checkout : première cause d'abandon de panier. Intègre-les au prix.</li>
+      <li>Pas de vidéo. Sur cette catégorie, la vidéo <em>est</em> la fiche produit.</li>
+      <li>Un menu à 8 entrées qui disperse le visiteur venu pour un produit précis.</li>
+      <li>Un temps de chargement supérieur à 3 secondes sur mobile. Compresse tes images en WebP, supprime les applications que tu n'utilises pas. Chaque application ajoute du script.</li>
+    </ol>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 07 ══════════════ -->
+<section id="s7">
+  <div class="sec-head"><span class="sec-n">07</span><h2>Fournisseurs et automatisation</h2></div>
+  <p class="lede">Tu as demandé de ne <strong>jamais supposer qu'une intégration existe</strong>. Voici l'état réel, vérifié. Deux des quatre plateformes que tu cites n'ont aucune intégration officielle — et l'une d'elles interdit explicitement ton cas d'usage.</p>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:22px">
+<div class="tw"><table>
+<thead><tr>
+<th>Plateforme</th><th>Import produits</th><th>Commandes auto</th><th>Tracking auto</th><th>App / API officielle</th><th>Dropshipping autorisé</th><th>Entrepôt UE</th><th>Verdict</th>
+</tr></thead>
+<tbody>
+<tr><td class="nm">AliExpress <small>via DSers</small></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Partenaire officiel</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-warn">Partiel</span></td><td>Le seul canal chinois réellement automatisable. Pour <strong>tester</strong>, pas pour scaler.</td></tr>
+<tr><td class="nm">CJdropshipping</td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">App Shopify</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui (FR/DE/ES)</span></td><td><strong>Ton fournisseur principal.</strong> Filtre sur les SKU en entrepôt UE uniquement.</td></tr>
+<tr><td class="nm">BigBuy <small>(Espagne)</small></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Intégration Shopify</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui (24–72 h UE)</span></td><td>Catalogue UE, factures UE, conformité plus simple. Marges plus serrées, abonnement à l'entrée.</td></tr>
+<tr><td class="nm">Alibaba</td><td><span class="tag t-warn">Manuel</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Aucune</span></td><td><span class="tag t-neutral">B2B, hors sujet</span></td><td><span class="tag t-stop">Non</span></td><td>Ce n'est pas une plateforme de dropshipping. C'est là que tu <strong>achèteras ton stock en phase 2</strong>, pas avant.</td></tr>
+<tr><td class="nm">Temu</td><td><span class="tag t-warn">Via outils tiers</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Aucune</span></td><td><span class="tag t-stop">Non supporté</span></td><td><span class="tag t-warn">Variable</span></td><td><strong>À exclure.</strong> Aucune API, aucune app officielle, revente non supportée.</td></tr>
+<tr><td class="nm">SHEIN</td><td><span class="tag t-warn">Via outils tiers</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Non</span></td><td><span class="tag t-stop">Aucune</span></td><td><span class="tag t-stop">Aucun programme</span></td><td><span class="tag t-warn">Variable</span></td><td><strong>À exclure.</strong> En plus : textile à tailles = le taux de retour que tu voulais éviter.</td></tr>
+<tr><td class="nm">Printful / Printify <small>(POD)</small></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">App Shopify</span></td><td><span class="tag t-ok">Oui</span></td><td><span class="tag t-ok">Oui</span></td><td>Pour les produits personnalisés (§03 n° 24, 26). Zéro stock, zéro retour, marge élevée.</td></tr>
+</tbody>
+<caption><span class="tag t-ok">Vérifié</span> août 2026, sources en fin de page. Les conditions des plateformes changent : <strong>revérifie avant d'engager du budget.</strong> Ne prends jamais un article de blog comme preuve qu'une intégration existe — vérifie sur le Shopify App Store et dans la documentation du fournisseur.</caption>
+</table></div>
+</div>
+
+<div class="col">
+  <h3 style="margin-top:34px">Ton scénario d'automatisation : possible ou pas ?</h3>
+  <p style="margin-top:8px; color:var(--muted)">Tu as décrit une chaîne précise. Réponse : <strong>oui, elle est réellement possible</strong> — avec AliExpress/DSers, CJdropshipping ou BigBuy. Mais elle casse à trois endroits que personne ne te montrera dans un tutoriel.</p>
+
+  <div class="script" style="margin-top:18px">
+    <header><b>La chaîne réelle, étape par étape</b><span>Configuration : Shopify + CJdropshipping (SKU entrepôt UE) ou DSers (AliExpress)</span></header>
+    <ol>
+      <li><b>1</b><div><b>Le client commande sur Shopify</b><span>Paiement encaissé par Shopify Payments. Commande créée avec statut « non traitée ».</span></div></li>
+      <li><b>2</b><div><b>L'app récupère la commande automatiquement</b><span>DSers ou CJ interroge Shopify en continu. La commande apparaît chez eux en quelques secondes.</span></div></li>
+      <li><b>3</b><div><b>La commande est transmise au fournisseur</b><span>Automatique <em>si</em> tu as activé le paiement automatique et alimenté ton solde. Sinon elle attend ta validation manuelle — c'est le réglage par défaut, et c'est là que la plupart des gens croient être automatisés sans l'être.</span></div></li>
+      <li><b>4</b><div><b>Le fournisseur prépare et expédie</b><span>1 à 3 jours ouvrés depuis un entrepôt UE. 2 à 5 jours depuis la Chine.</span></div></li>
+      <li><b>5</b><div><b>Le numéro de suivi remonte dans Shopify</b><span>Automatique. Le statut passe à « traitée » et Shopify envoie l'e-mail de confirmation d'expédition au client.</span></div></li>
+      <li><b>6</b><div><b>Le client suit son colis</b><span>Via l'e-mail Shopify et ta page de suivi.</span></div></li>
+    </ol>
+  </div>
+
+  <h3 style="margin-top:32px">Les trois points de rupture</h3>
+  <div class="stack" style="margin-top:16px">
+    <div class="call stop">
+      <h4>Rupture 1 — la douane, depuis le 1<sup>er</sup> juillet 2026</h4>
+      <p>Si ton fournisseur expédie en <strong>DDU</strong> (droits non acquittés), c'est ton client qui reçoit un avis de paiement du transporteur pour les 3&nbsp;€ de droit plus les frais de dossier — souvent 8 à 15&nbsp;€ de « frais de présentation en douane ». Le client refuse le colis, ouvre un litige, laisse un avis à une étoile.</p>
+      <p><strong>Ce que tu dois faire :</strong> exiger par écrit du fournisseur qu'il expédie en <strong>DDP</strong> avec numéro <strong>IOSS</strong> renseigné. Si un fournisseur ne sait pas te répondre sur ce point, il n'est pas prêt pour le marché UE en 2026 : passe au suivant. C'est le premier filtre de sélection, avant même le prix.</p>
+    </div>
+    <div class="call warn">
+      <h4>Rupture 2 — la rupture de stock silencieuse</h4>
+      <p>Le fournisseur passe le SKU en rupture. L'app ne peut pas passer la commande. Elle reste en attente <em>sans t'alerter</em>. Tu découvres le problème 6 jours plus tard par un e-mail client furieux.</p>
+      <p><strong>Ce que tu dois faire :</strong> une vérification manuelle des commandes non traitées <strong>tous les matins, 5 minutes</strong>. C'est la seule tâche manuelle que je te demande de garder. Ne l'automatise pas, ne la saute pas.</p>
+    </div>
+    <div class="call warn">
+      <h4>Rupture 3 — le colis et la facture du fournisseur</h4>
+      <p>Un colis qui arrive avec un sachet AliExpress, une facture en yuan et le nom d'un tiers détruit la marque que tu construis — et te met en porte-à-faux avec ton obligation d'information sur l'identité du fournisseur.</p>
+      <p><strong>Ce que tu dois faire :</strong> activer l'option « no invoice / blind dropshipping » chez le fournisseur dès le départ (CJ et BigBuy le proposent en standard). Puis, à partir de ~300 commandes par mois, passer au packaging personnalisé — c'est la première marche vers la marque (§sortie).</p>
+    </div>
+  </div>
+
+  <div class="sunk" style="margin-top:26px">
+    <p class="eyebrow">Configuration retenue</p>
+    <h3 style="margin-top:8px; font-size:1.1rem">CJdropshipping (SKU entrepôt UE) en principal · DSers/AliExpress pour le test de nouveautés uniquement · Printful pour le personnalisé</h3>
+    <p style="margin-top:10px">Un produit testé sur AliExpress qui dépasse 10 ventes est immédiatement re-sourcé en entrepôt UE avant d'entrer dans le Cœur de la boutique. <strong>Tu n'annonces jamais « 3 à 5 jours » sur un produit encore expédié depuis la Chine.</strong> Tant qu'il est en Labo, tu affiches le délai réel : « expédié sous 10 à 15 jours ». Ça convertit moins. C'est le prix de ne pas mentir — et de ne pas être signalé.</p>
+  </div>
+
+  <h3 style="margin-top:34px">Quand changer de niveau logistique</h3>
+  <div class="tw" style="margin-top:14px"><table>
+  <thead><tr><th>Palier</th><th>Ce que tu fais</th><th>Pourquoi à ce moment-là</th></tr></thead>
+  <tbody>
+  <tr><td class="nm">0 → 30 cmd/mois</td><td>Dropshipping pur, entrepôt UE</td><td>Zéro trésorerie immobilisée. Tu paies ta liberté de te tromper.</td></tr>
+  <tr><td class="nm">30 → 150 cmd/mois</td><td>Agent d'approvisionnement (sourcing agent)</td><td>Le volume justifie qu'un agent négocie pour toi : 15 à 30 % de coût produit en moins, et un contrôle qualité avant expédition.</td></tr>
+  <tr><td class="nm">150 → 400 cmd/mois</td><td>Premier achat de stock (300–500 pièces) + prestataire logistique UE</td><td>Délai à 48 h, packaging à toi, coût unitaire divisé. Immobilise 3 000–6 000 €. Ne le fais que sur un produit avec 3 mois de ventes stables.</td></tr>
+  <tr><td class="nm">400 → 1 000 cmd/mois</td><td>Négociation directe avec l'usine</td><td>Tu as le volume pour discuter le prix, le MOQ et les délais. C'est ici que la marge fait un bond réel.</td></tr>
+  <tr><td class="nm">1 000+ cmd/mois</td><td>Produit fabriqué sur mesure, moule ou design propre</td><td>Tu sors de la comparabilité. Plus personne ne peut vendre exactement ton produit. C'est la définition d'une marque.</td></tr>
+  </tbody>
+  <caption><span class="tag t-neutral">Estimation</span> — paliers indicatifs. Le vrai déclencheur n'est pas le volume mais la <strong>stabilité</strong> : 3 mois consécutifs au même niveau avant d'immobiliser de la trésorerie.</caption>
+  </table></div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 08 ══════════════ -->
+<section id="s8">
+  <div class="sec-head"><span class="sec-n">08</span><h2>La stratégie TikTok / Instagram</h2></div>
+  <p class="lede">Sans budget publicitaire, le contenu <em>est</em> ton canal d'acquisition. Ce n'est pas une activité annexe : c'est ton métier principal pendant 60 jours.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h4>Cadence</h4><p><strong>3 vidéos par jour sur TikTok, 2 Reels par jour sur Instagram, 7 jours sur 7.</strong> En dessous de 2/jour, tu n'as pas assez d'échantillons pour distinguer un bon produit d'un mauvais montage. C'est un volume de tournage d'environ 90 minutes par jour si tu tournes en série une fois par semaine.</p></div>
+    <div class="card"><h4>Nombre de comptes</h4><p><strong>Un compte de marque + un compte « créateur ».</strong> Le compte de marque porte l'univers Calyne. Le compte créateur, à ton nom, teste les angles agressifs sans risquer l'image. Ne multiplie pas les comptes : gérer 5 comptes médiocres est pire qu'en tenir 2 correctement.</p></div>
+    <div class="card"><h4>Format et durée</h4><p><strong>7 à 15 secondes en priorité.</strong> Ta métrique est le taux de visionnage complet, et une vidéo de 9 secondes revue deux fois vaut mieux qu'une de 40 secondes abandonnée à 12. Vertical 9:16, sous-titres systématiques, texte à l'écran dans la première seconde.</p></div>
+    <div class="card"><h4>Publication</h4><p>11 h, 18 h et 21 h. Le créneau du soir surperforme sur cette niche — les gens sont chez eux, lumière allumée, dans le contexte exact du produit. Publie <strong>en natif</strong>, jamais un export avec filigrane.</p></div>
+    <div class="card"><h4>Méthode de test</h4><p>Une seule variable change entre deux vidéos. Vidéos 1–5 : même produit, 5 hooks différents. Vidéos 6–10 : le hook gagnant, 5 formats différents. C'est ce qui rend le résultat interprétable.</p></div>
+    <div class="card"><h4>Métriques à surveiller</h4><p>Dans l'ordre : <strong>rétention à 3 s</strong> (&gt; 65 %) → <strong>visionnage complet</strong> (&gt; 40 %) → <strong>taux de clic sur la bio</strong> (&gt; 1,5 % des vues) → <strong>ajout au panier</strong> (&gt; 6 % des sessions) → <strong>ventes</strong>. Un problème se règle toujours de gauche à droite : inutile d'optimiser ta page produit si tu perds tout le monde à la 3ᵉ seconde.</p></div>
+  </div>
+
+  <h3 style="margin-top:38px">30 hooks TikTok</h3>
+  <p style="margin-top:6px; color:var(--muted)">À l'écran dans la première seconde, en 5 mots si possible. Testés un par un, jamais deux dans la même vidéo.</p>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:16px">
+<div class="hooks">
+<div><span>01</span>J'ai éteint toutes les lumières du salon. Sauf une.</div>
+<div><span>02</span>Ta chambre n'est pas moche. Elle est mal éclairée.</div>
+<div><span>03</span>POV : il est 17 h et il fait déjà nuit.</div>
+<div><span>04</span>Arrête d'allumer le plafonnier.</div>
+<div><span>05</span>Ce truc à 39 € a remplacé mes quatre lampes.</div>
+<div><span>06</span>Ma coloc m'a demandé le lien. Trois fois.</div>
+<div><span>07</span>Regarde ce qui se passe quand j'appuie.</div>
+<div><span>08</span>Personne en France ne connaît encore ça.</div>
+<div><span>09</span>Si tu vis en appartement, regarde ça.</div>
+<div><span>10</span>Ce que personne ne te dit sur les bougies.</div>
+<div><span>11</span>Trois secondes. C'est tout ce que ça prend.</div>
+<div><span>12</span>J'ai dépensé 200 € en déco. Le seul truc qui a marché en coûtait 39.</div>
+<div><span>13</span>Si ton salon te déprime en hiver, ce n'est pas toi.</div>
+<div><span>14</span>Le seul objet que j'ai racheté trois fois.</div>
+<div><span>15</span>Ma mère me l'a volé.</div>
+<div><span>16</span>Tu ne peux pas percer les murs ? Fais ça.</div>
+<div><span>17</span>Ça a l'air cher. Ça coûte 39 €.</div>
+<div><span>18</span>Le cadeau que personne n'a déjà.</div>
+<div><span>19</span>On m'a demandé le lien douze fois. Le voilà.</div>
+<div><span>20</span>Ce que j'aurais aimé savoir en emménageant.</div>
+<div><span>21</span>J'ai arrêté d'acheter des bougies. Voilà pourquoi.</div>
+<div><span>22</span>Écoute juste le son.</div>
+<div><span>23</span>C'est nul en photo. C'est incroyable en vrai.</div>
+<div><span>24</span>Ne fais pas la même erreur que moi.</div>
+<div><span>25</span>Trois objets qui ont changé mon appart.</div>
+<div><span>26</span>Test : est-ce que ça vaut vraiment le coup ?</div>
+<div><span>27</span>Pourquoi tes photos d'intérieur sont toujours ratées.</div>
+<div><span>28</span>Je l'ai testé 30 jours. Voilà le résultat.</div>
+<div><span>29</span>Avant / après, sans rien acheter d'autre.</div>
+<div><span>30</span>Le truc que j'offre à tout le monde depuis six mois.</div>
+</div>
+</div>
+
+<div class="col">
+  <h3 style="margin-top:36px">20 concepts de vidéos</h3>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><p><strong>1. Avant / après lumière.</strong> Le socle. Plafonnier allumé → une seule lampe. Fonctionne indéfiniment.</p></div>
+    <div class="card"><p><strong>2. Déballage silencieux.</strong> ASMR, mains, carton, aucune parole. Très forte rétention.</p></div>
+    <div class="card"><p><strong>3. Routine du soir.</strong> 5 plans : rideaux, plaid, lampe, thé, livre.</p></div>
+    <div class="card"><p><strong>4. Tour d'appartement en 15 s.</strong> Le produit apparaît deux fois, jamais annoncé.</p></div>
+    <div class="card"><p><strong>5. Démonstration mécanique.</strong> Un seul geste filmé de près, en boucle parfaite.</p></div>
+    <div class="card"><p><strong>6. Réaction d'un tiers.</strong> Coloc, mère, copain qui découvre. L'émotion n'est pas jouable.</p></div>
+    <div class="card"><p><strong>7. Trois objets sous 40 €.</strong> Format liste, très fort taux de sauvegarde.</p></div>
+    <div class="card"><p><strong>8. Comparatif.</strong> Le produit contre la solution habituelle, côte à côte.</p></div>
+    <div class="card"><p><strong>9. POV climatique.</strong> « Il fait nuit à 17 h. » Contexte saisonnier français.</p></div>
+    <div class="card"><p><strong>10. Time-lapse de transformation.</strong> Pièce vide → pièce habitée en 12 secondes.</p></div>
+    <div class="card"><p><strong>11. Réponse à un commentaire.</strong> Le format le moins cher et le plus performant qui existe.</p></div>
+    <div class="card"><p><strong>12. FAQ vidéo.</strong> Une question, une réponse, 8 secondes.</p></div>
+    <div class="card"><p><strong>13. Storytime.</strong> « Pourquoi j'ai lancé ça. » À sortir vers J+20, pas au démarrage.</p></div>
+    <div class="card"><p><strong>14. Préparation de commande.</strong> Les gens adorent voir un colis se préparer.</p></div>
+    <div class="card"><p><strong>15. Ce que je mets dans le colis.</strong> Montre la carte manuscrite : c'est le contraire du dropshipping perçu.</p></div>
+    <div class="card"><p><strong>16. Classement de tes propres produits.</strong> Auto-dérision, très partagé.</p></div>
+    <div class="card"><p><strong>17. Erreurs de déco que tout le monde fait.</strong> Contenu utile, pas promotionnel. Excellent pour la portée.</p></div>
+    <div class="card"><p><strong>18. Stitch / duo d'une vidéo déco populaire.</strong> Emprunte l'audience de quelqu'un d'autre.</p></div>
+    <div class="card"><p><strong>19. Idées cadeaux à moins de 40 €.</strong> À sortir massivement du 10 nov. au 15 déc.</p></div>
+    <div class="card"><p><strong>20. Boucle hypnotique sans parole.</strong> 6 secondes, coupe invisible. Vise le visionnage multiple.</p></div>
+  </div>
+
+  <h3 style="margin-top:38px">10 scripts prêts à tourner</h3>
+  <div class="stack" style="margin-top:16px">
+
+    <div class="script"><header><b>Script 1 — « Le plafonnier »</b><span>Chauffe-bougie ou lampe champignon · 11 s · aucun dialogue</span></header><ol>
+      <li><b>0–1 s</b><div><span>Plafonnier allumé, lumière blanche, salon banal. Texte : <strong>« Arrête d'allumer le plafonnier. »</strong></span></div></li>
+      <li><b>1–3 s</b><div><span>Une main atteint l'interrupteur. Noir complet pendant un demi-temps.</span></div></li>
+      <li><b>3–8 s</b><div><span>La lampe s'allume. Travelling lent. Rien d'autre ne bouge.</span></div></li>
+      <li><b>8–11 s</b><div><span>Texte : <strong>« Même pièce. »</strong> Puis : « lien en bio ».</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 2 — « Trois secondes »</b><span>Projecteur d'ambiance · 9 s · boucle</span></header><ol>
+      <li><b>0–1 s</b><div><span>Chambre normale, plafond nu. Texte : <strong>« 3 secondes. »</strong></span></div></li>
+      <li><b>1–2 s</b><div><span>Doigt sur le bouton. Son du clic conservé.</span></div></li>
+      <li><b>2–7 s</b><div><span>Panoramique vers le plafond couvert d'aurores.</span></div></li>
+      <li><b>7–9 s</b><div><span>Retour au plan initial. La boucle est invisible : la vidéo se rejoue sans coupure perçue.</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 3 — « Ma coloc »</b><span>N'importe quel produit du Cœur · 14 s · voix off</span></header><ol>
+      <li><b>0–2 s</b><div><span>Visage caméra. <em>« Ma coloc m'a demandé le lien trois fois. »</em></span></div></li>
+      <li><b>2–5 s</b><div><span>Coupe sur l'objet allumé sur la table basse.</span></div></li>
+      <li><b>5–10 s</b><div><span><em>« C'est une lampe qui fait fondre la bougie. Pas de flamme, pas de fumée, et la bougie dure trois fois plus longtemps. »</em></span></div></li>
+      <li><b>10–14 s</b><div><span>Plan sur la cire qui fond. <em>« Elle m'a piqué la mienne. J'en ai racheté deux. »</em></span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 4 — « Il fait nuit à 17 h »</b><span>Saisonnier, à publier à partir du 15 octobre · 12 s</span></header><ol>
+      <li><b>0–2 s</b><div><span>Fenêtre, dehors il fait déjà sombre. Texte : <strong>« 17 h 04. »</strong></span></div></li>
+      <li><b>2–4 s</b><div><span>Plan sur un salon gris, sans lumière allumée. Ambiance déprimante assumée.</span></div></li>
+      <li><b>4–9 s</b><div><span>On allume trois sources chaudes, une par une, à trois endroits.</span></div></li>
+      <li><b>9–12 s</b><div><span>Texte : <strong>« L'hiver, c'est une question de lumière. »</strong></span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 5 — « Le comparatif »</b><span>Chauffe-bougie vs. bougie classique · 15 s</span></header><ol>
+      <li><b>0–2 s</b><div><span>Écran partagé. À gauche une bougie allumée, à droite la lampe. Texte : <strong>« Même bougie. »</strong></span></div></li>
+      <li><b>2–7 s</b><div><span>Gauche : la flamme noircit le bord du verre. Droite : rien, la cire fond uniformément.</span></div></li>
+      <li><b>7–12 s</b><div><span>Texte à gauche : « 18 h de combustion ». À droite : « 50 h ».</span></div></li>
+      <li><b>12–15 s</b><div><span><strong>« Et aucune flamme dans un appart avec un chat. »</strong></span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 6 — « Réponse à un commentaire »</b><span>Le format le plus rentable · 10 s · à faire dès le 1er commentaire</span></header><ol>
+      <li><b>0–2 s</b><div><span>Capture du commentaire affichée en haut de l'écran : « ça sent vraiment ? »</span></div></li>
+      <li><b>2–8 s</b><div><span>Démonstration directe, sans intro, sans « salut à tous ». Tu réponds, c'est tout.</span></div></li>
+      <li><b>8–10 s</b><div><span><em>« D'autres questions, je réponds à toutes. »</em> → génère les commentaires suivants, donc les vidéos suivantes.</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 7 — « Trois objets sous 40 € »</b><span>Format liste · 16 s · fort taux de sauvegarde</span></header><ol>
+      <li><b>0–2 s</b><div><span><strong>« Trois objets à moins de 40 € qui ont changé mon appart. »</strong></span></div></li>
+      <li><b>2–6 s</b><div><span>Objet 1, plan serré, un mot d'explication.</span></div></li>
+      <li><b>6–10 s</b><div><span>Objet 2.</span></div></li>
+      <li><b>10–16 s</b><div><span>Objet 3 — ton produit à pousser, gardé pour la fin, avec le plan le plus travaillé.</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 8 — « Le colis »</b><span>Coulisses · 13 s · construit la confiance, pas la vente immédiate</span></header><ol>
+      <li><b>0–2 s</b><div><span>Table, carton vide, papier de soie. <strong>« Ce qu'il y a dans vos colis. »</strong></span></div></li>
+      <li><b>2–9 s</b><div><span>Emballage réel, mains, une carte écrite à la main posée dessus.</span></div></li>
+      <li><b>9–13 s</b><div><span>Fermeture, étiquette. <em>« Onze commandes aujourd'hui. Merci. »</em> — chiffre réel, même petit. La modestie convertit.</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 9 — « Erreurs de déco »</b><span>Contenu utile, non promotionnel · 18 s · pour la portée</span></header><ol>
+      <li><b>0–2 s</b><div><span><strong>« Trois erreurs qui rendent ton salon froid. »</strong></span></div></li>
+      <li><b>2–7 s</b><div><span>« Une seule source de lumière, au plafond. » Illustration.</span></div></li>
+      <li><b>7–12 s</b><div><span>« Des ampoules blanches à 6000 K. » Comparaison à l'image.</span></div></li>
+      <li><b>12–18 s</b><div><span>« Rien en dessous de la hauteur des yeux. » → ton produit apparaît naturellement comme la correction.</span></div></li>
+    </ol></div>
+
+    <div class="script"><header><b>Script 10 — « Le cadeau »</b><span>À publier du 10 nov. au 15 déc. · 14 s</span></header><ol>
+      <li><b>0–2 s</b><div><span><strong>« Le cadeau que personne n'a déjà. »</strong></span></div></li>
+      <li><b>2–6 s</b><div><span>Objet emballé, ruban, on le tend hors champ.</span></div></li>
+      <li><b>6–11 s</b><div><span>Ouverture filmée. Réaction réelle, non jouée.</span></div></li>
+      <li><b>11–14 s</b><div><span>Texte : <strong>« 39 €. Livré avant Noël. »</strong> — la date limite est l'argument, pas le prix.</span></div></li>
+    </ol></div>
+  </div>
+
+  <div class="grid2" style="margin-top:34px">
+    <div class="card"><h4>10 angles UGC</h4><ol class="tight" style="font-size:.85rem">
+      <li>La coloc qui découvre l'objet sans savoir qu'on filme</li>
+      <li>Le parent sceptique qui finit convaincu</li>
+      <li>Le déballage à une main dans un lit défait</li>
+      <li>La personne qui l'a acheté trois fois et le dit</li>
+      <li>Le témoignage « j'ai hésité un mois »</li>
+      <li>L'étudiant en chambre de 9 m²</li>
+      <li>Le télétravailleur qui montre son coin bureau</li>
+      <li>Le couple qui n'est pas d'accord sur la couleur</li>
+      <li>La personne qui l'a reçu en cadeau et ne connaissait pas la marque</li>
+      <li>Le retour à J+30 : « est-ce que je m'en sers encore ? »</li>
+    </ol></div>
+
+    <div class="card"><h4>10 vidéos comparatives</h4><ol class="tight" style="font-size:.85rem">
+      <li>Chauffe-bougie vs. bougie allumée</li>
+      <li>Lampe sans fil vs. rallonge qui traverse la pièce</li>
+      <li>Projecteur vs. guirlande à installer</li>
+      <li>Ampoule 2700 K vs. 6000 K, même pièce</li>
+      <li>Le modèle à 15 € vs. celui à 40 € (sois honnête : parfois le moins cher suffit)</li>
+      <li>Ton produit vs. son équivalent en grande surface</li>
+      <li>Diffuseur à flamme vs. bougie parfumée sur trois semaines</li>
+      <li>Plaid classique vs. plaid à capuche, en situation</li>
+      <li>Trois lampes d'ambiance côte à côte, tu classes</li>
+      <li>Version de l'an dernier vs. version actuelle</li>
+    </ol></div>
+
+    <div class="card"><h4>10 vidéos problème → solution</h4><ol class="tight" style="font-size:.85rem">
+      <li>« Mes bougies noircissent les murs »</li>
+      <li>« Je n'ai pas de prise près du canapé »</li>
+      <li>« Je ne peux rien accrocher, je suis locataire »</li>
+      <li>« Mon appart est déprimant en hiver »</li>
+      <li>« Ma bougie à 25 € a duré trois semaines »</li>
+      <li>« Je lis au lit et je réveille l'autre »</li>
+      <li>« Mon bureau est un chaos de câbles »</li>
+      <li>« Mon enfant ne s'endort pas dans le noir »</li>
+      <li>« J'ai un chat, je ne peux pas laisser de flamme »</li>
+      <li>« Je ne sais jamais quoi offrir à ma sœur »</li>
+    </ol></div>
+
+    <div class="card"><h4>Matériel — la totalité</h4><ul class="tight" style="font-size:.85rem">
+      <li>Ton téléphone. Aucun appareil photo.</li>
+      <li>Un trépied à 15 €. Le seul achat non négociable.</li>
+      <li>CapCut, version gratuite.</li>
+      <li>La lumière du jour, ou l'objet lui-même comme source.</li>
+      <li>Un drap blanc pour rebondir la lumière.</li>
+    </ul><p style="font-size:.85rem">Achète le trépied avant l'anneau lumineux : un anneau lumineux sur une niche « ambiance chaude » <strong>détruit</strong> l'esthétique du produit. La lumière que tu vends est celle qui doit éclairer la scène.</p></div>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 09 ══════════════ -->
+<section id="s9">
+  <div class="sec-head"><span class="sec-n">09</span><h2>Le système de test des produits</h2></div>
+  <p class="lede">Tu voulais un cadre concret avec des seuils. Le voici. La règle qui compte : <strong>un produit n'est jamais « mort » — c'est le couple produit × angle qui l'est.</strong> Il faut avoir tué deux angles différents avant de tuer un produit.</p>
+
+  <div class="script" style="margin-top:24px">
+    <header><b>Le protocole en 4 vagues — 14 jours par produit</b><span>Une seule variable change entre deux vidéos</span></header>
+    <ol>
+      <li><b>V1 · J1–3</b><div><b>5 vidéos, 5 hooks différents, même produit, même format</b><span>Objectif : trouver ce qui arrête le pouce. On ne regarde que la rétention à 3 secondes.</span></div></li>
+      <li><b>V2 · J4–7</b><div><b>5 vidéos, le hook gagnant, 5 formats différents</b><span>Objectif : trouver ce qui retient. On regarde le visionnage complet et le taux de clic en bio.</span></div></li>
+      <li><b>V3 · J8–11</b><div><b>5 vidéos, hook + format gagnants, 5 angles de bénéfice</b><span>Objectif : trouver ce qui fait acheter. On regarde l'ajout au panier et les ventes.</span></div></li>
+      <li><b>V4 · J12–14</b><div><b>Décision</b><span>Continuer, modifier, ou arrêter. Voir la matrice en §16.</span></div></li>
+    </ol>
+  </div>
+
+  <h3 style="margin-top:32px">Les seuils</h3>
+  <p style="margin-top:6px; color:var(--muted)"><span class="tag t-neutral">Estimation</span> — ce sont des ordres de grandeur de travail. Recalibre-les sur <em>tes</em> propres données après 3 produits testés : tes seuils réels valent mieux que les miens.</p>
+
+  <div class="tw" style="margin-top:16px"><table>
+  <thead><tr><th>Étape</th><th>Métrique</th><th>Seuil de survie</th><th>Si tu es en dessous</th></tr></thead>
+  <tbody>
+  <tr><td class="nm">Accroche</td><td>Rétention à 3 s</td><td class="num">&gt; 65 %</td><td>Le hook est mauvais. Le produit n'est pas en cause. Rejoue la vague 1.</td></tr>
+  <tr><td class="nm">Rétention</td><td>Visionnage complet</td><td class="num">&gt; 40 %</td><td>Vidéo trop longue ou promesse non tenue. Raccourcis à 8 s.</td></tr>
+  <tr><td class="nm">Portée</td><td>Meilleure vidéo sur 10</td><td class="num">&gt; 20 000 vues</td><td>Si aucune des 10 ne dépasse 5 000 vues, l'angle est mort. Change d'angle, pas de produit.</td></tr>
+  <tr><td class="nm">Intérêt</td><td>Clics vers la bio / vues</td><td class="num">&gt; 1,5 %</td><td>Les gens regardent mais ne veulent pas l'objet. C'est le signal le plus dur : souvent le produit lui-même.</td></tr>
+  <tr><td class="nm">Page produit</td><td>Ajout au panier / sessions</td><td class="num">&gt; 6 %</td><td>Problème de fiche produit, pas de produit. Vidéo manquante, prix mal amené, photos catalogue.</td></tr>
+  <tr><td class="nm">Checkout</td><td>Achat / ajout au panier</td><td class="num">&gt; 25 %</td><td>Frais de port surprise, délai affiché, manque de réassurance, moyens de paiement.</td></tr>
+  <tr><td class="nm">Global</td><td>Taux de conversion site</td><td class="num">&gt; 1,2 %</td><td>Sous 1 % avec plus de 300 sessions : c'est la boutique, pas le produit.</td></tr>
+  <tr><td class="nm">Validation</td><td>Ventes organiques en 14 j</td><td class="num">≥ 10</td><td>Sous 3 ventes : arrêt. Entre 3 et 9 : une vague supplémentaire, une seule.</td></tr>
+  </tbody>
+  </table></div>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="call stop"><h4>Quand tu arrêtes</h4><ul class="tight">
+      <li>10 vidéos publiées, <strong>aucune au-dessus de 5 000 vues</strong>, sur deux angles distincts.</li>
+      <li>Plus de 500 sessions, <strong>zéro vente</strong>.</li>
+      <li>Marge brute sous 55 % du prix HT après le droit de 3 €. Tu ne pourras jamais passer à la publicité.</li>
+      <li>Plus de 8 % de retours sur les 20 premières commandes.</li>
+      <li>Le fournisseur ne sait pas répondre sur DDP/IOSS, ou ne fournit pas les informations fabricant exigées par le GPSR.</li>
+    </ul></div>
+    <div class="call go"><h4>Quand tu accélères</h4><ul class="tight">
+      <li>Une vidéo dépasse <strong>50 000 vues</strong> → tourne 5 variantes du même angle <em>dans les 48 h</em>. La fenêtre se referme vite.</li>
+      <li><strong>10 ventes organiques</strong> → re-source en entrepôt UE, fais de vraies photos, monte le produit dans le Cœur.</li>
+      <li><strong>20 ventes organiques + 3 créatifs à plus de 50 000 vues</strong> → tu as le droit d'ouvrir un compte publicitaire. Pas avant.</li>
+      <li>Deux avis clients spontanés à 5 étoiles → active le bloc preuve sociale de la page d'accueil.</li>
+    </ul></div>
+  </div>
+
+  <div class="call warn" style="margin-top:20px">
+    <h4>Le piège le plus courant</h4>
+    <p>Tu vas être tenté de tester 6 produits en même temps pour « aller plus vite ». Ne le fais pas. Avec 3 vidéos par jour réparties sur 6 produits, tu as 7 vidéos par produit en 14 jours — <strong>pas assez pour conclure quoi que ce soit</strong>, et tu élimineras des produits corrects sur du bruit statistique. <strong>Deux produits en parallèle, maximum.</strong> C'est plus lent en apparence, et beaucoup plus rapide en réalité.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 10 ══════════════ -->
+<section id="s10">
+  <div class="sec-head"><span class="sec-n">10</span><h2>La stratégie Ads</h2></div>
+  <p class="lede">Le passage à la publicité n'est pas une étape chronologique, c'est un <strong>seuil</strong>. Tant que tu ne l'as pas franchi, chaque euro dépensé en publicité est un euro perdu à valider ce que l'organique t'aurait dit gratuitement.</p>
+
+  <div class="call stop" style="margin-top:22px">
+    <h4>Les 4 conditions d'entrée — toutes obligatoires</h4>
+    <ol class="tight">
+      <li><strong>20 ventes organiques</strong> sur le produit, sans un euro de publicité.</li>
+      <li><strong>Marge brute ≥ 60 %</strong> du prix HT après coût produit, port et droit de douane.</li>
+      <li><strong>3 créatifs</strong> ayant dépassé 50 000 vues en organique — ce sont eux qui deviennent tes publicités.</li>
+      <li><strong>Délai UE ≤ 5 jours</strong> et fournisseur en DDP. Faire de la publicité vers un produit expédié de Chine en 14 jours, c'est acheter des remboursements.</li>
+    </ol>
+  </div>
+
+  <div class="stack-lg" style="margin-top:26px">
+    <div>
+      <h3>Meta Ads — premier canal</h3>
+      <p style="margin-top:8px; color:var(--muted)">Le meilleur rapport apprentissage/coût pour un objet de décoration à 30–50 €, parce que l'audience de la déco est encore massivement sur Facebook et Instagram en France.</p>
+      <div class="tw" style="margin-top:14px"><table>
+        <thead><tr><th>Élément</th><th>Configuration</th></tr></thead>
+        <tbody>
+        <tr><td class="nm">Budget de départ</td><td>20 €/jour pendant 7 jours. En dessous de 15 €/jour, l'algorithme ne sort jamais de la phase d'apprentissage.</td></tr>
+        <tr><td class="nm">Structure</td><td>1 campagne Ventes · 1 ensemble de publicités <strong>large</strong> (France, 25–55 ans, aucun centre d'intérêt) · 4 créatifs dedans. Ne fractionne pas en 6 ensembles à 5 € : tu divises le signal.</td></tr>
+        <tr><td class="nm">Audiences</td><td>Large d'abord, toujours. Le ciblage par centres d'intérêt est devenu contre-productif depuis que l'algorithme cible mieux que toi. Les audiences similaires n'ont d'intérêt qu'au-delà de 200 acheteurs.</td></tr>
+        <tr><td class="nm">Créatifs</td><td>Tes 3 meilleures vidéos organiques, telles quelles, sans filigrane TikTok. C'est le point le plus important de toute la section : une vidéo validée en organique arrive avec une preuve de performance.</td></tr>
+        <tr><td class="nm">Retargeting</td><td>À n'ouvrir qu'au-delà de <strong>1 000 visiteurs sur 7 jours</strong>. En dessous, l'audience est trop petite pour dépenser. Une seule campagne : visiteurs 14 jours + paniers abandonnés, budget 5 €/jour.</td></tr>
+        <tr><td class="nm">Scaling</td><td>+20 % de budget tous les 3 jours <em>tant que le ROAS tient</em>. Doubler le budget d'un coup réinitialise l'apprentissage et casse la campagne.</td></tr>
+        <tr><td class="nm">Signal d'arrêt</td><td>150 € dépensés sur un produit sans atteindre le ROAS de rentabilité (§11) → coupe. Pas de « laisse tourner encore un peu ».</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div>
+      <h3>TikTok Ads — second canal</h3>
+      <p style="margin-top:8px; color:var(--muted)">À ouvrir <strong>après</strong> Meta, uniquement si tes vidéos organiques y performent déjà. TikTok Ads amplifie un signal existant ; il n'en crée pas.</p>
+      <ul class="tight" style="margin-top:12px">
+        <li><strong>Budget :</strong> 20 €/jour minimum. Le CPM est plus bas que Meta, mais le taux de conversion aussi — le coût par acquisition final est souvent comparable.</li>
+        <li><strong>Structure :</strong> campagne Conversions web, 1 groupe large France, 5 créatifs. Active <strong>Spark Ads</strong> pour promouvoir directement tes publications organiques : elles gardent leurs vues, leurs likes et leurs commentaires, ce qui améliore fortement la performance.</li>
+        <li><strong>Créatifs :</strong> uniquement du natif. Une publicité qui ressemble à une publicité est ignorée en 0,4 seconde sur TikTok.</li>
+        <li><strong>Fréquence :</strong> l'usure créative est 3 fois plus rapide que sur Meta. Prévois 5 nouveaux créatifs toutes les deux semaines, sinon la performance s'effondre.</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3>Google Ads — troisième canal, et le plus rentable à terme</h3>
+      <p style="margin-top:8px; color:var(--muted)">Google capte une <strong>demande existante</strong> au lieu de la créer. C'est le canal qui te reste quand la mode passe — et celui que la plupart des dropshippers n'ouvrent jamais.</p>
+      <ul class="tight" style="margin-top:12px">
+        <li><strong>Google Shopping en premier.</strong> Flux produit via l'app Google &amp; YouTube de Shopify vers Merchant Center. Gratuit à installer. À ouvrir dès que tu as 5 produits stables avec de vraies photos.</li>
+        <li><strong>Search sur ta marque, tout de suite.</strong> 2 €/jour. Dès que tes vidéos tournent, des gens tapent « Calyne » dans Google. Si tu n'y es pas, un concurrent ou un comparateur récupère le clic. C'est l'euro le mieux dépensé de toute cette section.</li>
+        <li><strong>Search générique</strong> (« chauffe bougie électrique », « lampe sans fil rechargeable ») : à ouvrir à 50 commandes/mois. Intention d'achat forte, taux de conversion 2 à 3 fois supérieur au social.</li>
+        <li><strong>Performance Max :</strong> à réserver au-delà de <strong>30 conversions par mois</strong>. En dessous, l'algorithme n'a pas de quoi apprendre et dépense en pure perte. C'est l'erreur la plus coûteuse des petites boutiques.</li>
+        <li><strong>YouTube :</strong> pas avant 6 mois. Ton contenu vertical existant peut y être recyclé en Shorts gratuitement en attendant.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sunk" style="margin-top:26px">
+    <p class="eyebrow">Calendrier de bascule</p>
+    <p style="margin-top:8px"><strong>Aujourd'hui → mi-octobre :</strong> 100 % organique, zéro euro de publicité. <strong>Mi-octobre → mi-novembre :</strong> Meta Ads sur le produit validé, 20 €/jour, plus Search sur ta marque. <strong>Semaine du Black Friday :</strong> budget × 3 sur ce qui fonctionne déjà — jamais sur un produit non testé. <strong>Décembre :</strong> Shopping + retargeting à plein, le trafic est le plus qualifié de l'année. <strong>Janvier :</strong> retour à l'organique, la trésorerie se reconstitue.</p>
+  </div>
+</section>
+</div>
+
+<div class="col">
+<!-- ══════════════ 11 ══════════════ -->
+<section id="s11">
+  <div class="sec-head"><span class="sec-n">11</span><h2>Le modèle financier</h2></div>
+  <p class="lede">Ton exemple : produit 8 €, livraison 3 €, vente 29,90 €. Je l'ai recalculé avec le droit de douane de 3 €. <strong>Le résultat est que ce prix ne supporte pas la publicité.</strong> Voici la démonstration, puis la version qui fonctionne.</p>
+
+  <div class="grid2" style="margin-top:26px">
+    <div class="card" style="border-color:var(--stop)">
+      <h3>Scénario A — ton exemple, sourcé en Chine</h3>
+      <div class="tw" style="margin-top:10px"><table style="min-width:0">
+      <tbody>
+      <tr><td>Prix de vente TTC</td><td class="num">29,90 €</td></tr>
+      <tr><td>− TVA 20 %</td><td class="num">−4,98 €</td></tr>
+      <tr><td><strong>Chiffre d'affaires HT</strong></td><td class="num"><strong>24,92 €</strong></td></tr>
+      <tr><td>− Coût produit</td><td class="num">−8,00 €</td></tr>
+      <tr><td>− Port fournisseur</td><td class="num">−3,00 €</td></tr>
+      <tr><td>− Droit forfaitaire UE</td><td class="num" style="color:var(--stop)">−3,00 €</td></tr>
+      <tr><td>− Frais de paiement</td><td class="num">−0,70 €</td></tr>
+      <tr><td>− Provision retours 4 %</td><td class="num">−1,00 €</td></tr>
+      <tr><td><strong>Marge de contribution</strong></td><td class="num"><strong>9,22 €</strong></td></tr>
+      <tr><td>Marge en % du HT</td><td class="num">37 %</td></tr>
+      <tr><td><strong>CPA maximum</strong></td><td class="num"><strong>9,22 €</strong></td></tr>
+      <tr><td><strong>ROAS d'équilibre</strong></td><td class="num"><strong>3,24</strong></td></tr>
+      <tr><td>CPA pour 20 % net</td><td class="num" style="color:var(--stop)">4,24 €</td></tr>
+      </tbody></table></div>
+      <p style="margin-top:10px"><strong>Verdict : inexploitable en publicité.</strong> Un CPA de 4,24 € sur de la décoration en France est hors d'atteinte. Ce prix ne fonctionne qu'en organique pur.</p>
+    </div>
+
+    <div class="card" style="border-color:var(--go)">
+      <h3>Scénario B — repositionné, entrepôt UE</h3>
+      <div class="tw" style="margin-top:10px"><table style="min-width:0">
+      <tbody>
+      <tr><td>Prix de vente TTC</td><td class="num">39,90 €</td></tr>
+      <tr><td>− TVA 20 %</td><td class="num">−6,65 €</td></tr>
+      <tr><td><strong>Chiffre d'affaires HT</strong></td><td class="num"><strong>33,25 €</strong></td></tr>
+      <tr><td>− Coût produit <small>(UE, +37 %)</small></td><td class="num">−11,00 €</td></tr>
+      <tr><td>− Port fournisseur</td><td class="num">−2,50 €</td></tr>
+      <tr><td>− Droit forfaitaire UE</td><td class="num" style="color:var(--go)">0,00 €</td></tr>
+      <tr><td>− Frais de paiement</td><td class="num">−0,85 €</td></tr>
+      <tr><td>− Provision retours 4 %</td><td class="num">−1,33 €</td></tr>
+      <tr><td><strong>Marge de contribution</strong></td><td class="num"><strong>17,57 €</strong></td></tr>
+      <tr><td>Marge en % du HT</td><td class="num">53 %</td></tr>
+      <tr><td><strong>CPA maximum</strong></td><td class="num"><strong>17,57 €</strong></td></tr>
+      <tr><td><strong>ROAS d'équilibre</strong></td><td class="num"><strong>2,27</strong></td></tr>
+      <tr><td>CPA pour 20 % net</td><td class="num" style="color:var(--go)">10,92 €</td></tr>
+      </tbody></table></div>
+      <p style="margin-top:10px"><strong>Verdict : exploitable.</strong> Un CPA de 11 € est atteignable sur cette niche. Le produit coûte 3 € de plus à l'achat et rapporte 8,35 € de plus par commande.</p>
+    </div>
+  </div>
+
+  <div class="call go" style="margin-top:22px">
+    <h4>Les deux leviers, dans l'ordre d'importance</h4>
+    <ol class="tight">
+      <li><strong>Monter le prix, pas baisser le coût.</strong> Passer de 29,90 à 39,90 € rapporte 8,35 € par commande. Négocier le produit de 8 à 7 € en rapporte 1. Sur cette niche, le prix n'est pas le premier critère d'achat — l'esthétique l'est. C'est justement ce qui rend cette niche viable.</li>
+      <li><strong>Monter le panier, pas le trafic.</strong> Un bundle à 54,90 € (lampe + 3 bougies) porte une contribution d'environ 26 € pour le même coût d'acquisition. <strong>C'est le levier le plus puissant de tout ce document</strong> : le trafic coûte cher, le panier est gratuit. Mais attention — si tu expédies depuis la Chine, un bundle de 3 références distinctes paie <strong>9 € de droit</strong>, pas 3. Le bundle n'a de sens qu'en entrepôt UE.</li>
+    </ol>
+  </div>
+
+  <div class="call warn" style="margin-top:18px">
+    <h4>Le cas particulier du démarrage : la franchise en base de TVA</h4>
+    <p>Sous le seuil de franchise en base pour la vente de biens (<strong>85 000 € de chiffre d'affaires</strong>, seuil majoré 93 500 € — inchangé en 2026, le projet de seuil unique à 25 000 € ayant été abandonné par la loi du 3 novembre 2025), tu ne factures pas la TVA. Sur le scénario A, ta marge de contribution passe alors de 9,22 € à <strong>14,20 €</strong> — parce que tu gardes les 4,98 € de TVA.</p>
+    <p><strong>La contrepartie :</strong> tu ne récupères pas la TVA sur tes achats, tu dois porter la mention « TVA non applicable, art. 293 B du CGI » sur toutes tes factures, et le jour où tu franchis le seuil, ta marge chute mécaniquement de 5 € par commande. <strong>Anticipe ce basculement dans ton prix dès le départ</strong> plutôt que de le subir à 84 000 € de chiffre d'affaires. C'est une erreur classique et douloureuse.</p>
+  </div>
+
+  <h3 style="margin-top:36px">Trois scénarios, quatre volumes</h3>
+  <p style="margin-top:6px; color:var(--muted)"><span class="tag t-neutral">Estimation</span> — arithmétique, pas prévision. Hypothèse commune : 30 % des commandes viennent de l'organique (coût d'acquisition nul), 70 % de la publicité.</p>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:16px">
+<div class="tw"><table>
+<thead><tr><th>Scénario</th><th class="num">Panier moyen</th><th class="num">Contribution / cmd</th><th class="num">CPA moyen</th><th class="num">Net / cmd</th><th class="num">10 cmd/j</th><th class="num">50 cmd/j</th><th class="num">100 cmd/j</th><th class="num">500 cmd/j</th></tr></thead>
+<tbody>
+<tr><td class="nm">Conservateur</td><td class="num">32 €</td><td class="num">12,00 €</td><td class="num">9,80 €</td><td class="num">2,20 €</td><td class="num">410 €</td><td class="num">2 800 €</td><td class="num">5 400 €</td><td class="num">24 000 €</td></tr>
+<tr><td class="nm">Réaliste</td><td class="num">42 €</td><td class="num">18,00 €</td><td class="num">7,70 €</td><td class="num">10,30 €</td><td class="num">2 840 €</td><td class="num">14 950 €</td><td class="num">29 700 €</td><td class="num">145 500 €</td></tr>
+<tr><td class="nm">Très bon</td><td class="num">52 €</td><td class="num">24,00 €</td><td class="num">6,30 €</td><td class="num">17,70 €</td><td class="num">5 060 €</td><td class="num">26 050 €</td><td class="num">51 900 €</td><td class="num">256 500 €</td></tr>
+<tr style="border-top:2px solid var(--line-strong)"><td class="nm" style="color:var(--faint)">Chiffre d'affaires TTC/mois</td><td colspan="4" style="color:var(--faint); font-size:.78rem">Réaliste, pour référence →</td><td class="num" style="color:var(--faint)">12 600 €</td><td class="num" style="color:var(--faint)">63 000 €</td><td class="num" style="color:var(--faint)">126 000 €</td><td class="num" style="color:var(--faint)">630 000 €</td></tr>
+</tbody>
+<caption>Résultat mensuel <strong>après</strong> coût produit, port, droits, frais de paiement, retours, publicité et frais fixes (250 € · 500 € · 1 200 € · 9 000 € selon le palier). <strong>Avant</strong> impôts, cotisations et ta rémunération. Un chiffre positif n'est pas un salaire.</caption>
+</table></div>
+</div>
+
+<div class="col">
+  <div class="call stop" style="margin-top:22px">
+    <h4>Trois avertissements sur ce tableau</h4>
+    <ul class="tight">
+      <li><strong>La colonne 500 cmd/j n'est pas ton projet.</strong> C'est une entreprise avec des salariés, un entrepôt et un service client. Je l'ai calculée parce que tu l'as demandée, mais l'extrapolation linéaire y est fausse : à ce volume, les taux de retour, le coût du support et le besoin en fonds de roulement changent de nature.</li>
+      <li><strong>La trésorerie est le vrai obstacle, pas la marge.</strong> Shopify Payments te verse sous 3 à 5 jours ouvrés, mais tu paies le fournisseur immédiatement, et la publicité est prélevée quotidiennement. À 50 commandes par jour, tu portes en permanence 2 000 à 4 000 € d'avance de trésorerie. <strong>C'est ce qui tue les boutiques en croissance — pas le manque de ventes.</strong></li>
+      <li><strong>Le scénario conservateur est le plus probable les trois premiers mois.</strong> 410 € par mois pour un travail à plein temps. Regarde ce chiffre en face maintenant, pas en novembre. Si tu ne peux pas tenir trois mois à ce niveau, ne lance pas le projet.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 12 ══════════════ -->
+<section id="s12">
+  <div class="sec-head"><span class="sec-n">12</span><h2>La stratégie rentrée</h2></div>
+  <p class="lede">Nous sommes le 21 août. Je ne vais pas te vendre une stratégie de rentrée qui n'existe plus. Voici ce qui est réellement jouable dans les onze jours restants — et ce qui ne l'est pas.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="call stop"><h4>Ce qui n'est plus jouable</h4><ul class="tight">
+      <li>Sourcer un produit de rentrée en Chine : il arrive fin septembre, tu vends en octobre, personne ne cherche.</li>
+      <li>Fournitures scolaires, cartables, agendas : le pic d'achat est passé et tu es battu sur le prix par la grande distribution.</li>
+      <li>Construire une audience de zéro et convertir en 11 jours.</li>
+    </ul></div>
+    <div class="call go"><h4>Ce qui reste jouable</h4><ul class="tight">
+      <li><strong>Le thème organisation / télétravail tourne jusqu'à fin octobre</strong>, puis repart fort en janvier. Ce n'est pas « la rentrée », c'est « reprendre le contrôle ».</li>
+      <li>Les produits déjà disponibles en entrepôt UE, expédiables sous 3 jours : c'est le seul sourcing possible cette semaine.</li>
+      <li><strong>Le contenu.</strong> Septembre est ton mois d'apprentissage : tu apprends à tourner, à monter, à écrire des accroches — sur un trafic qui ne compte pas encore.</li>
+    </ul></div>
+  </div>
+
+  <h3 style="margin-top:32px">Les cibles, et ce qu'elles achètent réellement</h3>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card"><h4>Étudiants (17–24)</h4><p>Budget serré, achat impulsif à moins de 25 €, chambre de 9 m² qu'ils ne peuvent pas percer. <strong>Guirlande photo, lampe de lecture à pince, lampe champignon sans fil, trousse dépliable.</strong> C'est la cible la plus facile à atteindre en organique et la plus dure à rentabiliser en publicité.</p></div>
+    <div class="card"><h4>Jeunes actifs (24–32)</h4><p>Premier appartement, budget 30–60 €, veulent que ça ait l'air cher. <strong>Lampe de bureau pliable, organisateur de bureau, mug isotherme, chauffe-bougie.</strong> Meilleur rapport panier/effort de toute la section.</p></div>
+    <div class="card"><h4>Parents (30–45)</h4><p>Achètent contre la charge mentale, pas contre l'ennui. <strong>Tableau planificateur magnétique, veilleuse nuage, coussin chauffant.</strong> Angle : « l'organisation de la famille tient sur le frigo ».</p></div>
+    <div class="card"><h4>Télétravailleurs (28–50)</h4><p>Le meilleur panier moyen du groupe, et les retours les plus faibles. <strong>Lampe de bureau, repose-pieds, organisateur, mug isotherme.</strong> Fenêtre : septembre-octobre, puis janvier.</p></div>
+  </div>
+
+  <div class="sunk" style="margin-top:24px">
+    <p class="eyebrow">La bonne façon de jouer septembre</p>
+    <p style="margin-top:8px">Ne cherche pas à faire du chiffre d'affaires en septembre. <strong>Cherche à publier 90 vidéos et à comprendre lesquelles marchent.</strong> Le rendement de septembre n'est pas en euros, il est en compétence et en abonnés — et ces deux actifs sont ce qui te permettra de vendre en novembre. Un compte à 4 000 abonnés le 1<sup>er</sup> novembre vaut plus que 600 € de ventes en septembre.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 13 ══════════════ -->
+<section id="s13">
+  <div class="sec-head"><span class="sec-n">13</span><h2>La stratégie Halloween</h2></div>
+  <p class="lede">Tu proposais sept options. Je prends <strong>A + E + F</strong> : une collection datée dans la boutique principale, centrée sur la décoration et l'ambiance de soirée. <strong>Zéro déguisement.</strong> Et je change le nom de la collection.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h3>Pourquoi pas une boutique séparée (B)</h3><p>Un deuxième nom de domaine, un deuxième compte TikTok, une deuxième audience à construire — pour trois semaines de vente, puis un actif mort. Tu doublerais le travail au moment précis où tu dois concentrer tes efforts sur Black Friday.</p></div>
+    <div class="card"><h3>Pourquoi pas les déguisements (C)</h3><p>Des tailles, donc des retours à deux chiffres. Un contrôle qualité impossible à distance sur du textile. Et une concurrence qui vend en dessous de ton prix de revient. C'est le pire produit possible au regard de tes propres critères.</p></div>
+  </div>
+
+  <div class="call go" style="margin-top:20px">
+    <h4>Le geste stratégique : appelle-la « Octobre », pas « Halloween »</h4>
+    <p>Une collection « Halloween » meurt le 1<sup>er</sup> novembre et emporte avec elle l'image de ta marque. Une collection <strong>« Octobre »</strong> — bougies, lanternes en céramique, velours, lumière chaude, teintes prune et ambre — capte exactement la même demande, <strong>commence trois semaines plus tôt</strong> (dès la mi-septembre, quand le public cherche « déco automne »), et <strong>survit au 1<sup>er</sup> novembre</strong> : la moitié des références glissent naturellement vers la collection Cocooning.</p>
+    <p>Tu obtiens la saisonnalité que tu voulais, sans le mur du 1<sup>er</sup> novembre. C'est la réponse à ta question « comment profiter d'Halloween tout en conservant la boutique après octobre ».</p>
+  </div>
+
+  <h3 style="margin-top:34px">20 produits — décoration et soirée uniquement</h3>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:14px">
+<div class="tw"><table>
+<thead><tr><th>#</th><th>Produit</th><th class="num">Achat</th><th class="num">Vente</th><th>Survit au 1er nov. ?</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td class="nm">Projecteur d'animations fantômes</td><td class="num">12 €</td><td class="num">39,90 €</td><td><span class="tag t-stop">Non</span></td></tr>
+<tr><td class="num">2</td><td class="nm">Lanterne citrouille LED céramique</td><td class="num">10 €</td><td class="num">32,90 €</td><td><span class="tag t-ok">Oui — automne</span></td></tr>
+<tr><td class="num">3</td><td class="nm">Bougie sculptée fantôme</td><td class="num">7 €</td><td class="num">24,90 €</td><td><span class="tag t-warn">Partiellement</span></td></tr>
+<tr><td class="num">4</td><td class="nm">Guirlande LED citrouilles</td><td class="num">6 €</td><td class="num">22,90 €</td><td><span class="tag t-stop">Non</span></td></tr>
+<tr><td class="num">5</td><td class="nm">Photophore en verre fumé</td><td class="num">6 €</td><td class="num">21,90 €</td><td><span class="tag t-ok">Oui</span></td></tr>
+<tr><td class="num">6</td><td class="nm">Chemin de table velours prune</td><td class="num">8 €</td><td class="num">27,90 €</td><td><span class="tag t-ok">Oui — Noël</span></td></tr>
+<tr><td class="num">7</td><td class="nm">Bougeoir main sculptée</td><td class="num">9 €</td><td class="num">29,90 €</td><td><span class="tag t-ok">Oui</span></td></tr>
+<tr><td class="num">8</td><td class="nm">Silhouettes de fenêtre (lot)</td><td class="num">4 €</td><td class="num">16,90 €</td><td><span class="tag t-stop">Non</span></td></tr>
+<tr><td class="num">9</td><td class="nm">Mini machine à brume</td><td class="num">14 €</td><td class="num">44,90 €</td><td><span class="tag t-warn">Party toute l'année</span></td></tr>
+<tr><td class="num">10</td><td class="nm">Housse de coussin citrouille velours</td><td class="num">7 €</td><td class="num">24,90 €</td><td><span class="tag t-ok">Oui — automne</span></td></tr>
+<tr><td class="num">11</td><td class="nm">Verres à cocktail ambrés (×4)</td><td class="num">11 €</td><td class="num">36,90 €</td><td><span class="tag t-ok">Oui — Noël</span></td></tr>
+<tr><td class="num">12</td><td class="nm">Plateau apéro ardoise noire</td><td class="num">10 €</td><td class="num">32,90 €</td><td><span class="tag t-ok">Oui — Noël</span></td></tr>
+<tr><td class="num">13</td><td class="nm">Couronne de porte automnale</td><td class="num">12 €</td><td class="num">39,90 €</td><td><span class="tag t-warn">Version Noël à sourcer</span></td></tr>
+<tr><td class="num">14</td><td class="nm">Sous-verres tarot / astro (lot)</td><td class="num">6 €</td><td class="num">22,90 €</td><td><span class="tag t-ok">Oui — cadeau</span></td></tr>
+<tr><td class="num">15</td><td class="nm">Boule à neige manoir hanté</td><td class="num">9 €</td><td class="num">29,90 €</td><td><span class="tag t-stop">Non</span></td></tr>
+<tr><td class="num">16</td><td class="nm">Toile d'araignée lumineuse</td><td class="num">7 €</td><td class="num">24,90 €</td><td><span class="tag t-stop">Non</span></td></tr>
+<tr><td class="num">17</td><td class="nm">Kit photobooth (cadre + accessoires)</td><td class="num">6 €</td><td class="num">22,90 €</td><td><span class="tag t-warn">Version Nouvel An</span></td></tr>
+<tr><td class="num">18</td><td class="nm">Lampe chauve-souris / lune</td><td class="num">11 €</td><td class="num">36,90 €</td><td><span class="tag t-ok">Oui</span></td></tr>
+<tr><td class="num">19</td><td class="nm">Vaisselle premium noir mat (party)</td><td class="num">8 €</td><td class="num">26,90 €</td><td><span class="tag t-ok">Oui — Nouvel An</span></td></tr>
+<tr><td class="num">20</td><td class="nm">Diffuseur parfum « bois &amp; épices »</td><td class="num">10 €</td><td class="num">32,90 €</td><td><span class="tag t-ok">Oui — hiver</span></td></tr>
+</tbody>
+<caption><strong>13 des 20 références survivent au 1<sup>er</sup> novembre.</strong> C'est le critère de sélection principal — pas le potentiel de vente en octobre. Un produit qui ne survit pas doit être commandé en quantité strictement limitée. Prix : <span class="tag t-neutral">Estimation</span> à revalider.</caption>
+</table></div>
+</div>
+
+<div class="col">
+  <div class="grid2" style="margin-top:26px">
+    <div class="card"><h4>20 idées TikTok pour octobre</h4><ol class="tight" style="font-size:.84rem">
+      <li>« Ma déco d'automne qui reste jolie en novembre »</li>
+      <li>Transformation d'une table en 30 secondes</li>
+      <li>ASMR : allumage de 6 bougies en plan fixe</li>
+      <li>« 3 objets pour une soirée réussie sous 60 € »</li>
+      <li>Fenêtre normale → fantômes projetés</li>
+      <li>« Erreurs de déco d'Halloween » (le format critique performe)</li>
+      <li>Time-lapse d'une bougie sculptée qui fond</li>
+      <li>Réaction des enfants qui découvrent la déco</li>
+      <li>« Prépare ma soirée avec moi » en 15 s</li>
+      <li>Comparatif citrouille vraie vs. lanterne céramique</li>
+      <li>« Ce que j'ai gardé de ma déco d'octobre » (à publier le 2 nov.)</li>
+      <li>Recette de cocktail dans les verres ambrés</li>
+      <li>Plan large de la porte d'entrée décorée, de nuit</li>
+      <li>« Combien ça m'a coûté » — transparence totale des prix</li>
+      <li>Le kit photobooth testé par 4 amis</li>
+      <li>Ambiance brume + lumière rouge en une prise</li>
+      <li>« Déco d'octobre quand tu es locataire »</li>
+      <li>Déballage silencieux de toute la collection</li>
+      <li>« Le seul objet que je ressors chaque année »</li>
+      <li>Compte à rebours réel : « J-7, il faut commander maintenant »</li>
+    </ol></div>
+
+    <div class="card"><h4>10 bundles</h4><ol class="tight" style="font-size:.84rem">
+      <li><strong>Soirée complète</strong> — projecteur + brume + guirlande · 89,90 €</li>
+      <li><strong>Table d'octobre</strong> — chemin de table + 2 photophores + bougie · 64,90 €</li>
+      <li><strong>Entrée</strong> — couronne + 2 lanternes · 79,90 €</li>
+      <li><strong>Apéro</strong> — plateau + 4 verres + sous-verres · 74,90 €</li>
+      <li><strong>Cocooning d'automne</strong> — housse coussin + bougie + diffuseur · 69,90 €</li>
+      <li><strong>Duo lanternes</strong> — deux tailles · 54,90 €</li>
+      <li><strong>Kit locataire</strong> — silhouettes + guirlande + projecteur · 69,90 €</li>
+      <li><strong>Petit budget</strong> — guirlande + bougie · 39,90 €</li>
+      <li><strong>Photo</strong> — kit photobooth + brume · 59,90 €</li>
+      <li><strong>Trio lumière</strong> — 3 photophores dépareillés · 49,90 €</li>
+    </ol><p style="font-size:.84rem"><strong>Règle :</strong> tout bundle doit partir d'un entrepôt UE. Depuis la Chine, chaque référence supplémentaire ajoute 3 € de droit.</p></div>
+
+    <div class="card"><h4>10 angles marketing</h4><ol class="tight" style="font-size:.84rem">
+      <li>« La déco d'octobre que tu ne jettes pas le 1<sup>er</sup> novembre »</li>
+      <li>« Pour ceux qui n'aiment pas Halloween mais aiment l'automne »</li>
+      <li>« Ta soirée prête en 20 minutes »</li>
+      <li>« Sans percer un seul trou » (locataires)</li>
+      <li>« Élégant, pas kitsch »</li>
+      <li>« Ce que tes invités photographieront »</li>
+      <li>« Moins cher qu'une vraie citrouille, sur cinq ans »</li>
+      <li>« Sans flamme, avec des enfants et un chat »</li>
+      <li>« Commandé aujourd'hui, chez toi vendredi » (l'argument entrepôt UE)</li>
+      <li>« Le 25 octobre, c'est trop tard » (urgence réelle, datée, vérifiable)</li>
+    </ol></div>
+
+    <div class="card"><h4>Calendrier de lancement et de sortie</h4><ul class="tight" style="font-size:.84rem">
+      <li><strong>15 sept.</strong> — Ouverture de la collection « Octobre ». Contenu automne, pas Halloween.</li>
+      <li><strong>25 sept. → 10 oct.</strong> — Montée en puissance : 4 vidéos/jour. Le pic de recherche est mi-octobre, donc le contenu doit précéder.</li>
+      <li><strong>10 → 24 oct.</strong> — Cœur de saison. Publicité si et seulement si les 4 conditions du §10 sont remplies.</li>
+      <li><strong>24 oct.</strong> — <strong>Dernière date d'expédition garantie.</strong> Communique-la partout : c'est ton meilleur levier d'urgence, et il est vrai.</li>
+      <li><strong>25 → 31 oct.</strong> — Stop aux nouvelles ventes physiques. Bascule tout le contenu sur la collecte d'e-mails : « préviens-moi pour Noël ».</li>
+      <li><strong>1<sup>er</sup> nov.</strong> — Basculement, pas soldes. Les 13 références compatibles glissent en Cocooning, les 7 autres sortent du menu.</li>
+      <li><strong>2 nov.</strong> — Premier e-mail Noël à la liste d'octobre. <strong>C'est le vrai produit de ta saison Halloween.</strong></li>
+    </ul></div>
+  </div>
+
+  <div class="sunk" style="margin-top:24px">
+    <p class="eyebrow">Le point que je veux que tu retiennes</p>
+    <h3 style="margin-top:8px; font-size:1.12rem">La vraie valeur d'octobre n'est pas le chiffre d'affaires d'octobre. C'est la liste de clients que tu obtiens 27 jours avant Black Friday.</h3>
+    <p style="margin-top:10px">Deux cents acheteurs d'octobre, c'est une liste e-mail et SMS de gens qui t'ont déjà donné leur carte bancaire. Le 27 novembre, leur revendre coûte presque rien alors que l'acquisition publicitaire est à son prix le plus élevé de l'année. <strong>Vu comme ça, ton intuition sur Halloween était juste — mais pas pour la raison que tu croyais.</strong> Ce n'est pas un marché à prendre, c'est une rampe de lancement vers celui de novembre.</p>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 14 ══════════════ -->
+<section id="s14">
+  <div class="sec-head"><span class="sec-n">14</span><h2>Le plan 30 jours</h2></div>
+  <p class="lede">Daté à partir d'aujourd'hui, vendredi 21 août 2026. Chaque jour a un livrable unique. <strong>Si un jour déborde, tu décales — tu ne sautes pas.</strong> L'ordre compte : le statut juridique est en J4 parce que le SIRET met deux à trois semaines à arriver.</p>
+
+  <div class="days" style="margin-top:24px">
+    <div><div class="dh">J1<small>ven 21/08</small></div><div class="db"><b>Écris ton territoire en une phrase</b><span>« Tout ce qui rend un intérieur plus chaleureux le soir. » Imprime-la. Toute décision produit des 90 prochains jours s'y confronte. N'achète rien aujourd'hui.</span></div></div>
+    <div><div class="dh">J2<small>sam 22/08</small></div><div class="db"><b>Vérifie 10 noms</b><span>Base marques INPI, TMview (EUIPO), classes 11/20/21/35. Puis domaines .fr et .com, puis les handles TikTok et Instagram. Sors de la journée avec 3 noms libres sur les quatre plans.</span></div></div>
+    <div><div class="dh">J3<small>dim 23/08</small></div><div class="db"><b>Choisis. Achète le domaine. Réserve les handles.</b><span>.fr et .com, ~25 €. Crée l'adresse e-mail professionnelle. Les handles se réservent en 10 minutes et se perdent définitivement.</span></div></div>
+    <div><div class="dh">J4<small>lun 24/08</small></div><div class="db"><b>Crée la micro-entreprise</b><span>Guichet unique de l'INPI. Gratuit. Le SIRET arrive sous 1 à 3 semaines et il te faut pour Shopify Payments — c'est pour ça que ce n'est pas en J20.</span></div></div>
+    <div><div class="dh">J5<small>mar 25/08</small></div><div class="db"><b>Ouvre Shopify, installe Dawn</b><span>Essai à 1 €/mois pendant 3 mois. Thème gratuit. <strong>Zéro application aujourd'hui.</strong></span></div></div>
+    <div><div class="dh">J6<small>mer 26/08</small></div><div class="db"><b>Comptes fournisseurs + présélection</b><span>CJdropshipping et DSers. Filtre « entrepôt UE » activé. Sors 20 SKU candidats, pas plus.</span></div></div>
+    <div><div class="dh">J7<small>jeu 27/08</small></div><div class="db"><b>Interroge les fournisseurs sur la conformité</b><span>Un message type à chaque fournisseur : expédition DDP ? numéro IOSS ? coordonnées du fabricant et documentation GPSR ? Sans réponse écrite claire, le SKU sort de la liste. Ce filtre élimine généralement la moitié des candidats.</span></div></div>
+    <div><div class="dh">J8<small>ven 28/08</small></div><div class="db"><b>Commande 4 échantillons</b><span>2 produits à tester + 2 du futur Cœur. Depuis un entrepôt UE : livrés sous 3 à 5 jours. Budget ~120 €.</span></div></div>
+    <div><div class="dh">J9<small>sam 29/08</small></div><div class="db"><b>Identité visuelle — 2 heures maximum</b><span>Logo en texte pur dans une police serif. Palette à 3 couleurs. Un kit Canva. Ne passe pas trois jours là-dessus : ton logo n'a jamais vendu un seul produit.</span></div></div>
+    <div><div class="dh">J10<small>dim 30/08</small></div><div class="db"><b>Rédige les pages légales</b><span>Mentions légales, CGV, confidentialité, cookies, livraison, retours. Pars des modèles Shopify, adapte au droit français, fais relire plus tard (§16).</span></div></div>
+    <div><div class="dh">J11<small>lun 31/08</small></div><div class="db"><b>Monte la page d'accueil</b><span>Les 9 blocs du §06, avec les textes fournis. Le bloc preuve sociale reste désactivé : tu n'as pas encore de client.</span></div></div>
+    <div><div class="dh">J12<small>mar 01/09</small></div><div class="db"><b>Écris les fiches produit du Cœur</b><span>Structure en 16 blocs du §06. Photos fournisseur en provisoire — remplacées en J18.</span></div></div>
+    <div><div class="dh">J13<small>mer 02/09</small></div><div class="db"><b>Paiements, livraison, e-mails</b><span>Shopify Payments + PayPal. Zones et délais réels. Traduis et réécris les e-mails transactionnels : ceux par défaut sonnent américain.</span></div></div>
+    <div><div class="dh">J14<small>jeu 03/09</small></div><div class="db"><b>Applications minimales + traçage</b><span>Avis clients, e-mail, analytics. Trois applications, pas dix. Pixel Meta, pixel TikTok, GA4 — installe-les maintenant même sans publicité : ils accumulent des données dès aujourd'hui.</span></div></div>
+    <div><div class="dh">J15<small>ven 04/09</small></div><div class="db"><b>Réception et contrôle des échantillons</b><span>Manipule, teste, filme le déballage. <strong>Un produit qui te déçoit en main est éliminé aujourd'hui</strong> — pas après 40 vidéos.</span></div></div>
+    <div><div class="dh">J16<small>sam 05/09</small></div><div class="db"><b>Journée de tournage n°1</b><span>20 rushes sur le produit A, 5 hooks différents. Une seule session, lumière naturelle, trépied.</span></div></div>
+    <div><div class="dh">J17<small>dim 06/09</small></div><div class="db"><b>Montage et première publication</b><span>CapCut. 3 vidéos en ligne à 11 h, 18 h et 21 h. La première vidéo fera 200 vues. C'est normal, continue.</span></div></div>
+    <div><div class="dh">J18<small>lun 07/09</small></div><div class="db"><b>Tes vraies photos produit</b><span>Chez toi, lumière de fin d'après-midi. 7 visuels par produit du Cœur. C'est ce qui te sépare visuellement du dropshipping.</span></div></div>
+    <div><div class="dh">J19<small>mar 08/09</small></div><div class="db"><b>3 vidéos · remplacement des photos catalogue</b><span>Plus une seule image de fournisseur sur les fiches du Cœur à la fin de la journée.</span></div></div>
+    <div><div class="dh">J20<small>mer 09/09</small></div><div class="db"><b>3 vidéos · commande test de bout en bout</b><span>Achète sur ta propre boutique. Vérifie : e-mail, remontée de la commande chez le fournisseur, tracking, colis, facture. Trouve les erreurs avant tes clients.</span></div></div>
+    <div><div class="dh">J21<small>jeu 10/09</small></div><div class="db"><b>Première analyse</b><span>Rétention à 3 s des 10 vidéos. Identifie le hook gagnant. C'est ta première donnée réelle du projet.</span></div></div>
+    <div><div class="dh">J22<small>ven 11/09</small></div><div class="db"><b>Vague 2 — 5 formats sur le hook gagnant</b><span>Une variable change, une seule.</span></div></div>
+    <div><div class="dh">J23<small>sam 12/09</small></div><div class="db"><b>Tournage n°2</b><span>Produit B + premiers plans de la collection Octobre.</span></div></div>
+    <div><div class="dh">J24<small>dim 13/09</small></div><div class="db"><b>Montage · 3 publications</b><span>Tu es maintenant à ~25 vidéos publiées. Le rythme est installé.</span></div></div>
+    <div><div class="dh">J25<small>lun 14/09</small></div><div class="db"><b>Ouverture de la collection « Octobre »</b><span>13 références compatibles automne. Une semaine avant le pic de recherche — le contenu doit précéder la demande.</span></div></div>
+    <div><div class="dh">J26<small>mar 15/09</small></div><div class="db"><b>Réponds en vidéo aux commentaires</b><span>3 vidéos de réponse. Le format le moins cher et le plus performant du répertoire.</span></div></div>
+    <div><div class="dh">J27<small>mer 16/09</small></div><div class="db"><b>Automatisations e-mail</b><span>Bienvenue, panier abandonné, post-achat à J+7 demandant un avis. Trois séquences, c'est tout ce dont tu as besoin cette année.</span></div></div>
+    <div><div class="dh">J28<small>jeu 17/09</small></div><div class="db"><b>Conformité GPSR sur toutes les fiches</b><span>Bloc identité et adresse du fabricant en pied de chaque fiche produit. Fastidieux, obligatoire.</span></div></div>
+    <div><div class="dh">J29<small>ven 18/09</small></div><div class="db"><b>Audit de vitesse mobile</b><span>PageSpeed Insights. Images en WebP. Désinstalle toute application non utilisée : chaque app ajoute du script et ralentit la page.</span></div></div>
+    <div><div class="dh">J30<small>sam 19/09</small></div><div class="db"><b>Bilan et décision</b><span>~40 vidéos publiées, 2 produits testés, boutique complète et conforme. Passe A et B dans la matrice de décision du §16 : continuer, modifier ou arrêter.</span></div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h4>Mois 2 — 20 sept. → 19 oct.</h4><ul class="tight" style="font-size:.85rem">
+      <li><strong>S5</strong> — Test du produit C. Montée à 4 vidéos/jour sur la collection Octobre. Objectif : première vente organique.</li>
+      <li><strong>S6</strong> — Le gagnant du mois 1 monte dans le Cœur : re-sourcing UE, vraies photos, fiche longue. Ouverture de Google Search sur ta marque (2 €/jour).</li>
+      <li><strong>S7</strong> — Cœur de saison Octobre. Premiers avis clients en ligne. Activation du bloc preuve sociale. Si les 4 conditions du §10 sont réunies : ouverture de Meta Ads à 20 €/jour.</li>
+      <li><strong>S8</strong> — <strong>24 oct. : dernière expédition garantie.</strong> Puis bascule totale du contenu sur la collecte d'e-mails pour Noël.</li>
+    </ul></div>
+    <div class="card"><h4>Mois 3 — 20 oct. → 19 nov.</h4><ul class="tight" style="font-size:.85rem">
+      <li><strong>S9</strong> — 1<sup>er</sup> nov. : basculement Octobre → Cocooning et Noël. Premier e-mail Noël à la liste d'octobre le 2.</li>
+      <li><strong>S10</strong> — Collection Noël en ligne. Mise en avant des bundles cadeaux. Flux Google Shopping activé.</li>
+      <li><strong>S11</strong> — Préparation Black Friday : offre décidée et figée, e-mails écrits, créatifs montés, stock confirmé avec le fournisseur par écrit. <strong>Tout doit être prêt le 20 novembre.</strong></li>
+      <li><strong>S12</strong> — <strong>27 nov. : Black Friday.</strong> Budget publicitaire × 3 sur ce qui fonctionne déjà. Aucun produit nouveau ce jour-là.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ══════════════ 15 ══════════════ -->
+<section id="s15">
+  <div class="sec-head"><span class="sec-n">15</span><h2>La stack d'outils</h2></div>
+  <p class="lede">Tu as demandé de ne pas te recommander 50 applications inutiles. En voici <strong>onze</strong>, dont six gratuites. Chaque application installée ralentit ta boutique et prélève un abonnement : la stack la plus rentable est la plus courte.</p>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:18px">
+<div class="tw"><table>
+<thead><tr><th>Outil</th><th>Rôle</th><th class="num">Prix/mois</th><th>Avantage</th><th>Inconvénient</th><th>Alternative gratuite</th><th class="num">Note</th></tr></thead>
+<tbody>
+<tr><td class="nm">Shopify Basic</td><td>La boutique</td><td class="num">~36 €<br><small>25 € en annuel</small></td><td>Fiable, checkout excellent, écosystème complet</td><td>Commissions si tu n'utilises pas Shopify Payments</td><td>Aucune sérieuse à ce stade</td><td class="num score s-hi">9</td></tr>
+<tr><td class="nm">Thème Dawn</td><td>Design</td><td class="num">0 €</td><td>Officiel, rapide, mis à jour, propre</td><td>Peu différenciant sans travail éditorial</td><td>—</td><td class="num score s-hi">9</td></tr>
+<tr><td class="nm">CJdropshipping</td><td>Sourcing + logistique</td><td class="num">0 €<br><small>coût au produit</small></td><td>Entrepôts UE, commandes et tracking automatiques, packaging neutre</td><td>Qualité variable selon le SKU — teste toujours</td><td>—</td><td class="num score s-hi">8</td></tr>
+<tr><td class="nm">DSers</td><td>Test de nouveaux SKU</td><td class="num">0 €<br><small>offre gratuite</small></td><td>Partenaire officiel AliExpress, automatisation complète</td><td>Délais Chine + 3 € de droit désormais</td><td>—</td><td class="num score s-hi">8</td></tr>
+<tr><td class="nm">Judge.me</td><td>Avis clients</td><td class="num">0 → 15 €</td><td>Offre gratuite très complète, photos clients, riches extraits Google</td><td>Personnalisation limitée en gratuit</td><td>Sa propre offre gratuite</td><td class="num score s-hi">9</td></tr>
+<tr><td class="nm">Klaviyo <em>ou</em> Shopify Email</td><td>E-mail et SMS</td><td class="num">0 → 45 €</td><td>Klaviyo est la référence ; Shopify Email suffit sous 500 contacts</td><td>Klaviyo devient cher vite et est surdimensionné au début</td><td>Shopify Email (10 000 envois/mois)</td><td class="num score s-hi">8</td></tr>
+<tr><td class="nm">CapCut</td><td>Montage vidéo</td><td class="num">0 €</td><td>Sous-titres automatiques en français, formats natifs TikTok</td><td>Attention au filigrane sur certains modèles</td><td>Sa propre version gratuite</td><td class="num score s-hi">9</td></tr>
+<tr><td class="nm">Canva</td><td>Visuels, logo, bannières</td><td class="num">0 → 12 €</td><td>Suffit largement pour toute ton identité</td><td>Suppression d'arrière-plan payante</td><td>Photopea</td><td class="num score s-hi">8</td></tr>
+<tr><td class="nm">GA4 + Google Search Console</td><td>Analytics</td><td class="num">0 €</td><td>Indispensable, gratuit, données conservées</td><td>Interface ingrate</td><td>—</td><td class="num score s-mid">7</td></tr>
+<tr><td class="nm">App Google &amp; YouTube</td><td>Merchant Center et Shopping</td><td class="num">0 €</td><td>Flux produit automatique, fiches gratuites dans Shopping</td><td>Validation initiale parfois lente</td><td>—</td><td class="num score s-hi">8</td></tr>
+<tr><td class="nm">Bandeau cookies conforme CNIL</td><td>RGPD</td><td class="num">0 → 10 €</td><td>Obligatoire dès que tu poses des pixels publicitaires</td><td>Le bandeau natif Shopify ne suffit pas toujours pour la France</td><td>Selon l'application choisie</td><td class="num score s-hi">8</td></tr>
+</tbody>
+<caption><strong>Coût mensuel de départ : environ 36 à 50 €.</strong> <span class="tag t-ok">Vérifié</span> pour le tarif Shopify France, août 2026 (offre de lancement à 1 €/mois pendant 3 mois). Les autres tarifs sont des ordres de grandeur à revérifier. <strong>N'installe aucune application de compte à rebours, de « X personnes regardent ce produit » ou de notification de fausse vente</strong> — au-delà du risque juridique (§16), ce sont les signaux que ton acheteur français associe à l'arnaque.</caption>
+</table></div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 16 ══════════════ -->
+<section id="s16">
+  <div class="sec-head"><span class="sec-n">16</span><h2>Risques, légal, et matrice de décision</h2></div>
+  <p class="lede">Tu as écrit que tu voulais « faire les choses proprement ». C'est la meilleure phrase de ton brief — et c'est aussi ce qui va te coûter le plus de temps.</p>
+
+  <div class="call warn" style="margin-top:22px">
+    <h4>Ce que ce document n'est pas</h4>
+    <p>Ce qui suit est une <strong>liste de sujets à traiter</strong>, pas un conseil juridique et pas un avis fiscal. Je ne connais ni ta situation personnelle, ni ton patrimoine, ni tes produits exacts. <strong>Avant de vendre ton premier article, fais valider ta configuration par un expert-comptable</strong> (statut, TVA, facturation) <strong>et fais relire tes CGV par un juriste</strong>. Compte 400 à 900 € au total. C'est le meilleur investissement de la liste, et le seul qui te protège personnellement.</p>
+  </div>
+</section>
+</div>
+
+<div class="col wide" style="margin-top:18px">
+<div class="tw"><table>
+<thead><tr><th>Sujet</th><th>Ce que ça implique concrètement</th><th>À vérifier auprès de</th></tr></thead>
+<tbody>
+<tr><td class="nm">Statut juridique</td><td>Micro-entreprise pour démarrer : gratuit, immédiat, comptabilité minimale. Limite : ton patrimoine et ta responsabilité. Passage en SASU ou EURL à envisager dès que le projet devient sérieux ou qu'un associé arrive.</td><td>Expert-comptable · guichet unique INPI</td></tr>
+<tr><td class="nm">TVA</td><td>Franchise en base sous 85 000 € de ventes de biens (majoré 93 500 €), seuils inchangés en 2026. Au-delà : TVA collectée à 20 %, déclarations périodiques. Le franchissement fait chuter ta marge de ~5 € par commande : anticipe-le dans ton prix.</td><td>Expert-comptable · impots.gouv.fr</td></tr>
+<tr><td class="nm">Facturation</td><td>Facture obligatoire pour chaque vente, numérotée en série continue. Mentions obligatoires. Sous franchise : mention « TVA non applicable, art. 293 B du CGI ». La facturation électronique arrive progressivement — vérifie ton calendrier d'obligation.</td><td>Expert-comptable</td></tr>
+<tr><td class="nm">CGV</td><td>Obligatoires en B2C. Doivent couvrir prix, paiement, livraison, rétractation, garanties légales, litiges, médiation. <strong>Ne copie pas celles d'un concurrent : tu hérites de ses erreurs et tu contrefais son texte.</strong></td><td>Juriste ou avocat en droit de la consommation</td></tr>
+<tr><td class="nm">Droit de rétractation</td><td>14 jours minimum sans motif à compter de la réception. Formulaire type à fournir. Remboursement sous 14 jours après retour. Ne pas informer correctement <strong>étend le délai à 12 mois</strong>.</td><td>DGCCRF · economie.gouv.fr</td></tr>
+<tr><td class="nm">Garanties légales</td><td>Garantie légale de conformité de 2 ans et garantie des vices cachés. Elles s'appliquent que tu le veuilles ou non, et c'est <em>toi</em> que le client actionne, pas ton fournisseur chinois.</td><td>DGCCRF</td></tr>
+<tr><td class="nm">Responsabilité du dropshipper</td><td>Le droit français t'assimile au vendeur : <strong>responsable de plein droit de la bonne exécution du contrat</strong>, même sans jamais toucher le colis. Obligation d'informer sur les caractéristiques essentielles, le délai réel de livraison et l'identité du fournisseur.</td><td>DGCCRF · avocat</td></tr>
+<tr><td class="nm">RGPD</td><td>Registre des traitements, base légale, information des personnes, droits d'accès et d'effacement, contrats de sous-traitance avec Shopify et tes applications, transferts hors UE.</td><td>CNIL</td></tr>
+<tr><td class="nm">Cookies</td><td>Consentement préalable pour les pixels Meta, TikTok et GA4. <strong>Refuser doit être aussi simple qu'accepter</strong> — exigence CNIL, contrôlée et sanctionnée. Le bandeau natif de Shopify ne suffit pas toujours.</td><td>CNIL</td></tr>
+<tr><td class="nm">Mentions légales</td><td>Identité, forme juridique, adresse, SIREN, contact, hébergeur, directeur de publication, médiateur de la consommation.</td><td>LCEN · Code de la consommation</td></tr>
+<tr><td class="nm">GPSR — sécurité produit</td><td>Applicable depuis le 13 déc. 2024. Personne responsable établie dans l'UE obligatoire. <strong>Sans représentant du fabricant dans l'UE, c'est toi.</strong> Documentation technique, analyse de risque, coordonnées fabricant affichées sur la fiche produit.</td><td>DGCCRF · fournisseur (par écrit)</td></tr>
+<tr><td class="nm">Marquage CE</td><td>Requis pour l'électrique, l'électronique, les jouets et d'autres familles. Suppose une déclaration UE de conformité que tu dois pouvoir produire. <strong>C'est la raison n° 1 d'éviter l'électronique pour un premier lancement.</strong></td><td>Fournisseur · organisme notifié si besoin</td></tr>
+<tr><td class="nm">Emballages — REP</td><td>Responsabilité élargie du producteur : adhésion à un éco-organisme, éco-contribution, identifiant unique, signalétique de tri Triman. S'applique même à petit volume.</td><td>ADEME · éco-organisme (Citeo)</td></tr>
+<tr><td class="nm">DEEE</td><td>Filière séparée pour tout équipement électrique ou électronique. Éco-contribution et enregistrement distincts de la filière emballages.</td><td>Éco-organisme DEEE</td></tr>
+<tr><td class="nm">Droits de douane</td><td><strong>Exonération de 150 € supprimée au 1<sup>er</sup> juillet 2026.</strong> Droit forfaitaire transitoire de 3 € par ligne tarifaire sur les envois B2C hors UE de moins de 150 €, jusqu'au 1<sup>er</sup> juillet 2028.</td><td>Douane · ton transitaire</td></tr>
+<tr><td class="nm">IOSS / TVA à l'import</td><td>Le guichet unique à l'import permet de collecter la TVA à la vente et d'éviter que le client soit sollicité à la livraison. <strong>Exige de tout fournisseur hors UE une expédition DDP avec IOSS renseigné</strong>, ou passe par un entrepôt UE.</td><td>Expert-comptable · fournisseur</td></tr>
+<tr><td class="nm">Pratiques commerciales</td><td>Faux avis, faux prix barrés, faux stocks, faux comptes à rebours : pratiques commerciales trompeuses, sanctionnables pénalement. Le e-commerce est un secteur de contrôle prioritaire de la DGCCRF.</td><td>DGCCRF</td></tr>
+</tbody>
+<caption>Liste de sujets à traiter, non exhaustive et non contractuelle. Les seuils, dates et régimes cités sont <span class="tag t-ok">Vérifié</span> en août 2026 mais évoluent — vérifie chacun à sa source officielle avant de t'engager.</caption>
+</table></div>
+</div>
+
+<div class="col">
+  <h3 style="margin-top:36px">La matrice de décision produit</h3>
+  <p style="margin-top:6px; color:var(--muted)">À appliquer à chaque produit au 14<sup>e</sup> jour de test. Lecture : <strong>un seul critère de la colonne rouge suffit à arrêter.</strong> La colonne verte, elle, demande la majorité des critères.</p>
+
+  <div class="matrix" style="margin-top:18px">
+    <div class="mcol go"><header>Je continue</header><ul>
+      <li>≥ 10 ventes organiques en 14 jours</li>
+      <li>Marge de contribution ≥ 55 % du HT</li>
+      <li>Au moins 1 vidéo au-dessus de 50 000 vues</li>
+      <li>Clics vers la bio &gt; 1,5 % des vues</li>
+      <li>Ajout au panier &gt; 6 % des sessions</li>
+      <li>Conversion site &gt; 1,2 %</li>
+      <li>Retours &lt; 5 %</li>
+      <li>Aucun avis sous 4 étoiles sur la qualité</li>
+      <li>Fournisseur UE disponible et conforme</li>
+    </ul></div>
+    <div class="mcol warn"><header>Je modifie</header><ul>
+      <li>Bonnes vues, peu de clics → <strong>change l'angle</strong>, pas le produit</li>
+      <li>Bons clics, peu de paniers → <strong>refais la fiche produit</strong></li>
+      <li>Bons paniers, peu d'achats → <strong>frais de port, délai ou réassurance</strong></li>
+      <li>Marge entre 45 et 55 % → <strong>monte le prix ou crée un bundle</strong></li>
+      <li>Retours entre 5 et 8 % → <strong>vérifie les photos et les dimensions affichées</strong></li>
+      <li>CPA au-dessus du seuil mais ROAS proche de 2 → <strong>travaille le panier moyen</strong></li>
+      <li>Ventes correctes, délai trop long → <strong>re-source en UE</strong></li>
+    </ul></div>
+    <div class="mcol stop"><header>J'arrête</header><ul>
+      <li>10 vidéos, deux angles distincts, aucune au-dessus de 5 000 vues</li>
+      <li>Plus de 500 sessions, zéro vente</li>
+      <li>Marge sous 45 % du HT après droits</li>
+      <li>Retours au-dessus de 8 %</li>
+      <li>Deux avis ou plus signalant un défaut de qualité</li>
+      <li>Coût produit qui augmente ou rupture chronique</li>
+      <li>Fournisseur incapable de fournir DDP/IOSS ou la documentation GPSR</li>
+      <li>Le produit t'expose au marquage CE et tu ne peux pas obtenir la déclaration de conformité</li>
+      <li>Tu n'as pas envie de le montrer à quelqu'un que tu connais</li>
+    </ul></div>
+  </div>
+
+  <h3 style="margin-top:36px">Les dix risques opérationnels, par ordre de probabilité</h3>
+  <div class="stack" style="margin-top:16px">
+    <div class="call stop"><h4>1 — Tu abandonnes avant J45</h4><p>Le risque le plus probable de toute cette liste, et de loin. Les 30 premières vidéos font 200 vues. Le compte décolle en général entre la 40<sup>e</sup> et la 80<sup>e</sup>. <strong>La quasi-totalité des gens arrêtent entre la 15<sup>e</sup> et la 25<sup>e</sup>.</strong> Écris aujourd'hui, sur papier, la date à laquelle tu t'autorises à juger — et pas avant.</p></div>
+    <div class="call warn"><h4>2 — Le client paie la douane à la livraison</h4><p>Fournisseur en DDU. Litige, remboursement, avis à une étoile. <strong>Prévention :</strong> exiger DDP et IOSS par écrit avant le premier SKU (§07).</p></div>
+    <div class="call warn"><h4>3 — Rupture de stock silencieuse</h4><p>La commande reste en attente sans alerte. <strong>Prévention :</strong> 5 minutes de contrôle des commandes non traitées chaque matin.</p></div>
+    <div class="call warn"><h4>4 — Trésorerie bloquée en croissance</h4><p>Tu paies fournisseur et publicité avant d'être crédité. À 50 commandes/jour, tu portes 2 000 à 4 000 € en permanence. <strong>Prévention :</strong> garde une réserve équivalente à 15 jours d'achats avant d'accélérer la publicité.</p></div>
+    <div class="call warn"><h4>5 — Suspension du compte publicitaire</h4><p>Meta suspend sans préavis et sans explication utilisable. <strong>Prévention :</strong> ne dépends jamais d'un seul canal — c'est aussi la raison d'ouvrir Google Search sur ta marque dès octobre.</p></div>
+    <div class="call warn"><h4>6 — Produit copié dès qu'il marche</h4><p>Inévitable en dropshipping. <strong>Prévention :</strong> ce n'est pas le produit qu'on ne peut pas copier, c'est l'audience, la marque et le packaging. D'où le §sortie.</p></div>
+    <div class="call warn"><h4>7 — Qualité irrégulière entre deux lots</h4><p>Le même SKU change de fabricant sans prévenir. <strong>Prévention :</strong> recommande un échantillon à chaque changement de lot, et à chaque hausse de volume.</p></div>
+    <div class="call warn"><h4>8 — Colis perdu</h4><p>Environ 1 à 2 % des envois. <strong>Prévention :</strong> provisionne-le dans ta marge (les 4 % du §11 le couvrent), et rembourse ou réexpédie immédiatement, sans discuter. Le coût d'un litige dépasse toujours le coût du produit.</p></div>
+    <div class="call warn"><h4>9 — Contrôle DGCCRF</h4><p>Le e-commerce est un secteur de contrôle prioritaire. <strong>Prévention :</strong> pages légales à jour, délais honnêtes, pas de faux avis, pas de faux prix barrés, conformité GPSR documentée.</p></div>
+    <div class="call warn"><h4>10 — Tu te retrouves avec un bazar incohérent</h4><p>C'est ce que tu voulais éviter et ça arrive par accumulation, sans décision. <strong>Prévention :</strong> la règle du §04 — un produit ne monte dans le Cœur qu'après 10 ventes et 2 avis. Applique-la sans exception, y compris à ton produit préféré.</p></div>
+  </div>
+</div>
+
+<div class="col">
+<!-- ══════════════ 17 ══════════════ -->
+<section id="s17">
+  <div class="sec-head"><span class="sec-n">17</span><h2>Ton plan d'action exact</h2></div>
+  <p class="lede">Trois budgets, puis les sept règles non négociables, puis ce que tu fais en fermant cette page.</p>
+
+  <h3 style="margin-top:30px">Les trois budgets</h3>
+  <div class="grid3" style="margin-top:16px">
+    <div class="card"><h3>300 €</h3><p class="eyebrow" style="margin-top:2px">Budget d'apprentissage</p>
+      <div class="tw" style="margin-top:10px"><table style="min-width:0"><tbody>
+        <tr><td>Shopify (3 mois à 1 €)</td><td class="num">3 €</td></tr>
+        <tr><td>Domaine .fr + .com</td><td class="num">25 €</td></tr>
+        <tr><td>4 échantillons</td><td class="num">130 €</td></tr>
+        <tr><td>Trépied + accessoires</td><td class="num">20 €</td></tr>
+        <tr><td>Applications</td><td class="num">0 €</td></tr>
+        <tr><td>Publicité</td><td class="num">0 €</td></tr>
+        <tr><td>Réserve</td><td class="num">122 €</td></tr>
+      </tbody></table></div>
+      <p><strong>Suffisant pour répondre à la seule question qui compte : est-ce que je tiens 60 jours de contenu ?</strong> Tu ne lanceras pas une marque avec ça, mais tu sauras si le projet est pour toi. La relecture juridique est reportée — assume-le consciemment, et fais-la dès la première vente.</p>
+    </div>
+
+    <div class="card" style="border-color:var(--accent); border-width:1.5px"><h3>1 000 € <span class="tag t-ok">Recommandé</span></h3><p class="eyebrow" style="margin-top:2px">Budget de lancement</p>
+      <div class="tw" style="margin-top:10px"><table style="min-width:0"><tbody>
+        <tr><td>Shopify + domaine</td><td class="num">28 €</td></tr>
+        <tr><td>8 à 10 échantillons</td><td class="num">280 €</td></tr>
+        <tr><td>Matériel de tournage</td><td class="num">60 €</td></tr>
+        <tr><td><strong>Relecture CGV + comptable</strong></td><td class="num">350 €</td></tr>
+        <tr><td>Applications (3 mois)</td><td class="num">45 €</td></tr>
+        <tr><td>Meta Ads (7 j × 20 €)</td><td class="num">140 €</td></tr>
+        <tr><td>Réserve</td><td class="num">97 €</td></tr>
+      </tbody></table></div>
+      <p><strong>C'est le budget que je te recommande.</strong> La ligne à 350 € est celle que tout le monde coupe et c'est une erreur : elle te protège personnellement et elle coûte moins cher qu'un seul contrôle raté. Les 140 € de publicité ne se dépensent qu'après validation organique.</p>
+    </div>
+
+    <div class="card"><h3>3 000 €</h3><p class="eyebrow" style="margin-top:2px">Budget d'accélération</p>
+      <div class="tw" style="margin-top:10px"><table style="min-width:0"><tbody>
+        <tr><td>Tout le budget 1 000 €</td><td class="num">1 000 €</td></tr>
+        <tr><td>UGC créateurs (5 × 80 €)</td><td class="num">400 €</td></tr>
+        <tr><td>Publicité (30 j, Meta + TikTok)</td><td class="num">800 €</td></tr>
+        <tr><td>Premier stock (produit validé)</td><td class="num">700 €</td></tr>
+        <tr><td>Réserve</td><td class="num">100 €</td></tr>
+      </tbody></table></div>
+      <p><strong>Le budget le plus dangereux des trois.</strong> Avec 3 000 € tu peux acheter du stock avant d'avoir validé quoi que ce soit — et c'est l'erreur la plus coûteuse du secteur. <strong>Règle : les 2 000 € au-delà du premier millier restent bloqués tant qu'un produit n'a pas fait 20 ventes organiques.</strong> Écris-le quelque part.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:38px">Les sept règles non négociables</h3>
+  <div class="stack" style="margin-top:16px">
+    <div class="call flat"><p><strong>1. Tu ne mens jamais sur le délai de livraison.</strong> Ni sur les stocks, ni sur les avis, ni sur les prix barrés. C'est à la fois une obligation légale et la seule différence durable entre toi et les 400 boutiques qui vendront le même objet cet automne.</p></div>
+    <div class="call flat"><p><strong>2. Aucun fournisseur sans réponse écrite sur DDP, IOSS et documentation fabricant.</strong> Ce filtre passe avant le prix, avant la marge, avant tout.</p></div>
+    <div class="call flat"><p><strong>3. Deux produits en test à la fois, maximum.</strong> Dix vidéos minimum avant de juger. Deux angles avant de tuer.</p></div>
+    <div class="call flat"><p><strong>4. Pas un euro de publicité avant 20 ventes organiques.</strong> Aucune exception, même en novembre, même si tu es en retard.</p></div>
+    <div class="call flat"><p><strong>5. Un produit n'entre dans le Cœur qu'après 10 ventes et 2 avis réels.</strong> C'est ce qui empêche ta boutique de redevenir un catalogue.</p></div>
+    <div class="call flat"><p><strong>6. Trois vidéos par jour, sept jours sur sept, jusqu'au 30 novembre.</strong> C'est ton unique canal d'acquisition. Le jour où tu arrêtes de publier, ton chiffre d'affaires s'arrête 72 heures plus tard.</p></div>
+    <div class="call flat"><p><strong>7. Cinq minutes par matin sur les commandes non traitées.</strong> La seule tâche manuelle que je te demande de conserver — et celle qui évite 90 % des litiges.</p></div>
+  </div>
+</section>
+
+<!-- ══════════════ SORTIE ══════════════ -->
+<section id="sortie">
+  <div class="sec-head"><span class="sec-n">→</span><h2>De la revente à la marque</h2></div>
+  <p class="lede">Tu as écrit que tu ne voulais pas rester dans un modèle bas de gamme. La bonne nouvelle : le chemin est connu, et chaque marche a un déclencheur chiffré. La mauvaise : la plupart des gens n'en franchissent jamais la troisième, parce qu'elle demande d'immobiliser de l'argent au moment où tout marche bien.</p>
+
+  <div class="days" style="margin-top:24px">
+    <div><div class="dh">Étape 1<small>Mois 1–2</small></div><div class="db"><b>Dropshipping pur, entrepôt UE</b><span>Zéro trésorerie immobilisée. Tu achètes le droit de te tromper. Objectif unique : trouver un produit qui se vend sans publicité.</span></div></div>
+    <div><div class="dh">Étape 2<small>~10 ventes</small></div><div class="db"><b>Produit gagnant identifié</b><span>Il passe du Labo au Cœur : re-sourcing UE, tes propres photos, fiche longue, premiers avis.</span></div></div>
+    <div><div class="dh">Étape 3<small>~50 ventes</small></div><div class="db"><b>Validation du marché</b><span>Le produit se vend sur deux canaux distincts, avec des retours sous 5 % et des avis à 4,5 ou plus. C'est là seulement que tu as le droit de parler de « produit validé ».</span></div></div>
+    <div><div class="dh">Étape 4<small>~150 ventes/mois</small></div><div class="db"><b>Commande en volume</b><span>300 à 500 pièces via un agent ou directement à l'usine. Coût unitaire divisé par 1,5 à 2. Immobilise 3 000 à 6 000 €. <strong>C'est la marche que la plupart ne franchissent pas.</strong></span></div></div>
+    <div><div class="dh">Étape 5<small>même moment</small></div><div class="db"><b>Packaging personnalisé</b><span>Boîte à ta marque, notice en français, carte de remerciement. Coût : 0,80 à 2 € par unité. <strong>C'est le moment exact où tu cesses d'être un revendeur</strong> — pas quand tu le décides, quand le client le voit.</span></div></div>
+    <div><div class="dh">Étape 6<small>Mois 6–9</small></div><div class="db"><b>Stock en entrepôt européen</b><span>Prestataire logistique en France, en Espagne ou aux Pays-Bas. Livraison en 48 h. Tu deviens compétitif face à Amazon sur le délai, ce qu'aucun dropshipper ne peut faire.</span></div></div>
+    <div><div class="dh">Étape 7<small>Mois 9–12</small></div><div class="db"><b>Site premium et gamme</b><span>Refonte, photos professionnelles, 3 à 5 produits complémentaires qui font sens ensemble. Tu vends un univers, plus un objet.</span></div></div>
+    <div><div class="dh">Étape 8<small>Année 2</small></div><div class="db"><b>Influenceurs, fidélisation, produit propre</b><span>Partenariats rémunérés plutôt que UGC acheté. Programme de fidélité. Puis un produit dessiné par toi, fabriqué sur ton cahier des charges. <strong>Là, plus personne ne peut vendre exactement ton produit. C'est la définition d'une marque.</strong></span></div></div>
+  </div>
+
+  <div class="call warn" style="margin-top:22px">
+    <h4>Le vrai obstacle de cette transition</h4>
+    <p>Ce n'est ni technique ni commercial : <strong>c'est psychologique et financier.</strong> À l'étape 4, tu gagnes bien ta vie en dropshipping, sans risque et sans stock. Immobiliser 5 000 € dans des cartons pour gagner 2 € de marge unitaire supplémentaire paraît absurde sur le moment. C'est pourtant la seule marche qui transforme un revenu en actif — la seule qui crée quelque chose qui vaut de l'argent le jour où tu voudrais le vendre.</p>
+  </div>
+</section>
+
+<!-- ══════════════ FINAL ══════════════ -->
+<section id="final">
+  <div class="sunk">
+    <p class="eyebrow">Recommandation finale</p>
+    <h2 style="margin-top:8px; font-size:clamp(1.5rem,3.6vw,2.1rem)">Si j'étais à ta place, voici exactement ce que je ferais.</h2>
+
+    <div class="stack" style="margin-top:22px">
+      <p><strong>1. J'abandonnerais Halloween comme projet, et je le garderais comme saison.</strong> Je monterais une marque de décoration d'ambiance — lumière, chaleur, cocooning — et j'y ouvrirais une collection « Octobre », puis « Noël ». Même contenu, même trafic, même saisonnalité, mais un actif qui existe encore le 1<sup>er</sup> novembre.</p>
+
+      <p><strong>2. J'oublierais la rentrée.</strong> Elle est terminée dans onze jours et je ne peux rien sourcer d'ici là. Je traiterais septembre comme un mois d'entraînement : 90 vidéos publiées, aucune attente de chiffre d'affaires.</p>
+
+      <p><strong>3. Je sourcerais en entrepôt européen dès le premier jour.</strong> Depuis le 1<sup>er</sup> juillet 2026 et les 3 € de droit par ligne tarifaire, l'écart de coût avec la Chine s'est refermé. Pour le même prix je gagne dix jours de délai, un tracking lisible, des bundles rentables et la conformité GPSR. AliExpress ne me servirait plus qu'à tester de nouvelles références.</p>
+
+      <p><strong>4. Je vendrais à 39,90 €, pas à 29,90 €.</strong> Le calcul du §11 est sans appel : à 29,90 € avec un produit à 8 €, la publicité est structurellement impossible. Dix euros de plus font passer la marge de contribution de 9 à 18 €, et le ROAS d'équilibre de 3,2 à 2,3. Sur cette niche, personne n'achète au prix le plus bas — on achète ce qui est beau.</p>
+
+      <p><strong>5. Je ne dépenserais pas un euro en publicité avant le 15 octobre.</strong> Mes quatre conditions du §10 sont toutes remplies ou je ne lance rien. L'organique n'est pas une phase pauvre en attendant mieux : c'est le laboratoire qui produit les créatifs publicitaires que j'utiliserai ensuite.</p>
+
+      <p><strong>6. Je viserais Black Friday, pas Halloween.</strong> J-98 aujourd'hui, contre J-71. C'est exactement le temps qu'il faut pour construire une audience de 3 000 à 5 000 abonnés, valider deux produits et constituer une liste e-mail. Octobre n'est pas mon objectif — c'est ma rampe de lancement, et sa vraie production sera les 200 acheteurs que j'aurai à recontacter le 27 novembre.</p>
+
+      <p><strong>7. Je dépenserais 350 € en relecture juridique et comptable avant ma première vente.</strong> Sur ce marché, en France, en 2026, avec le GPSR et la responsabilité de plein droit du dropshipper, c'est la ligne budgétaire qui me protège personnellement. C'est celle que tout le monde coupe.</p>
+
+      <p><strong>8. Et je m'engagerais sur un chiffre, pas sur une intention :</strong> 90 vidéos publiées avant le 30 septembre. Si je n'y arrive pas, le problème n'est ni le produit, ni la niche, ni l'algorithme — c'est que ce modèle ne me convient pas, et il vaut mieux le savoir en septembre avec 300 € dépensés qu'en décembre avec 3 000.</p>
+    </div>
+
+    <hr class="rule" style="margin:26px 0; border-color:var(--on-sunk-muted); opacity:.25">
+    <p style="font-size:1.05rem"><strong>La phrase à retenir :</strong> ton avantage ne sera jamais le produit — il sera copié en trois semaines. Ce sera la vitesse à laquelle tu livres, l'honnêteté de ce que tu affiches, et l'audience que tu auras construite pendant que les autres cherchaient encore leur niche gagnante. <strong>Ces trois choses commencent aujourd'hui, et aucune ne coûte d'argent.</strong></p>
+  </div>
+</section>
+
+<!-- ══════════════ SOURCES ══════════════ -->
+<section id="sources">
+  <div class="sec-head"><span class="sec-n">§</span><h2>Sources et méthode</h2></div>
+  <p class="lede">Tu m'as demandé de distinguer les données vérifiées des hypothèses. Voici la ligne de partage.</p>
+
+  <div class="grid2" style="margin-top:22px">
+    <div class="card"><h4><span class="tag t-ok">Vérifié</span> — recoupé sur sources d'août 2026</h4><ul class="tight" style="font-size:.86rem">
+      <li>Suppression de l'exonération douanière de 150 € au 1<sup>er</sup> juillet 2026 et droit forfaitaire de 3 € par ligne tarifaire jusqu'en 2028</li>
+      <li>Applicabilité du GPSR depuis le 13 décembre 2024 et report de responsabilité sur le vendeur en ligne</li>
+      <li>Responsabilité de plein droit du dropshipper en droit français de la consommation</li>
+      <li>Seuils de franchise en base de TVA 2026 (85 000 / 93 500 €) et abandon du projet de seuil unique à 25 000 €</li>
+      <li>Statut des intégrations Shopify : DSers partenaire officiel AliExpress ; absence d'API et de programme dropshipping chez Temu et SHEIN ; entrepôts UE chez CJdropshipping et BigBuy</li>
+      <li>Tarif Shopify Basic France (~36 €/mois, ~25 € en annuel)</li>
+    </ul></div>
+    <div class="card"><h4><span class="tag t-neutral">Estimation</span> — mon jugement, à valider</h4><ul class="tight" style="font-size:.86rem">
+      <li>Tous les prix d'achat et de vente des 52 produits cités</li>
+      <li>Les notes sur 10 des catégories et des produits</li>
+      <li>Tous les seuils du système de test (vues, taux de clic, conversion)</li>
+      <li>Les trois scénarios financiers et les paliers logistiques</li>
+      <li>Les risques d'antériorité des noms de marque</li>
+      <li>Les estimations de CPA, de ROAS et de budgets publicitaires</li>
+    </ul></div>
+  </div>
+
+  <div class="srcs">
+    <p class="eyebrow" style="margin-top:16px">Références consultées</p>
+    <a href="https://commission.europa.eu/news-and-media/news/ensuring-fairness-and-safety-eur3-customs-duty-low-value-parcels-2026-06-29_en">Commission européenne — Droit de douane de 3 € sur les colis de faible valeur (29 juin 2026)</a>
+    <a href="https://www.consilium.europa.eu/en/press/press-releases/2025/12/12/customs-council-agrees-to-levy-customs-duty-on-small-parcels-as-of-1-july-2026/">Conseil de l'UE — Accord sur les droits de douane des petits colis au 1<sup>er</sup> juillet 2026</a>
+    <a href="https://taxation-customs.ec.europa.eu/news/e-commerce-150-eur-customs-duty-exemption-threshold-be-removed-2026-2025-11-13_en">Commission européenne, DG TAXUD — Suppression du seuil de 150 €</a>
+    <a href="https://www.avalara.com/blog/en/europe/2025/11/eu-end-150-customs-duty-exemption-2026.html">Avalara — Fin de l'exonération de 150 € en juillet 2026</a>
+    <a href="https://eur-lex.europa.eu/FR/legal-content/summary/general-product-safety-regulation-2023.html">EUR-Lex — Règlement (UE) 2023/988 sur la sécurité générale des produits</a>
+    <a href="https://www.mirabile-avocat.com/dropshipping-sur-tiktok-shop-les-risques-juridiques-specifiques-a-connaitre-en-2026">Analyse juridique — Risques du dropshipping et responsabilité du vendeur (2026)</a>
+    <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047663185">Légifrance — Loi n° 2023-451 du 9 juin 2023 (influence commerciale et dropshipping)</a>
+    <a href="https://www.socic.fr/ressources-comptabilite/articles/micro-entreprise-et-tva-en-2026-franchise-depassement-de-seuils-regime-reel-et-option-volontaire">Seuils de franchise en base de TVA applicables en 2026</a>
+    <a href="https://www.dsers.com/features/auto-sync-tracking-numbers">DSers — Synchronisation automatique des numéros de suivi</a>
+    <a href="https://dodropshipping.com/temu-dropshipping-with-shopify/">État des intégrations Temu et SHEIN avec Shopify (2026)</a>
+    <a href="https://www.buildyourstore.ai/blog/dropshipping-suppliers-france/">Fournisseurs dropshipping disposant d'entrepôts en France et en Europe (2026)</a>
+    <a href="https://stellarprojects.fr/en/pages/pages-tarifs-shopify">Tarifs Shopify France 2026</a>
+  </div>
+
+  <div class="foot">
+    <p>Document de travail établi le 21 août 2026 en réponse à un brief en 20 étapes. Il ne constitue ni un conseil juridique, ni un conseil fiscal, ni une garantie de résultat commercial. Les réglementations douanières, fiscales et de sécurité produit citées évoluent : vérifie chacune à sa source officielle avant de t'engager.</p>
+  </div>
+</section>
+</div>
+</main>
+</div>
+
+<script>
+(function(){
+  const links=[...document.querySelectorAll('#toc a')];
+  const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const targets=[...map.keys()].map(id=>document.getElementById(id)).filter(Boolean);
+  if(!('IntersectionObserver' in window)||!targets.length) return;
+  let active=null;
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        if(active) active.classList.remove('on');
+        active=map.get(e.target.id);
+        if(active) active.classList.add('on');
+      }
+    });
+  },{rootMargin:'-10% 0px -80% 0px',threshold:0});
+  targets.forEach(t=>io.observe(t));
+})();
+</script>
