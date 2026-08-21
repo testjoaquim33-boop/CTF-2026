@@ -4,6 +4,7 @@ import { validateEmail, validatePassword, passwordsMatch } from '@project_fit/sh
 export interface AuthResult {
   ok: boolean;
   error?: string;
+  hasSession?: boolean;
 }
 
 /** Inscription email/password. Déclenche l'email de vérification (config Supabase). */
@@ -20,12 +21,14 @@ export async function signUpWithEmail(
   const m = passwordsMatch(password, confirm);
   if (!m.valid) return { ok: false, error: m.error };
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: email.trim(),
     password,
     options: { data: displayName ? { display_name: displayName } : undefined },
   });
-  return error ? { ok: false, error: error.message } : { ok: true };
+  if (error) return { ok: false, error: error.message };
+  // Si la confirmation d'email est activée, aucune session n'est créée tout de suite.
+  return { ok: true, hasSession: !!data.session };
 }
 
 /** Connexion email/password. */

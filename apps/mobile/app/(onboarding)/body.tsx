@@ -51,7 +51,14 @@ export default function BodyStep() {
     setSaving(true);
     const res = await saveOnboarding(merged);
     setSaving(false);
-    if (!res.ok) { Alert.alert('Erreur', res.error ?? 'unknown'); return; }
+    if (!res.ok) {
+      if (res.error === 'not_authenticated') {
+        Alert.alert('Connecte-toi', 'Crée un compte ou connecte-toi pour enregistrer ton profil.',
+          [{ text: 'OK', onPress: () => router.replace('/(auth)/sign-in') }]);
+        return;
+      }
+      Alert.alert('Erreur', res.error ?? 'unknown'); return;
+    }
     router.replace('/(tabs)');
   };
 

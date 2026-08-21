@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Text, Button, ProgressBar } from '../../components';
 import { ONBOARDING_STEPS, type OnboardingStep } from '@project_fit/shared';
@@ -22,7 +23,17 @@ export function StepScaffold({ step, title, subtitle, canContinue, onNext, nextL
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <View style={{ padding: t.spacing.lg, gap: t.spacing.md }}>
-        <ProgressBar progress={progress} />
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
+          {router.canGoBack() ? (
+            <Pressable onPress={() => router.back()} hitSlop={12}>
+              <Text variant="h3" color="textSecondary">‹ Retour</Text>
+            </Pressable>
+          ) : null}
+          <View style={{ flex: 1 }}>
+            <ProgressBar progress={progress} />
+          </View>
+          <Text variant="caption" color="textMuted">{idx + 1}/{ONBOARDING_STEPS.length}</Text>
+        </View>
         <Text variant="h1">{title}</Text>
         {subtitle ? <Text color="textSecondary">{subtitle}</Text> : null}
       </View>

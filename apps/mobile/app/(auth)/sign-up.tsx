@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, Alert } from 'react-native';
 import { router, Link } from 'expo-router';
 import { AuthForm } from '../../src/features/auth/AuthForm';
 import { Text } from '../../src/components';
@@ -18,8 +18,17 @@ export default function SignUp() {
       onSubmit={async (v) => {
         const res = await signUpWithEmail(v.email ?? '', v.password ?? '', v.confirm ?? '');
         if (!res.ok) return res.error ?? 'error';
-        // Après inscription (session active si confirmation email désactivée) -> onboarding.
-        router.replace('/(onboarding)');
+        if (res.hasSession) {
+          // Session active -> on peut faire l'onboarding tout de suite.
+          router.replace('/(onboarding)');
+        } else {
+          // Confirmation d'email requise : pas de session encore.
+          Alert.alert(
+            'Vérifie ton email',
+            "Nous t'avons envoyé un lien de confirmation. Confirme ton adresse puis connecte-toi.",
+            [{ text: 'OK', onPress: () => router.replace('/(auth)/sign-in') }],
+          );
+        }
         return null;
       }}
       footer={
