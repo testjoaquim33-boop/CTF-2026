@@ -4,13 +4,13 @@ Application mobile de fitness/musculation (freemium + Premium) — iOS & Android
 Nom de code temporaire : **PROJECT_FIT** (renommable via `apps/mobile/app.config.ts`
 et `apps/mobile/src/constants/branding.ts`).
 
-## Statut
-- ✅ Phase 0 — Analyse & architecture : `docs/PHASE_0_ANALYSIS.md`
-- ✅ Phase 2 — Monorepo (workspaces, shared pkg testé)
-- ✅ Phase 3 — Design System (tokens dark-first)
-- ✅ Phase 4 — Base de données (schéma, RLS testée, seed 52 exercices)
-- ✅ Phase 5 — Authentification (services email/password + delete RGPD)
-- 🚧 Phase 6 — Onboarding (9 écrans + persistance Supabase)
+## Statut (MVP construit, à tester sur device)
+- ✅ Phase 0 Analyse · 2 Monorepo · 3 Design System · 4 DB (RLS testée, 52 exercices)
+- ✅ Phase 5 Auth · 6 Onboarding · 7 Bibliothèque exercices · 8-9 Séances + Tracking
+- ✅ Phase 10-11 Progression + Records · 12 AI Coach · 13 Gamification · 14 Ranking
+- ✅ Phase 15 Abonnements (RevenueCat) · 16 Notifications · 17 Analytics + Gym Card
+- ✅ Docs sécurité/déploiement/store · logique partagée testée (25 tests)
+- ⏳ À faire par toi : setup RevenueCat + comptes stores, tests sur device (voir docs/RUN.md)
 
 ## Structure (monorepo)
 ```

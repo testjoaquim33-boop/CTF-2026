@@ -28,3 +28,17 @@ par le serveur (RLS Postgres + Edge Functions). Voir `docs/PHASE_0_ANALYSIS.md` 
 - Anti-cheat ranking (bornes, cohérence, multi-comptes).
 - Contrôle des coûts IA (quotas Free/Premium, cache).
 - Monitoring (Sentry) + audit (`ai_recommendations`, `subscription_events`).
+
+## Surface complète (mise à jour post-implémentation)
+- **Edge Functions sensibles** : `ai-recommendation` (quotas, données lues en base →
+  anti-injection, sortie JSON validée, garde-fou douleur/blessure), `leaderboard-submit`
+  (anti-cheat : bornes de plausibilité, force relative), `revenuecat-webhook`
+  (auth par secret partagé, statut Premium serveur), `account-delete` (RGPD, identité par JWT).
+- **RLS** : données utilisateur owner-only ; contenu en lecture/écriture-admin ;
+  leaderboard écriture serveur only + lecture publique via vue à colonnes sûres
+  (poids de corps non exposé) ; subscriptions lecture-propre / écriture serveur only.
+- **Secrets** : `ANTHROPIC_API_KEY`, `REVENUECAT_WEBHOOK_SECRET`, `SUPABASE_SERVICE_ROLE_KEY`
+  côté serveur uniquement. Client : seulement `EXPO_PUBLIC_*` (anon key, clés SDK publiques).
+- **Anti-cheat ranking** : validation des valeurs absurdes ; `verified` flag ; à renforcer
+  (détection multi-comptes, cohérence temporelle) en durcissement futur.
+- **Contrôle des coûts IA** : quotas hebdo Free/Premium, logging tokens.
