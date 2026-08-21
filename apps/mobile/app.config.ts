@@ -20,12 +20,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     orientation: 'portrait',
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
-    icon: './assets/icon.png',
-    splash: {
-      image: './assets/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#0B0B0F',
-    },
     ios: {
       supportsTablet: false,
       bundleIdentifier: isProd
@@ -37,10 +31,6 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       package: isProd
         ? BRANDING.androidPackage
         : `${BRANDING.androidPackage}.${appEnv}`,
-      adaptiveIcon: {
-        foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#0B0B0F',
-      },
     },
     plugins: ['expo-router', 'expo-secure-store'],
     experiments: { typedRoutes: true },
