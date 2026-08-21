@@ -1,0 +1,31 @@
+# deps
+node_modules/
+# env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.keystore
+google-services.json
+GoogleService-Info.plist
+# expo / build
+.expo/
+dist/
+web-build/
+*.tsbuildinfo
+# native
+ios/
+android/
+# logs
+npm-debug.log*
+yarn-error.log*
+# os / editor
+.DS_Store
+.vscode/
+.idea/
+# supabase local
+backend/supabase/.branches/
+backend/supabase/.temp/
