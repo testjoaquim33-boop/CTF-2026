@@ -56,6 +56,8 @@ export default function HomeScreen() {
           <Text>{prog.data?.workoutCount ?? 0} séances · {prog.data?.recentPRs.length ?? 0} records récents</Text>
           <Button label="Voir la progression" variant="secondary" onPress={() => router.push('/(tabs)/progress')} />
         </Card>
+
+        <Button label="🏆 Ma Gym Card (partager)" variant="secondary" onPress={() => router.push('/gym-card')} />
       </ScrollView>
     </SafeAreaView>
   );

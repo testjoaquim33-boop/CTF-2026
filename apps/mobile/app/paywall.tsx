@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { useTheme } from '../src/theme/ThemeProvider';
 import { Text, Button } from '../src/components';
 import { purchasesEnabled } from '../src/services/purchases';
+import { track, EVENTS } from '../src/services/analytics';
 
 const BENEFITS = [
   'AI Coach illimité',
@@ -18,6 +19,7 @@ const BENEFITS = [
 export default function Paywall() {
   const t = useTheme();
   const [busy, setBusy] = useState(false);
+  React.useEffect(() => { track(EVENTS.paywallViewed); }, []);
 
   const buy = async () => {
     if (!purchasesEnabled()) {
