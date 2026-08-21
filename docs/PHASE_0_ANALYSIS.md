@@ -455,3 +455,11 @@ avec les liens officiels — je ne veux pas inventer des tarifs précis ici.
 Initialiser le monorepo + Expo + config EAS (dev/staging/prod) + `.env.example` +
 squelette du Design System — **sans logique métier**, en commits atomiques.
 Je ne démarre pas tant que tu n'as pas validé A→O (ou indiqué tes ajustements).
+
+---
+
+## Décisions validées (2026-08-21)
+- **Stack & architecture A→O : validées** → passage en Phase 2.
+- **Offline : SQLite (expo-sqlite) + couche de sync op-based maison** (choix délégué, recommandation retenue).
+- **Fournisseur IA : Anthropic (Claude)** via proxy Edge Function (clé serveur only). Le proxy
+  reste isolé derrière une interface `AiProvider` pour rester remplaçable si besoin.
