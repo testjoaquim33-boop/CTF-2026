@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Image, Linking, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useTheme } from '../../src/theme/ThemeProvider';
-import { Text, Button } from '../../src/components';
+import { Text, Button, muscleColor } from '../../src/components';
 import { useExercise } from '../../src/hooks/useExercises';
 import { LEVEL_LABELS_SHORT } from '../../src/features/exercises/groups';
+
+const GROUP_EMOJI: Record<string, string> = {
+  push: '🔥', pull: '🎯', legs: '🦵', core: '🧱', posterior: '⚡', arms: '💪',
+};
 
 export default function ExerciseDetailScreen() {
   const t = useTheme();
@@ -28,37 +32,76 @@ export default function ExerciseDetailScreen() {
     );
   }
 
+  const mc = muscleColor(t.colors, data.primary_muscle?.group);
+  const group = data.primary_muscle?.group ?? 'push';
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
-      <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.md }}>
-        <Text variant="h1">{data.name}</Text>
-        <Text color="textSecondary">
-          {data.primary_muscle?.name ?? '—'} · {LEVEL_LABELS_SHORT[data.level] ?? data.level}
-          {data.is_bodyweight ? ' · Poids du corps' : ''}
-        </Text>
-        {data.description ? <Text style={{ marginTop: t.spacing.sm }}>{data.description}</Text> : null}
+      <ScrollView contentContainerStyle={{ paddingBottom: t.spacing.xxl }}>
+        {/* HERO : image si dispo, sinon bloc coloré */}
+        <View style={{ height: 220, backgroundColor: mc + '22', alignItems: 'center', justifyContent: 'center',
+          borderBottomWidth: 2, borderBottomColor: mc + '55' }}>
+          {data.image_url ? (
+            <Image source={{ uri: data.image_url }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+          ) : (
+            <Text style={{ fontSize: 84 }}>{GROUP_EMOJI[group] ?? '💪'}</Text>
+          )}
+        </View>
 
-        {data.instructions?.length ? (
-          <View style={{ marginTop: t.spacing.md }}>
-            <Text variant="h3" style={{ marginBottom: t.spacing.sm }}>Instructions</Text>
-            {data.instructions.map((ins, i) => (
-              <Text key={i} style={{ marginBottom: t.spacing.xs }}>{`${i + 1}. ${ins}`}</Text>
-            ))}
+        <View style={{ padding: t.spacing.lg, gap: t.spacing.md }}>
+          <Text variant="h1">{data.name}</Text>
+          <View style={{ flexDirection: 'row', gap: t.spacing.sm, flexWrap: 'wrap' }}>
+            <Chip color={mc} label={data.primary_muscle?.name ?? '—'} />
+            <Chip color={t.colors.info} label={LEVEL_LABELS_SHORT[data.level] ?? data.level} />
+            {data.is_bodyweight ? <Chip color={t.colors.success} label="Poids du corps" /> : null}
           </View>
-        ) : null}
 
-        {data.common_mistakes?.length ? (
-          <View style={{ marginTop: t.spacing.md }}>
-            <Text variant="h3" style={{ marginBottom: t.spacing.sm }}>Erreurs fréquentes</Text>
-            {data.common_mistakes.map((m, i) => (
-              <Text key={i} color="textSecondary" style={{ marginBottom: t.spacing.xs }}>{`• ${m}`}</Text>
-            ))}
-          </View>
-        ) : null}
+          {data.video_url ? (
+            <Button label="▶  Voir la démonstration" onPress={() => Linking.openURL(data.video_url!)} />
+          ) : null}
 
-        <Button label="🤖 Demander à l'AI Coach" onPress={() => router.push(`/coach/${data.id}`)} style={{ marginTop: t.spacing.xl }} />
-        <Button label="Retour" variant="secondary" onPress={() => router.back()} style={{ marginTop: t.spacing.md }} />
+          {data.description ? <Text style={{ marginTop: t.spacing.xs }}>{data.description}</Text> : null}
+
+          {data.instructions?.length ? (
+            <Section title="Instructions" color={mc}>
+              {data.instructions.map((ins, i) => (
+                <Text key={i} style={{ marginBottom: t.spacing.xs }}>{`${i + 1}. ${ins}`}</Text>
+              ))}
+            </Section>
+          ) : null}
+
+          {data.common_mistakes?.length ? (
+            <Section title="Erreurs fréquentes" color={t.colors.warning}>
+              {data.common_mistakes.map((m, i) => (
+                <Text key={i} color="textSecondary" style={{ marginBottom: t.spacing.xs }}>{`• ${m}`}</Text>
+              ))}
+            </Section>
+          ) : null}
+
+          <Button label="🤖  Demander à l'AI Coach" onPress={() => router.push(`/coach/${data.id}`)} style={{ marginTop: t.spacing.lg }} />
+          <Button label="Retour" variant="secondary" onPress={() => router.back()} style={{ marginTop: t.spacing.sm }} />
+        </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function Chip({ label, color }: { label: string; color: string }) {
+  const t = useTheme();
+  return (
+    <View style={{ paddingHorizontal: t.spacing.md, paddingVertical: 4, borderRadius: t.radius.pill,
+      backgroundColor: color + '22', borderWidth: 1, borderColor: color + '55' }}>
+      <Text variant="caption" style={{ color }}>{label}</Text>
+    </View>
+  );
+}
+function Section({ title, color, children }: { title: string; color: string; children: React.ReactNode }) {
+  const t = useTheme();
+  return (
+    <View style={{ marginTop: t.spacing.md, backgroundColor: t.colors.bgCard, borderRadius: t.radius.md,
+      padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.border, borderLeftWidth: 4, borderLeftColor: color }}>
+      <Text variant="h3" style={{ marginBottom: t.spacing.sm }}>{title}</Text>
+      {children}
+    </View>
   );
 }

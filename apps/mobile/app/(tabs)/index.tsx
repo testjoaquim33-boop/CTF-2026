@@ -8,11 +8,12 @@ import { Text, Button, ProgressBar } from '../../src/components';
 import { fetchHomeStats } from '../../src/services/gamification';
 import { fetchProgressSummary } from '../../src/services/progress';
 
-function Card({ children }: { children: React.ReactNode }) {
+function Card({ children, accent }: { children: React.ReactNode; accent?: string }) {
   const t = useTheme();
   return (
-    <View style={{ backgroundColor: t.colors.bgElevated, borderRadius: t.radius.md, padding: t.spacing.lg,
-      borderWidth: 1, borderColor: t.colors.border, gap: t.spacing.sm }}>{children}</View>
+    <View style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.lg, padding: t.spacing.lg,
+      borderWidth: 1, borderColor: t.colors.border, gap: t.spacing.sm,
+      ...(accent ? { borderLeftWidth: 4, borderLeftColor: accent } : {}) }}>{children}</View>
   );
 }
 
@@ -29,7 +30,6 @@ export default function HomeScreen() {
       </SafeAreaView>
     );
   }
-
   const refetch = () => { home.refetch(); prog.refetch(); };
 
   return (
@@ -38,26 +38,33 @@ export default function HomeScreen() {
         refreshControl={<RefreshControl refreshing={home.isRefetching} onRefresh={refetch} tintColor={t.colors.primary} />}>
         <Text variant="h1">Bonjour 👋</Text>
 
-        <Card>
-          <Text variant="overline" color="textMuted">TON NIVEAU</Text>
-          <Text variant="h2" color="primary">Niveau {home.data?.level} · {home.data?.title}</Text>
-          <ProgressBar progress={home.data?.progress ?? 0} />
-          <Text variant="caption" color="textSecondary">{home.data?.xp ?? 0} XP · 🔥 {home.data?.streak ?? 0} jours de streak</Text>
-        </Card>
+        {/* HERO NIVEAU — carte pleine couleur, accrocheuse */}
+        <View style={{ backgroundColor: t.colors.primary, borderRadius: t.radius.lg, padding: t.spacing.xl, gap: t.spacing.sm,
+          shadowColor: t.colors.primary, shadowOpacity: 0.4, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 8 }}>
+          <Text variant="overline" style={{ color: '#FFFFFFAA' }}>TON NIVEAU</Text>
+          <Text variant="display" color="onPrimary">Niveau {home.data?.level}</Text>
+          <Text variant="bodyMedium" color="onPrimary">{home.data?.title} · 🔥 {home.data?.streak ?? 0} jours</Text>
+          <View style={{ height: 8, backgroundColor: '#FFFFFF33', borderRadius: 999, marginTop: t.spacing.sm }}>
+            <View style={{ height: 8, width: `${(home.data?.progress ?? 0) * 100}%`, backgroundColor: '#FFFFFF', borderRadius: 999 }} />
+          </View>
+          <Text variant="caption" style={{ color: '#FFFFFFCC' }}>{home.data?.xp ?? 0} XP</Text>
+        </View>
 
-        <Card>
-          <Text variant="overline" color="textMuted">PROCHAINE SÉANCE</Text>
-          <Text variant="h3">Commence quand tu veux</Text>
-          <Button label="Démarrer une séance" onPress={() => router.push('/workout/new')} style={{ marginTop: t.spacing.sm }} />
-        </Card>
+        <View style={{ backgroundColor: t.colors.secondary, borderRadius: t.radius.lg, padding: t.spacing.xl, gap: t.spacing.sm }}>
+          <Text variant="overline" style={{ color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
+          <Text variant="h2" color="onPrimary">Prêt à t'entraîner ?</Text>
+          <Button label="Démarrer une séance" variant="secondary" onPress={() => router.push('/workout/new')}
+            style={{ marginTop: t.spacing.sm, backgroundColor: '#FFFFFF' }} />
+        </View>
 
-        <Card>
+        <Card accent={t.colors.success}>
           <Text variant="overline" color="textMuted">TA PROGRESSION</Text>
-          <Text>{prog.data?.workoutCount ?? 0} séances · {prog.data?.recentPRs.length ?? 0} records récents</Text>
-          <Button label="Voir la progression" variant="secondary" onPress={() => router.push('/(tabs)/progress')} />
+          <Text variant="h3">{prog.data?.workoutCount ?? 0} séances · {prog.data?.recentPRs.length ?? 0} records</Text>
+          <View style={{ flexDirection: 'row', gap: t.spacing.sm, marginTop: t.spacing.sm }}>
+            <Button label="Progression" variant="secondary" onPress={() => router.push('/(tabs)/progress')} style={{ flex: 1 }} />
+            <Button label="🏆 Gym Card" variant="secondary" onPress={() => router.push('/gym-card')} style={{ flex: 1 }} />
+          </View>
         </Card>
-
-        <Button label="🏆 Ma Gym Card (partager)" variant="secondary" onPress={() => router.push('/gym-card')} />
       </ScrollView>
     </SafeAreaView>
   );

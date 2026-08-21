@@ -5,3 +5,4 @@ export { ProgressBar } from './ProgressBar';
 export { FilterChips } from './FilterChips';
 export { MiniBarChart } from './MiniBarChart';
 export { RankBadge } from './RankBadge';
+export { ExerciseThumb, muscleColor } from './ExerciseThumb';
