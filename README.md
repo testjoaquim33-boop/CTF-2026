@@ -9,7 +9,8 @@ et `apps/mobile/src/constants/branding.ts`).
 - ✅ Phase 2 — Monorepo (workspaces, shared pkg testé)
 - ✅ Phase 3 — Design System (tokens dark-first)
 - ✅ Phase 4 — Base de données (schéma, RLS testée, seed 52 exercices)
-- 🚧 Phase 5 — Authentification (email/password + delete RGPD ; Apple/Google câblés)
+- ✅ Phase 5 — Authentification (services email/password + delete RGPD)
+- 🚧 Phase 6 — Onboarding (9 écrans + persistance Supabase)
 
 ## Structure (monorepo)
 ```
