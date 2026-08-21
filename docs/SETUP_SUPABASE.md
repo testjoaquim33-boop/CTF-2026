@@ -68,3 +68,14 @@ que la configuration native n'est pas faite. Quand tu voudras les activer :
 - Store de session (Zustand) : `apps/mobile/src/store/auth.ts`
 - Trigger de provisioning au signup : `migrations/0003_auth_provisioning.sql` (vérifié)
 - Edge Function suppression RGPD : `backend/supabase/functions/account-delete/`
+
+## 3-bis. Alternative sans CLI : SQL Editor (recommandé si tu es sur le dashboard)
+Si tu n'utilises pas la CLI Supabase, installe tout via le **SQL Editor** :
+1. Dashboard Supabase → icône **SQL Editor** (menu de gauche) → **New query**.
+2. Ouvre `backend/supabase/setup_bundle.sql` (dans ce repo), copie **tout** le contenu.
+3. Colle dans l'éditeur → **Run**.
+4. Résultat attendu : aucune erreur ; la table `exercises` contient **52** lignes.
+   Vérifier : `select count(*) from exercises;` → 52.
+
+Ce bundle regroupe schéma + RLS + provisioning + seed. À exécuter **une seule fois**
+sur une base neuve. (Il a été validé : s'applique sans erreur, 52 exercices, RLS active.)
