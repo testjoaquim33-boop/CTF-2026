@@ -38,15 +38,8 @@ export default function ExerciseDetailScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <ScrollView contentContainerStyle={{ paddingBottom: t.spacing.xxl }}>
-        {/* HERO : image si dispo, sinon bloc coloré */}
-        <View style={{ height: 220, backgroundColor: mc + '22', alignItems: 'center', justifyContent: 'center',
-          borderBottomWidth: 2, borderBottomColor: mc + '55' }}>
-          {data.image_url ? (
-            <Image source={{ uri: data.image_url }} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
-          ) : (
-            <Text style={{ fontSize: 84 }}>{GROUP_EMOJI[group] ?? '💪'}</Text>
-          )}
-        </View>
+        {/* HERO : image si dispo (fallback emoji si absente/erreur) */}
+        <Hero imageUrl={data.image_url} color={mc} emoji={GROUP_EMOJI[group] ?? '💪'} />
 
         <View style={{ padding: t.spacing.lg, gap: t.spacing.md }}>
           <Text variant="h1">{data.name}</Text>
@@ -83,6 +76,20 @@ export default function ExerciseDetailScreen() {
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function Hero({ imageUrl, color, emoji }: { imageUrl: string | null; color: string; emoji: string }) {
+  const [error, setError] = React.useState(false);
+  return (
+    <View style={{ height: 220, backgroundColor: color + '22', alignItems: 'center', justifyContent: 'center',
+      borderBottomWidth: 2, borderBottomColor: color + '55' }}>
+      {imageUrl && !error ? (
+        <Image source={{ uri: imageUrl }} onError={() => setError(true)} style={{ width: '100%', height: '100%' }} resizeMode="cover" />
+      ) : (
+        <Text style={{ fontSize: 84 }}>{emoji}</Text>
+      )}
+    </View>
   );
 }
 

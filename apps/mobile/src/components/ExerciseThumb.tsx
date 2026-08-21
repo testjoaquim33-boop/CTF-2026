@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import type { MuscleColors } from '../theme/colors';
@@ -13,14 +13,21 @@ export function muscleColor(colors: { muscle: MuscleColors }, group?: string | n
   return colors.muscle[key] ?? colors.muscle.push;
 }
 
-/** Vignette d'exercice : image si dispo, sinon bloc coloré par groupe musculaire. */
 export function ExerciseThumb({
-  imageUrl, group, name, size = 56, radius,
+  imageUrl, group, size = 56, radius,
 }: { imageUrl?: string | null; group?: string | null; name?: string; size?: number; radius?: number }) {
   const t = useTheme();
+  const [error, setError] = useState(false);
   const r = radius ?? t.radius.md;
-  if (imageUrl) {
-    return <Image source={{ uri: imageUrl }} style={{ width: size, height: size, borderRadius: r, backgroundColor: t.colors.bgInput }} />;
+
+  if (imageUrl && !error) {
+    return (
+      <Image
+        source={{ uri: imageUrl }}
+        onError={() => setError(true)}
+        style={{ width: size, height: size, borderRadius: r, backgroundColor: t.colors.bgInput }}
+      />
+    );
   }
   const color = muscleColor(t.colors, group);
   return (
