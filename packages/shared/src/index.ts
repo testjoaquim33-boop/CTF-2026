@@ -3,3 +3,4 @@ export * from './strength';
 export * from './progression';
 export * from './format';
 export * from './validators';
+export * from './onboarding';
