@@ -6,7 +6,10 @@ et `apps/mobile/src/constants/branding.ts`).
 
 ## Statut
 - ✅ Phase 0 — Analyse & architecture : `docs/PHASE_0_ANALYSIS.md`
-- 🚧 Phase 2 — Initialisation du monorepo (en cours)
+- ✅ Phase 2 — Monorepo (workspaces, shared pkg testé)
+- ✅ Phase 3 — Design System (tokens dark-first)
+- ✅ Phase 4 — Base de données (schéma, RLS testée, seed 52 exercices)
+- 🚧 Phase 5 — Authentification (email/password + delete RGPD ; Apple/Google câblés)
 
 ## Structure (monorepo)
 ```
