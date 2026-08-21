@@ -6,8 +6,7 @@ import { darkTheme } from '../src/theme/theme';
 
 /**
  * Point d'entrée. Redirige selon la session.
- * NB: les écrans d'auth (login/signup) arrivent à l'étape suivante ; en
- * attendant, sans session on envoie vers l'onboarding pour pouvoir tester le flux.
+ * NB: les écrans d'auth (login/signup) arrivent à l'étape suivante ; sans session -> écran de connexion.
  */
 export default function Index() {
   const { session, initializing } = useAuthStore();
@@ -18,5 +17,5 @@ export default function Index() {
       </View>
     );
   }
-  return session ? <Redirect href="/(tabs)" /> : <Redirect href="/(onboarding)" />;
+  return session ? <Redirect href="/(tabs)" /> : <Redirect href="/(auth)/sign-in" />;
 }
