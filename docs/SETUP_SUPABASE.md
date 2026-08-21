@@ -79,3 +79,12 @@ Si tu n'utilises pas la CLI Supabase, installe tout via le **SQL Editor** :
 
 Ce bundle regroupe schéma + RLS + provisioning + seed. À exécuter **une seule fois**
 sur une base neuve. (Il a été validé : s'applique sans erreur, 52 exercices, RLS active.)
+
+## En cas d'installation interrompue → `reset_bundle.sql`
+Si un premier passage a échoué en laissant un état partiel (ex. erreur
+`type "sex_t" already exists`), n'essaie pas de corriger à la main. Utilise
+**`backend/supabase/reset_bundle.sql`** : il **supprime et recrée** le schéma
+`public` (donc repart de zéro) puis réinstalle tout, le tout dans une seule
+transaction. ⚠️ Destructif — à réserver à un projet neuf / une réinstallation.
+N'affecte pas les schémas Supabase (auth, storage). Validé : s'applique proprement
+même par-dessus un état partiel (52 exercices).
