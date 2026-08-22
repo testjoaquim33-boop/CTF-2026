@@ -45,6 +45,56 @@ export async function fetchExercises(filters: ExerciseFilters = {}): Promise<Exe
     : rows;
 }
 
+export interface ExerciseHistorySet { weightKg: number; reps: number; isWarmup: boolean }
+export interface ExerciseHistoryDay { date: string; sets: ExerciseHistorySet[] }
+export interface ExercisePR { type: string; value: number; unit: string; achievedAt: string }
+
+/** Historique des séries de l'utilisateur pour un exercice, groupé par jour. */
+export async function fetchExerciseHistory(exerciseId: string, limit = 80): Promise<ExerciseHistoryDay[]> {
+  const { data: userData } = await supabase.auth.getUser();
+  const userId = userData.user?.id;
+  if (!userId) return [];
+  const { data, error } = await supabase
+    .from('sets')
+    .select('weight_kg,reps,is_warmup,logged_at,workout_exercises!inner(exercise_id,workouts!inner(user_id))')
+    .eq('workout_exercises.exercise_id', exerciseId)
+    .eq('workout_exercises.workouts.user_id', userId)
+    .order('logged_at', { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  const byDay = new Map<string, ExerciseHistorySet[]>();
+  for (const r of (data ?? []) as Array<Record<string, unknown>>) {
+    const day = String(r.logged_at).slice(0, 10);
+    const arr = byDay.get(day) ?? [];
+    arr.push({ weightKg: Number(r.weight_kg), reps: Number(r.reps), isWarmup: Boolean(r.is_warmup) });
+    byDay.set(day, arr);
+  }
+  return [...byDay.entries()].map(([date, sets]) => ({ date, sets }));
+}
+
+/** Records personnels de l'utilisateur pour un exercice. */
+export async function fetchExerciseRecords(exerciseId: string): Promise<ExercisePR[]> {
+  const { data: userData } = await supabase.auth.getUser();
+  const userId = userData.user?.id;
+  if (!userId) return [];
+  const { data, error } = await supabase
+    .from('personal_records')
+    .select('type,value,unit,achieved_at')
+    .eq('user_id', userId)
+    .eq('exercise_id', exerciseId)
+    .order('achieved_at', { ascending: false });
+  if (error) throw error;
+  // Garde le meilleur par type.
+  const best = new Map<string, ExercisePR>();
+  for (const r of data ?? []) {
+    const type = r.type as string;
+    const pr: ExercisePR = { type, value: Number(r.value), unit: (r.unit as string) ?? 'kg', achievedAt: r.achieved_at as string };
+    const cur = best.get(type);
+    if (!cur || pr.value > cur.value) best.set(type, pr);
+  }
+  return [...best.values()];
+}
+
 export async function fetchExerciseById(id: string): Promise<ExerciseDetail | null> {
   const { data, error } = await supabase
     .from('exercises')
