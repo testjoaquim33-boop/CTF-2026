@@ -96,14 +96,42 @@ export default function ExerciseDetailScreen() {
   );
 }
 
+/**
+ * Média de démonstration. Si l'URL pointe vers une image « .../0.jpg » (base
+ * free-exercise-db), on précharge aussi « .../1.jpg » et on alterne les deux
+ * frames (position départ ↔ arrivée) pour animer le mouvement. Fallback statique
+ * si la 2e frame manque, emoji si l'image échoue. Anime aussi nativement un
+ * GIF/WebP animé si image_url en pointe un.
+ */
 function Hero({ imageUrl, emoji }: { imageUrl: string | null; emoji: string }) {
-  const [error, setError] = React.useState(false);
+  const [err0, setErr0] = React.useState(false);
+  const [err1, setErr1] = React.useState(false);
+  const [showFirst, setShowFirst] = React.useState(true);
+
+  const frame1 = imageUrl && imageUrl.includes('/0.jpg') ? imageUrl.replace('/0.jpg', '/1.jpg') : null;
+  const animated = !!frame1 && !err1;
+
+  React.useEffect(() => {
+    if (!animated) return;
+    const id = setInterval(() => setShowFirst((s) => !s), 900);
+    return () => clearInterval(id);
+  }, [animated]);
+
+  const fill = { position: 'absolute' as const, top: 0, left: 0, right: 0, bottom: 0, width: '100%' as const, height: '100%' as const };
+
   return (
     <View style={{ height: 260, backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
-      {imageUrl && !error ? (
-        <Image source={{ uri: imageUrl }} onError={() => setError(true)} style={{ width: '100%', height: '100%' }} resizeMode="contain" />
-      ) : (
+      {!imageUrl || err0 ? (
         <Text style={{ fontSize: 96 }}>{emoji}</Text>
+      ) : (
+        <>
+          <Image source={{ uri: imageUrl }} onError={() => setErr0(true)} resizeMode="contain"
+            style={[fill, { opacity: !animated || showFirst ? 1 : 0 }]} />
+          {frame1 ? (
+            <Image source={{ uri: frame1 }} onError={() => setErr1(true)} resizeMode="contain"
+              style={[fill, { opacity: animated && !showFirst ? 1 : 0 }]} />
+          ) : null}
+        </>
       )}
     </View>
   );
