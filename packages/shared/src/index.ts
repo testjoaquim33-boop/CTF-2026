@@ -8,4 +8,5 @@ export * from './records';
 export * from './gamification';
 export * from './achievements';
 export * from './challenges';
+export * from './chat';
 export * from './ranking';

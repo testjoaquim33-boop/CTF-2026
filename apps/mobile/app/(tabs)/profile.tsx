@@ -77,6 +77,7 @@ export default function ProfileScreen() {
           <Text variant="caption" color="textSecondary">Statut : {status}</Text>
         </View>
 
+        <Button label="✨  Coach IA (chat)" onPress={() => router.push('/coach/chat')} />
         <Button label="🏅  Mes badges" variant="secondary" onPress={() => router.push('/achievements')} />
         <Button label="🔥  Défis" variant="secondary" onPress={() => router.push('/challenges')} />
 

@@ -24,33 +24,46 @@ Edge Functions → Secrets*) → ajouter :
 Quotas (optionnels, défauts raisonnables) : `AI_FREE_WEEKLY_LIMIT` (3),
 `AI_PREMIUM_WEEKLY_LIMIT` (100).
 
-## 2. Déployer la fonction `ai-recommendation`
+## 2. Déployer les fonctions
 
-La fonction est **auto-suffisante** (`backend/supabase/functions/ai-recommendation/index.ts`).
+Deux fonctions IA, toutes deux **auto-suffisantes** (aucune dépendance à copier) :
+
+| Fonction | Rôle |
+|----------|------|
+| `ai-chat` | **Chatbot conversationnel** (sport/nutrition/conseils/programmes). ⭐ principale |
+| `ai-recommendation` | Recommandation structurée (charge/séries/reps) sur un exercice. Optionnelle |
 
 ### Option A — Dashboard (sans CLI ni Docker) ✅ recommandé pour toi
 
+Pour **chaque** fonction :
 1. Dashboard → **Edge Functions** → **Deploy a new function** / **Create function**.
-2. Nom exact : `ai-recommendation`.
-3. Colle tout le contenu de `backend/supabase/functions/ai-recommendation/index.ts`.
+2. Nom exact : `ai-chat` (puis, si tu veux, `ai-recommendation`).
+3. Colle tout le contenu de `backend/supabase/functions/<nom>/index.ts`.
 4. **Deploy**.
 
 ### Option B — CLI (si tu as la CLI Supabase installée)
 
 ```bash
-supabase functions deploy ai-recommendation
-# (les secrets se posent aussi en CLI :)
+supabase functions deploy ai-chat
+supabase functions deploy ai-recommendation   # optionnel
 supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
 ```
 
+Quotas chat (optionnels) : `AI_CHAT_FREE_WEEKLY_LIMIT` (20), `AI_CHAT_PREMIUM_WEEKLY_LIMIT` (1000).
+
 ## 3. Tester dans l'app
 
-Fiche d'un exercice → **🤖 Demander à l'AI Coach** → *Obtenir une recommandation*.
+**Chatbot** : Accueil → carte **✨ Coach IA** (ou Profil → *Coach IA (chat)*) → pose une question
+(« Fais-moi un programme full-body », « Combien de protéines par jour ? »…).
 
-- Sans historique sur l'exercice : recommandation prudente de démarrage.
-- Avec historique : progression basée sur tes vraies séries.
-- Si tu écris une douleur/blessure dans la note : message de prudence (pas de conseil médical).
-- Sans clé configurée : message clair « L'IA n'est pas encore configurée ».
+**Recommandation** : fiche d'un exercice → **🤖 Demander à l'AI Coach**.
+
+Comportements :
+- Question sport/nutrition → réponse de coach, concise et actionnable.
+- Douleur/blessure mentionnée → message de prudence (pas de conseil médical).
+- Hors sujet → l'IA recentre poliment sur le sport/la nutrition.
+- Sans clé configurée → message clair « Le Coach IA n'est pas encore activé ».
+- Quota atteint (gratuit) → invitation à passer Premium.
 
 ## Notes
 

@@ -74,6 +74,22 @@ export default function DashboardScreen() {
           {/* NEXT SESSION */}
           <NextSession minutes={d.sessionMinutes} />
 
+          {/* COACH IA */}
+          <Pressable onPress={() => router.push('/coach/chat')}>
+            <LinearGradient colors={[t.colors.primary, t.colors.secondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+              style={{ borderRadius: 20, padding: 18, flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+              <View style={{ width: 46, height: 46, borderRadius: 23, backgroundColor: '#FFFFFF22',
+                alignItems: 'center', justifyContent: 'center' }}>
+                <Ionicons name="sparkles" size={24} color="#FFFFFF" />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: '#FFFFFF', fontWeight: '800', fontSize: 17, lineHeight: 22 }}>Coach IA</Text>
+                <Text style={{ color: '#FFFFFFCC', fontSize: 13, lineHeight: 18 }}>Programmes, nutrition, conseils — pose ta question</Text>
+              </View>
+              <Ionicons name="arrow-forward" size={22} color="#FFFFFF" />
+            </LinearGradient>
+          </Pressable>
+
           {/* STAT TILES — big numbers, small labels */}
           <View style={{ flexDirection: 'row', gap: 12 }}>
             <StatTile icon="barbell" color={t.colors.secondary} value={String(d.totalWorkouts)} label="Séances" />
