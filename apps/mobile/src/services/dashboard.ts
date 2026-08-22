@@ -6,7 +6,9 @@ export interface WeekBar { label: string; count: number }
 export interface DashPR { exerciseName: string; type: PersonalRecordType; value: number; unit: string }
 
 export interface Dashboard {
-  level: number; title: string; progress: number; xp: number; streak: number;
+  displayName: string;
+  weightSeries: number[];
+  level: number; title: string; progress: number; xp: number; nextXp: number | null; streak: number;
   totalWorkouts: number;
   weekWorkouts: number;
   recentPRs: DashPR[];
@@ -30,7 +32,7 @@ export async function fetchDashboard(): Promise<Dashboard> {
 
   const since = new Date(); since.setUTCDate(since.getUTCDate() - 45);
 
-  const [statsRes, levelsRes, workoutsRes, prRes, bodyRes, goalRes] = await Promise.all([
+  const [statsRes, levelsRes, workoutsRes, prRes, bodyRes, goalRes, profileRes] = await Promise.all([
     supabase.from('user_stats').select('xp,streak_days').eq('user_id', userId).maybeSingle(),
     supabase.from('levels').select('level,min_xp,title'),
     supabase.from('workouts').select('started_at').eq('user_id', userId).eq('status', 'completed')
@@ -40,7 +42,7 @@ export async function fetchDashboard(): Promise<Dashboard> {
       .eq('user_id', userId).order('achieved_at', { ascending: false }).limit(5),
     supabase.from('body_metrics').select('date,weight_kg').eq('user_id', userId).order('date', { ascending: true }),
     supabase.from('goals').select('target_weight_kg').eq('user_id', userId).eq('active', true).maybeSingle(),
-    supabase.from('workouts').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('status', 'completed'),
+    supabase.from('profiles').select('display_name').eq('id', userId).maybeSingle(),
   ]);
 
   // total workouts (separate exact count)
@@ -78,8 +80,13 @@ export async function fetchDashboard(): Promise<Dashboard> {
     type: r.type as PersonalRecordType, value: Number(r.value), unit: r.unit as string,
   }));
 
+  const rawName = profileRes.data?.display_name ?? '';
+  const displayName = (rawName.split(/[\s@]/)[0] || 'Champion');
+  const weightSeries = body.map((b) => Number(b.weight_kg));
+
   return {
-    level: st.level, title: st.title, progress: st.progress, xp, streak: statsRes.data?.streak_days ?? 0,
+    displayName, weightSeries,
+    level: st.level, title: st.title, progress: st.progress, xp, nextXp: st.nextMinXp, streak: statsRes.data?.streak_days ?? 0,
     totalWorkouts: totalRes.count ?? 0,
     weekWorkouts,
     recentPRs,

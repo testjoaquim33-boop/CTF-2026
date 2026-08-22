@@ -1,122 +1,150 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator, RefreshControl, Pressable } from 'react-native';
+import { View, ScrollView, ActivityIndicator, RefreshControl, Pressable, useWindowDimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { useTheme } from '../../src/theme/ThemeProvider';
-import { Text } from '../../src/components';
+import { Text, Ring, HexBadge, LineChart } from '../../src/components';
 import { fetchDashboard, type Dashboard } from '../../src/services/dashboard';
 
-const PR_LABELS: Record<string, string> = {
-  est_1rm: '1RM est.', max_weight: 'Charge', max_reps: 'Reps', max_volume: 'Volume',
-};
+const PR_LABELS: Record<string, string> = { est_1rm: '1RM est.', max_weight: 'Charge', max_reps: 'Reps', max_volume: 'Volume' };
 const DAY_LETTERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
-export default function Dashboard_() {
+export default function DashboardScreen() {
   const t = useTheme();
+  const { width } = useWindowDimensions();
   const { data, isLoading, refetch, isRefetching } = useQuery({ queryKey: ['dashboard'], queryFn: fetchDashboard });
 
   if (isLoading) {
     return <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg, alignItems: 'center', justifyContent: 'center' }}><ActivityIndicator color={t.colors.primary} /></SafeAreaView>;
   }
   const d = data as Dashboard;
+  const weightPct = (d.currentWeightKg != null && d.targetWeightKg != null && d.startWeightKg != null && d.startWeightKg !== d.targetWeightKg)
+    ? Math.max(0, Math.min(1, Math.abs(d.currentWeightKg - d.startWeightKg) / Math.abs(d.targetWeightKg - d.startWeightKg))) : 0;
+  const toGo = (d.currentWeightKg != null && d.targetWeightKg != null) ? Math.round((d.targetWeightKg - d.currentWeightKg) * 10) / 10 : null;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }} edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.lg, paddingBottom: t.spacing.xxl }}
         refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor={t.colors.primary} />}>
 
-        {/* Header */}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <View>
-            <Text variant="h1">Bonjour 👋</Text>
-            <Text color="textSecondary">Prêt à progresser aujourd'hui ?</Text>
+        {/* HEADER */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <View style={{ flex: 1 }}>
+            <Text variant="h1">Bonjour {d.displayName} 👋</Text>
+            <Text color="textSecondary">Prêt à devenir la meilleure version de toi-même ?</Text>
           </View>
-          <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: t.colors.primary,
-            alignItems: 'center', justifyContent: 'center' }}>
-            <Text variant="bodyMedium" color="onPrimary">{d.level}</Text>
+          <View style={{ flexDirection: 'row', gap: t.spacing.sm, alignItems: 'center' }}>
+            <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.bgCard, borderWidth: 1, borderColor: t.colors.border, alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name="notifications-outline" size={20} color={t.colors.textSecondary} />
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: t.colors.bgCard, borderWidth: 1, borderColor: t.colors.border, borderRadius: 999, paddingHorizontal: 10, height: 40 }}>
+              <Text>🔥</Text><Text variant="bodyMedium">{d.streak}</Text>
+            </View>
           </View>
         </View>
 
-        {/* HERO niveau */}
-        <View style={{ backgroundColor: t.colors.primary, borderRadius: t.radius.lg, padding: t.spacing.lg, gap: t.spacing.xs,
-          shadowColor: t.colors.primary, shadowOpacity: 0.35, shadowRadius: 16, shadowOffset: { width: 0, height: 8 }, elevation: 8 }}>
-          <Text variant="overline" style={{ color: '#FFFFFFAA' }}>NIVEAU {d.level} · {d.title.toUpperCase()}</Text>
-          <View style={{ height: 8, backgroundColor: '#FFFFFF33', borderRadius: 999, marginTop: 4 }}>
-            <View style={{ height: 8, width: `${Math.max(4, d.progress * 100)}%`, backgroundColor: '#FFFFFF', borderRadius: 999 }} />
+        {/* LEVEL CARD (gradient + hexagon + flame) */}
+        <LinearGradient colors={[t.colors.primaryDark, t.colors.bgCard]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+          style={{ borderRadius: t.radius.lg, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.primary + '55' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.lg }}>
+            <HexBadge level={d.level} />
+            <View style={{ flex: 1 }}>
+              <Text variant="overline" style={{ color: t.colors.primaryMuted }}>NIVEAU {d.level} · {d.title.toUpperCase()}</Text>
+              <Text variant="display">{d.xp} <Text variant="h3" color="textSecondary">XP</Text></Text>
+              <View style={{ height: 8, backgroundColor: '#00000044', borderRadius: 999, marginTop: 6 }}>
+                <View style={{ height: 8, width: `${Math.max(4, d.progress * 100)}%`, backgroundColor: t.colors.primary, borderRadius: 999 }} />
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 }}>
+                <Text variant="caption" color="textSecondary">{d.xp} / {d.nextXp ?? '∞'} XP</Text>
+                <Text variant="caption" style={{ color: t.colors.primaryMuted }}>{d.nextXp ? `Niveau ${d.level + 1}` : 'MAX'}</Text>
+              </View>
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <View style={{ width: 52, height: 52, borderRadius: 26, borderWidth: 2, borderColor: t.colors.primary, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 22 }}>🔥</Text>
+              </View>
+              <Text variant="bodyMedium" style={{ marginTop: 4 }}>{d.streak}</Text>
+              <Text variant="caption" color="textMuted">jours</Text>
+            </View>
           </View>
-          <Text variant="caption" style={{ color: '#FFFFFFDD', marginTop: 4 }}>{d.xp} XP · 🔥 {d.streak} jours de streak</Text>
-        </View>
+        </LinearGradient>
 
-        {/* CTA */}
-        <Pressable onPress={() => router.push('/workout/new')}
-          style={{ backgroundColor: t.colors.secondary, borderRadius: t.radius.lg, padding: t.spacing.lg,
-            flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-          <View>
-            <Text variant="overline" style={{ color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
-            <Text variant="h3" color="onPrimary">Démarrer une séance →</Text>
-          </View>
-          <Text style={{ fontSize: 32 }}>🏋️</Text>
+        {/* NEXT SESSION (purple gradient) */}
+        <Pressable onPress={() => router.push('/workout/new')}>
+          <LinearGradient colors={[t.colors.secondary, t.colors.secondaryDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+            style={{ borderRadius: t.radius.lg, padding: t.spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ flex: 1 }}>
+              <Text variant="overline" style={{ color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
+              <Text variant="h2" color="onPrimary">Démarrer une séance</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 6 }}>
+                <Ionicons name="flash-outline" size={16} color="#FFFFFFCC" />
+                <Text variant="caption" style={{ color: '#FFFFFFCC' }}>Choisis tes exercices et c'est parti</Text>
+              </View>
+            </View>
+            <View style={{ backgroundColor: '#FFFFFF', borderRadius: 999, width: 52, height: 52, alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name="play" size={24} color={t.colors.secondary} />
+            </View>
+          </LinearGradient>
         </Pressable>
 
-        {/* Stat tiles */}
+        {/* STAT TILES */}
         <View style={{ flexDirection: 'row', gap: t.spacing.md }}>
-          <StatTile label="Séances" value={String(d.totalWorkouts)} sub="total" color={t.colors.info} />
-          <StatTile label="Cette semaine" value={String(d.weekWorkouts)} sub="séances" color={t.colors.success} />
-          <StatTile label="Records" value={String(d.recentPRs.length)} sub="récents" color={t.colors.warning} />
+          <StatTile icon="barbell" color={t.colors.secondary} value={String(d.totalWorkouts)} label="Séances" sub="total" />
+          <StatTile icon="calendar" color={t.colors.success} value={String(d.weekWorkouts)} label="Cette semaine" sub="séances" />
+          <StatTile icon="star" color={t.colors.warning} value={String(d.recentPRs.length)} label="Records" sub="récents" />
         </View>
 
-        {/* 7-day streak dots */}
-        <Widget title="7 derniers jours">
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: t.spacing.sm }}>
-            {d.last7.map((day, i) => (
-              <View key={i} style={{ alignItems: 'center', gap: 6 }}>
-                <View style={{ width: 32, height: 32, borderRadius: 16,
-                  backgroundColor: day.trained ? t.colors.primary : t.colors.bgInput,
-                  alignItems: 'center', justifyContent: 'center', borderWidth: 1,
-                  borderColor: day.trained ? t.colors.primary : t.colors.border }}>
-                  <Text variant="caption" color={day.trained ? 'onPrimary' : 'textMuted'}>{day.trained ? '✓' : ''}</Text>
-                </View>
-                <Text variant="caption" color="textMuted">{DAY_LETTERS[i]}</Text>
-              </View>
-            ))}
-          </View>
-        </Widget>
-
-        {/* Weekly bars */}
-        <Widget title="Séances par semaine">
-          <View style={{ flexDirection: 'row', alignItems: 'flex-end', height: 90, gap: t.spacing.sm, marginTop: t.spacing.sm }}>
-            {d.weeks.map((w, i) => {
-              const max = Math.max(1, ...d.weeks.map((x) => x.count));
+        {/* TA SEMAINE */}
+        <Widget title="Ta semaine" right={`${d.last7.filter((x) => x.trained).length} / 7 séances`}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: t.spacing.md }}>
+            {d.last7.map((day, i) => {
+              const isToday = i === 6;
+              const on = day.trained;
               return (
-                <View key={i} style={{ flex: 1, alignItems: 'center', gap: 4 }}>
-                  <Text variant="caption" color="textMuted">{w.count}</Text>
-                  <View style={{ width: '70%', height: 8 + (w.count / max) * 60,
-                    backgroundColor: i === d.weeks.length - 1 ? t.colors.primary : t.colors.secondary,
-                    borderRadius: t.radius.sm }} />
+                <View key={i} style={{ alignItems: 'center', gap: 6 }}>
+                  <View style={{ width: 38, height: 38, borderRadius: 19,
+                    backgroundColor: on ? t.colors.primary : t.colors.bgInput,
+                    borderWidth: isToday && !on ? 2 : 0, borderColor: t.colors.primary,
+                    alignItems: 'center', justifyContent: 'center' }}>
+                    <Text variant="caption" color={on ? 'onPrimary' : 'textSecondary'} style={{ fontWeight: '700' }}>
+                      {on ? '✓' : DAY_LETTERS[i]}
+                    </Text>
+                  </View>
+                  <Text variant="caption" color="textMuted">{DAY_LETTERS[i]}</Text>
                 </View>
               );
             })}
           </View>
         </Widget>
 
-        {/* Weight goal */}
-        {d.currentWeightKg != null ? (
-          <Widget title="Objectif poids">
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: t.spacing.sm }}>
-              <Text variant="h2">{d.currentWeightKg} kg</Text>
-              <Text color="textSecondary">→ {d.targetWeightKg ?? '—'} kg</Text>
+        {/* PROGRESSION : ring + line chart */}
+        <Widget title="Ta progression">
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: t.spacing.md, gap: t.spacing.lg }}>
+            <View style={{ flex: 1 }}>
+              <Text variant="overline" color="textMuted">POIDS ACTUEL</Text>
+              <Text variant="h1">{d.currentWeightKg ?? '—'} <Text variant="h3" color="textSecondary">kg</Text></Text>
+              <Text color="textSecondary">Objectif : <Text style={{ color: t.colors.primary }}>{d.targetWeightKg ?? '—'} kg</Text></Text>
+              {toGo != null ? <Text style={{ color: t.colors.success, marginTop: 4 }}>{toGo > 0 ? '+' : ''}{toGo} kg à atteindre</Text> : null}
             </View>
-            {d.targetWeightKg && d.startWeightKg && d.startWeightKg !== d.targetWeightKg ? (
-              <WeightProgress start={d.startWeightKg} current={d.currentWeightKg} target={d.targetWeightKg} />
-            ) : null}
-          </Widget>
-        ) : null}
+            <Ring progress={weightPct} size={96} color={t.colors.primary} />
+          </View>
+          <View style={{ marginTop: t.spacing.md }}>
+            <LineChart values={d.weightSeries} width={width - t.spacing.lg * 4} />
+          </View>
+        </Widget>
 
-        {/* Recent PRs */}
+        {/* RECORDS */}
         <Widget title="Records récents">
           {d.recentPRs.length === 0 ? (
-            <Text color="textMuted">Termine une séance pour décrocher tes premiers records 💪</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, marginTop: t.spacing.sm }}>
+              <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.warning + '22', alignItems: 'center', justifyContent: 'center' }}>
+                <Ionicons name="trophy" size={20} color={t.colors.warning} />
+              </View>
+              <Text color="textSecondary" style={{ flex: 1 }}>Termine une séance pour décrocher tes premiers records 💪</Text>
+            </View>
           ) : d.recentPRs.map((pr, i) => (
             <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 6 }}>
               <Text>{pr.exerciseName} <Text color="textMuted" variant="caption">({PR_LABELS[pr.type] ?? pr.type})</Text></Text>
@@ -124,56 +152,33 @@ export default function Dashboard_() {
             </View>
           ))}
         </Widget>
-
-        {/* Quick actions */}
-        <View style={{ flexDirection: 'row', gap: t.spacing.md }}>
-          <QuickAction label="🏆 Gym Card" onPress={() => router.push('/gym-card')} />
-          <QuickAction label="📊 Progression" onPress={() => router.push('/(tabs)/progress')} />
-          <QuickAction label="🥇 Classement" onPress={() => router.push('/(tabs)/ranking')} />
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-function StatTile({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
+function StatTile({ icon, color, value, label, sub }: { icon: keyof typeof Ionicons.glyphMap; color: string; value: string; label: string; sub: string }) {
   const t = useTheme();
   return (
-    <View style={{ flex: 1, backgroundColor: t.colors.bgCard, borderRadius: t.radius.md, padding: t.spacing.md,
-      borderWidth: 1, borderColor: t.colors.border, borderTopWidth: 3, borderTopColor: color }}>
+    <View style={{ flex: 1, backgroundColor: t.colors.bgCard, borderRadius: t.radius.lg, padding: t.spacing.md, borderWidth: 1, borderColor: t.colors.border }}>
+      <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: color + '22', alignItems: 'center', justifyContent: 'center', marginBottom: t.spacing.sm }}>
+        <Ionicons name={icon} size={18} color={color} />
+      </View>
       <Text variant="h2">{value}</Text>
       <Text variant="caption" color="textSecondary">{label}</Text>
       <Text variant="caption" color="textMuted">{sub}</Text>
     </View>
   );
 }
-function Widget({ title, children }: { title: string; children: React.ReactNode }) {
+function Widget({ title, right, children }: { title: string; right?: string; children: React.ReactNode }) {
   const t = useTheme();
   return (
-    <View style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.lg, padding: t.spacing.lg,
-      borderWidth: 1, borderColor: t.colors.border }}>
-      <Text variant="overline" color="textMuted">{title.toUpperCase()}</Text>
+    <View style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.lg, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.border }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text variant="overline" color="textMuted">{title.toUpperCase()}</Text>
+        {right ? <Text variant="caption" color="textMuted">{right}</Text> : null}
+      </View>
       {children}
-    </View>
-  );
-}
-function QuickAction({ label, onPress }: { label: string; onPress: () => void }) {
-  const t = useTheme();
-  return (
-    <Pressable onPress={onPress} style={{ flex: 1, backgroundColor: t.colors.bgCard, borderRadius: t.radius.md,
-      padding: t.spacing.md, borderWidth: 1, borderColor: t.colors.border, alignItems: 'center' }}>
-      <Text variant="caption">{label}</Text>
-    </Pressable>
-  );
-}
-function WeightProgress({ start, current, target }: { start: number; current: number; target: number }) {
-  const t = useTheme();
-  const total = Math.abs(target - start);
-  const done = Math.abs(current - start);
-  const pct = Math.max(0, Math.min(1, total === 0 ? 0 : done / total));
-  return (
-    <View style={{ height: 8, backgroundColor: t.colors.bgInput, borderRadius: 999 }}>
-      <View style={{ height: 8, width: `${pct * 100}%`, backgroundColor: t.colors.success, borderRadius: 999 }} />
     </View>
   );
 }

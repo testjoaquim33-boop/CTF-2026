@@ -6,3 +6,6 @@ export { FilterChips } from './FilterChips';
 export { MiniBarChart } from './MiniBarChart';
 export { RankBadge } from './RankBadge';
 export { ExerciseThumb, muscleColor } from './ExerciseThumb';
+export { Ring } from './Ring';
+export { HexBadge } from './Hexagon';
+export { LineChart } from './LineChart';
