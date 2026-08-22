@@ -9,3 +9,4 @@ export { ExerciseThumb, muscleColor } from './ExerciseThumb';
 export { Ring } from './Ring';
 export { HexBadge } from './Hexagon';
 export { LineChart } from './LineChart';
+export { AmbientOrbs } from './AmbientOrbs';
