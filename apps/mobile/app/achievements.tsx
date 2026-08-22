@@ -7,9 +7,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../src/theme/ThemeProvider';
 import { Text, ProgressBar, AmbientOrbs } from '../src/components';
 import { fetchAchievements, type AchievementView } from '../src/services/achievements';
+import { useT } from '../src/i18n/useT';
 
 export default function AchievementsScreen() {
   const t = useTheme();
+  const tr = useT();
   const q = useQuery({ queryKey: ['achievements'], queryFn: fetchAchievements });
 
   const items = q.data?.items ?? [];
@@ -25,9 +27,9 @@ export default function AchievementsScreen() {
           <Ionicons name="chevron-back" size={22} color={t.colors.text} />
         </Pressable>
         <View style={{ flex: 1 }}>
-          <Text variant="h1">Badges</Text>
+          <Text variant="h1">{tr('ach.title')}</Text>
           {!q.isLoading ? (
-            <Text variant="caption" color="textSecondary">{unlockedCount} / {items.length} débloqués</Text>
+            <Text variant="caption" color="textSecondary">{tr('ach.unlockedCount', { n: unlockedCount, total: items.length })}</Text>
           ) : null}
         </View>
       </View>
@@ -36,10 +38,8 @@ export default function AchievementsScreen() {
         <ActivityIndicator color={t.colors.primary} style={{ marginTop: t.spacing.xl }} />
       ) : q.isError ? (
         <View style={{ padding: t.spacing.lg }}>
-          <Text color="danger">Impossible de charger les badges.</Text>
-          <Text color="textMuted" variant="caption">
-            Assure-toi d'avoir appliqué la migration 0006 et le seed 0004 sur Supabase.
-          </Text>
+          <Text color="danger">{tr('ach.error')}</Text>
+          <Text color="textMuted" variant="caption">{tr('ach.errorHint')}</Text>
         </View>
       ) : (
         <ScrollView contentContainerStyle={{ padding: t.spacing.lg, paddingTop: 0 }}>
@@ -59,6 +59,7 @@ export default function AchievementsScreen() {
 
 function BadgeCard({ a }: { a: AchievementView }) {
   const t = useTheme();
+  const tr = useT();
   const tint = a.unlocked ? t.colors.primary : t.colors.textMuted;
   return (
     <View style={{
@@ -90,7 +91,7 @@ function BadgeCard({ a }: { a: AchievementView }) {
       ) : null}
 
       {a.unlocked ? (
-        <Text variant="overline" style={{ color: tint }}>DÉBLOQUÉ</Text>
+        <Text variant="overline" style={{ color: tint }}>{tr('ach.unlocked')}</Text>
       ) : (
         <View style={{ gap: 4 }}>
           <ProgressBar progress={a.progress} />

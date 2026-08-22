@@ -8,10 +8,8 @@ import { useTheme } from '../src/theme/ThemeProvider';
 import { Text, ProgressBar, AmbientOrbs } from '../src/components';
 import { usePremium } from '../src/hooks/usePremium';
 import { fetchChallenges, joinChallenge, leaveChallenge, type ChallengeView } from '../src/services/challenges';
+import { useT } from '../src/i18n/useT';
 
-const METRIC_UNIT: Record<string, string> = {
-  workouts: 'séances', working_sets: 'séries', volume_kg: 'kg', prs: 'records',
-};
 const METRIC_ICON: Record<string, keyof typeof Ionicons.glyphMap> = {
   workouts: 'barbell', working_sets: 'repeat', volume_kg: 'trending-up', prs: 'trophy',
 };
@@ -22,6 +20,7 @@ function fmt(n: number): string {
 
 export default function ChallengesScreen() {
   const t = useTheme();
+  const tr = useT();
   const { isPremium } = usePremium();
   const q = useQuery({ queryKey: ['challenges'], queryFn: fetchChallenges });
   const [busy, setBusy] = useState<string | null>(null);
@@ -30,16 +29,16 @@ export default function ChallengesScreen() {
 
   const onJoin = async (c: ChallengeView) => {
     if (c.isPremium && !isPremium) {
-      Alert.alert('Défi Premium', 'Ce défi est réservé aux membres Premium.', [
-        { text: 'Plus tard', style: 'cancel' },
-        { text: 'Passer Premium', onPress: () => router.push('/paywall') },
+      Alert.alert(tr('ch.premiumTitle'), tr('ch.premiumMsg'), [
+        { text: tr('ch.later'), style: 'cancel' },
+        { text: tr('ch.goPremium'), onPress: () => router.push('/paywall') },
       ]);
       return;
     }
     setBusy(c.id);
     const res = await joinChallenge(c.id);
     setBusy(null);
-    if (!res.ok) { Alert.alert('Erreur', res.error ?? 'unknown'); return; }
+    if (!res.ok) { Alert.alert(tr('common.error'), res.error ?? 'unknown'); return; }
     q.refetch();
   };
 
@@ -47,7 +46,7 @@ export default function ChallengesScreen() {
     setBusy(c.id);
     const res = await leaveChallenge(c.id);
     setBusy(null);
-    if (!res.ok) { Alert.alert('Erreur', res.error ?? 'unknown'); return; }
+    if (!res.ok) { Alert.alert(tr('common.error'), res.error ?? 'unknown'); return; }
     q.refetch();
   };
 
@@ -61,8 +60,8 @@ export default function ChallengesScreen() {
           <Ionicons name="chevron-back" size={22} color={t.colors.text} />
         </Pressable>
         <View style={{ flex: 1 }}>
-          <Text variant="h1">Défis</Text>
-          <Text variant="caption" color="textSecondary">Relève un défi et suis ta progression en temps réel.</Text>
+          <Text variant="h1">{tr('ch.title')}</Text>
+          <Text variant="caption" color="textSecondary">{tr('ch.subtitle')}</Text>
         </View>
       </View>
 
@@ -70,14 +69,12 @@ export default function ChallengesScreen() {
         <ActivityIndicator color={t.colors.primary} style={{ marginTop: t.spacing.xl }} />
       ) : q.isError ? (
         <View style={{ padding: t.spacing.lg }}>
-          <Text color="danger">Impossible de charger les défis.</Text>
-          <Text color="textMuted" variant="caption">
-            Assure-toi d'avoir appliqué la migration 0007 et le seed 0005 sur Supabase.
-          </Text>
+          <Text color="danger">{tr('ch.error')}</Text>
+          <Text color="textMuted" variant="caption">{tr('ch.errorHint')}</Text>
         </View>
       ) : items.length === 0 ? (
         <View style={{ padding: t.spacing.lg }}>
-          <Text color="textSecondary">Aucun défi actif pour le moment. Reviens bientôt !</Text>
+          <Text color="textSecondary">{tr('ch.empty')}</Text>
         </View>
       ) : (
         <ScrollView contentContainerStyle={{ padding: t.spacing.lg, paddingTop: 0, gap: t.spacing.md }}>
@@ -94,8 +91,9 @@ function ChallengeCard({ c, busy, onJoin, onLeave }: {
   c: ChallengeView; busy: boolean; onJoin: () => void; onLeave: () => void;
 }) {
   const t = useTheme();
+  const tr = useT();
   const metric = c.config?.metric ?? 'workouts';
-  const unit = METRIC_UNIT[metric] ?? '';
+  const unit = tr(`ch.unit.${metric}`);
   const accent = c.completed ? t.colors.success : t.colors.primary;
 
   return (
@@ -115,13 +113,13 @@ function ChallengeCard({ c, busy, onJoin, onLeave }: {
             <Text variant="bodyMedium" numberOfLines={1} style={{ flexShrink: 1 }}>{c.name}</Text>
             {c.isPremium ? (
               <View style={{ paddingHorizontal: 6, paddingVertical: 1, borderRadius: t.radius.pill, backgroundColor: t.colors.primary + '22' }}>
-                <Text variant="overline" color="primary">PREMIUM</Text>
+                <Text variant="overline" color="primary">{tr('ch.premiumBadge')}</Text>
               </View>
             ) : null}
           </View>
           <Text variant="caption" color="textSecondary">
-            Objectif : {fmt(c.target)} {unit}
-            {c.daysLeft != null ? `  ·  ${c.daysLeft} j restants` : ''}
+            {tr('ch.objective', { target: fmt(c.target), unit })}
+            {c.daysLeft != null ? `  ·  ${tr('ch.daysLeft', { days: c.daysLeft })}` : ''}
           </Text>
         </View>
         {c.completed ? <Ionicons name="checkmark-circle" size={26} color={t.colors.success} /> : null}
@@ -136,18 +134,18 @@ function ChallengeCard({ c, busy, onJoin, onLeave }: {
       </View>
 
       {c.completed ? (
-        <Text variant="overline" style={{ color: t.colors.success }}>DÉFI RELEVÉ 🎉</Text>
+        <Text variant="overline" style={{ color: t.colors.success }}>{tr('ch.done')}</Text>
       ) : c.joined ? (
         <Pressable onPress={onLeave} disabled={busy}
           style={{ alignSelf: 'flex-start', paddingVertical: 6, paddingHorizontal: t.spacing.md,
             borderRadius: t.radius.sm, borderWidth: 1, borderColor: t.colors.border }}>
-          <Text variant="caption" color="textSecondary">{busy ? '…' : 'Quitter'}</Text>
+          <Text variant="caption" color="textSecondary">{busy ? '…' : tr('ch.leave')}</Text>
         </Pressable>
       ) : (
         <Pressable onPress={onJoin} disabled={busy}
           style={{ alignSelf: 'flex-start', paddingVertical: 8, paddingHorizontal: t.spacing.lg,
             borderRadius: t.radius.sm, backgroundColor: t.colors.primary }}>
-          <Text variant="caption" color="onPrimary">{busy ? '…' : 'Rejoindre le défi'}</Text>
+          <Text variant="caption" color="onPrimary">{busy ? '…' : tr('ch.join')}</Text>
         </Pressable>
       )}
     </View>

@@ -9,33 +9,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text } from '../../src/components';
 import { sendChatMessage } from '../../src/services/chat';
+import { useT } from '../../src/i18n/useT';
 import type { ChatMessage } from '@project_fit/shared';
-
-const ERR: Record<string, string> = {
-  ai_not_configured: "Le Coach IA n'est pas encore activé côté serveur.",
-  quota_exceeded: 'Tu as atteint ta limite de messages de la semaine. Passe Premium pour discuter sans limite.',
-  ai_rate_limited: "L'IA est très sollicitée, réessaie dans un instant.",
-  ai_error: "L'IA a rencontré une erreur, réessaie.",
-  ai_unreachable: "Impossible de joindre l'IA, vérifie ta connexion.",
-  unauthorized: 'Session expirée, reconnecte-toi.',
-};
-
-const GREETING =
-  "Salut 👋 Je suis ton coach IA. Pose-moi tes questions sur l'entraînement, la nutrition, la récup' ou demande-moi un programme !";
-
-const SUGGESTIONS = [
-  'Fais-moi un programme full-body 3x/semaine',
-  'Combien de protéines par jour pour prendre du muscle ?',
-  'Que manger avant et après ma séance ?',
-  'Comment progresser au développé couché ?',
-];
 
 interface Bubble extends ChatMessage { id: string }
 
 export default function CoachChatScreen() {
   const t = useTheme();
-  const [bubbles, setBubbles] = useState<Bubble[]>([
-    { id: 'greet', role: 'assistant', content: GREETING },
+  const tr = useT();
+  const SUGGESTIONS = [tr('chat.s1'), tr('chat.s2'), tr('chat.s3'), tr('chat.s4')];
+  const [bubbles, setBubbles] = useState<Bubble[]>(() => [
+    { id: 'greet', role: 'assistant', content: tr('chat.greeting') },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -65,7 +49,9 @@ export default function CoachChatScreen() {
     setLoading(false);
 
     if (!res.ok) {
-      setError(ERR[res.error ?? ''] ?? res.error ?? 'Erreur');
+      const key = `chat.err.${res.error ?? 'generic'}`;
+      const msg = tr(key);
+      setError(msg === key ? (res.error ?? tr('chat.err.generic')) : msg);
       scrollToEnd();
       return;
     }
@@ -90,8 +76,8 @@ export default function CoachChatScreen() {
           <Ionicons name="sparkles" size={20} color={t.colors.primary} />
         </View>
         <View style={{ flex: 1 }}>
-          <Text variant="h3">Coach IA</Text>
-          <Text variant="caption" color="textSecondary">Sport · Nutrition · Programmes</Text>
+          <Text variant="h3">{tr('chat.title')}</Text>
+          <Text variant="caption" color="textSecondary">{tr('chat.subtitle')}</Text>
         </View>
       </View>
 
@@ -118,7 +104,7 @@ export default function CoachChatScreen() {
 
           {showSuggestions ? (
             <View style={{ gap: t.spacing.sm, marginTop: t.spacing.sm }}>
-              <Text variant="overline" color="textMuted">SUGGESTIONS</Text>
+              <Text variant="overline" color="textMuted">{tr('chat.suggestions')}</Text>
               {SUGGESTIONS.map((s) => (
                 <Pressable key={s} onPress={() => send(s)}
                   style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.md, padding: t.spacing.md,
@@ -135,7 +121,7 @@ export default function CoachChatScreen() {
           padding: t.spacing.md, borderTopWidth: 1, borderTopColor: t.colors.border, backgroundColor: t.colors.bg }}>
           <TextInput
             value={input} onChangeText={setInput}
-            placeholder="Pose ta question…" placeholderTextColor={t.colors.textMuted}
+            placeholder={tr('chat.placeholder')} placeholderTextColor={t.colors.textMuted}
             multiline
             style={{ flex: 1, maxHeight: 120, backgroundColor: t.colors.bgInput, color: t.colors.text,
               borderRadius: t.radius.lg, paddingHorizontal: t.spacing.md, paddingVertical: t.spacing.sm, fontSize: 16 }}
