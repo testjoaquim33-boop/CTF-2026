@@ -17,7 +17,7 @@ export default function AchievementsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
-      <AmbientOrbs />
+      <AmbientOrbs colors={[t.colors.primary, t.colors.secondary, t.colors.info]} />
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, padding: t.spacing.lg, paddingBottom: t.spacing.sm }}>
         <Pressable onPress={() => router.back()} hitSlop={12}
           style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.bgCard,
