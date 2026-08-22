@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, ScrollView, Alert, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useTheme } from '../../src/theme/ThemeProvider';
@@ -7,6 +7,7 @@ import { Text, Button } from '../../src/components';
 import { usePremium } from '../../src/hooks/usePremium';
 import { useAuthStore } from '../../src/store/auth';
 import { signOut, deleteAccount } from '../../src/services/auth';
+import { supabase } from '../../src/services/supabase';
 import { restorePurchases, purchasesEnabled } from '../../src/services/purchases';
 
 export default function ProfileScreen() {
@@ -14,6 +15,23 @@ export default function ProfileScreen() {
   const { isPremium, status } = usePremium();
   const user = useAuthStore((s) => s.user);
   const [busy, setBusy] = useState(false);
+  const [name, setName] = useState('');
+  const [savingName, setSavingName] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase.from('profiles').select('display_name').maybeSingle();
+      if (data?.display_name) setName(data.display_name);
+    })();
+  }, []);
+
+  const saveName = async () => {
+    if (!user) return;
+    setSavingName(true);
+    const { error } = await supabase.from('profiles').update({ display_name: name.trim() }).eq('id', user.id);
+    setSavingName(false);
+    Alert.alert(error ? 'Erreur' : 'Enregistré', error ? error.message : 'Ton nom a été mis à jour.');
+  };
 
   const onLogout = async () => { await signOut(); router.replace('/(auth)/sign-in'); };
 
@@ -41,6 +59,14 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.md }}>
         <Text variant="h1">Profil</Text>
         <Text color="textSecondary">{user?.email ?? '—'}</Text>
+
+        <View style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.md, padding: t.spacing.lg,
+          borderWidth: 1, borderColor: t.colors.border, gap: t.spacing.sm }}>
+          <Text variant="overline" color="textMuted">NOM AFFICHÉ</Text>
+          <TextInput value={name} onChangeText={setName} placeholder="Ton prénom" placeholderTextColor={t.colors.textMuted}
+            style={{ backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.md, padding: t.spacing.md, fontSize: 16 }} />
+          <Button label={savingName ? '…' : 'Enregistrer le nom'} onPress={saveName} disabled={savingName} />
+        </View>
 
         <View style={{ backgroundColor: t.colors.bgElevated, borderRadius: t.radius.md, padding: t.spacing.lg,
           borderWidth: 1, borderColor: isPremium ? t.colors.primary : t.colors.border, gap: t.spacing.xs }}>

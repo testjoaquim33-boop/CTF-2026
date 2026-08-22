@@ -12,6 +12,7 @@ export interface Dashboard {
   totalWorkouts: number;
   weekWorkouts: number;
   recentPRs: DashPR[];
+  sessionMinutes: number | null;
   currentWeightKg: number | null;
   targetWeightKg: number | null;
   startWeightKg: number | null;
@@ -41,7 +42,7 @@ export async function fetchDashboard(): Promise<Dashboard> {
       .select('type,value,unit,exercise:exercises!exercise_id(name)')
       .eq('user_id', userId).order('achieved_at', { ascending: false }).limit(5),
     supabase.from('body_metrics').select('date,weight_kg').eq('user_id', userId).order('date', { ascending: true }),
-    supabase.from('goals').select('target_weight_kg').eq('user_id', userId).eq('active', true).maybeSingle(),
+    supabase.from('goals').select('target_weight_kg,session_minutes').eq('user_id', userId).eq('active', true).maybeSingle(),
     supabase.from('profiles').select('display_name').eq('id', userId).maybeSingle(),
   ]);
 
@@ -92,6 +93,7 @@ export async function fetchDashboard(): Promise<Dashboard> {
     recentPRs,
     currentWeightKg: body.length ? Number(body[body.length - 1].weight_kg) : null,
     startWeightKg: body.length ? Number(body[0].weight_kg) : null,
+    sessionMinutes: goalRes.data?.session_minutes != null ? Number(goalRes.data.session_minutes) : null,
     targetWeightKg: goalRes.data?.target_weight_kg != null ? Number(goalRes.data.target_weight_kg) : null,
     last7, weeks,
   };

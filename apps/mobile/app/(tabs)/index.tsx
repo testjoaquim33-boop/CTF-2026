@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator, RefreshControl, Pressable, useWindowDimensions } from 'react-native';
+import { View, ScrollView, ActivityIndicator, RefreshControl, Pressable, ImageBackground, useWindowDimensions } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
@@ -47,8 +49,8 @@ export default function DashboardScreen() {
         </View>
 
         {/* LEVEL CARD (gradient + hexagon + flame) */}
-        <LinearGradient colors={[t.colors.primaryDark, t.colors.bgCard]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-          style={{ borderRadius: t.radius.lg, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.primary + '55' }}>
+        <LinearGradient colors={['#3A2216', '#1B1622']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.9 }}
+          style={{ borderRadius: t.radius.lg, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.primary + '44' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.lg }}>
             <HexBadge level={d.level} />
             <View style={{ flex: 1 }}>
@@ -72,23 +74,7 @@ export default function DashboardScreen() {
           </View>
         </LinearGradient>
 
-        {/* NEXT SESSION (purple gradient) */}
-        <Pressable onPress={() => router.push('/workout/new')}>
-          <LinearGradient colors={[t.colors.secondary, t.colors.secondaryDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
-            style={{ borderRadius: t.radius.lg, padding: t.spacing.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View style={{ flex: 1 }}>
-              <Text variant="overline" style={{ color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
-              <Text variant="h2" color="onPrimary">Démarrer une séance</Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 6 }}>
-                <Ionicons name="flash-outline" size={16} color="#FFFFFFCC" />
-                <Text variant="caption" style={{ color: '#FFFFFFCC' }}>Choisis tes exercices et c'est parti</Text>
-              </View>
-            </View>
-            <View style={{ backgroundColor: '#FFFFFF', borderRadius: 999, width: 52, height: 52, alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name="play" size={24} color={t.colors.secondary} />
-            </View>
-          </LinearGradient>
-        </Pressable>
+        <NextSession minutes={d.sessionMinutes} />
 
         {/* STAT TILES */}
         <View style={{ flexDirection: 'row', gap: t.spacing.md }}>
@@ -154,6 +140,50 @@ export default function DashboardScreen() {
         </Widget>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function NextSession({ minutes }: { minutes: number | null }) {
+  const t = useTheme();
+  const [imgError, setImgError] = useState(false);
+  const heroUri = 'https://yoaxsshvfkmzsamlxati.supabase.co/storage/v1/object/public/exercise-media/_hero.jpg';
+
+  const Content = (
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: t.spacing.lg }}>
+      <View style={{ flex: 1 }}>
+        <Text variant="overline" style={{ color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
+        <Text variant="h2" color="onPrimary">Démarrer une séance</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, marginTop: 6 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Ionicons name="time-outline" size={15} color="#FFFFFFDD" />
+            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{minutes ? `~${minutes} min` : 'À ton rythme'}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Ionicons name="barbell-outline" size={15} color="#FFFFFFDD" />
+            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>Séance libre</Text>
+          </View>
+        </View>
+      </View>
+      <View style={{ backgroundColor: '#FFFFFF', borderRadius: 999, width: 54, height: 54, alignItems: 'center', justifyContent: 'center' }}>
+        <Ionicons name="play" size={26} color={t.colors.secondary} />
+      </View>
+    </View>
+  );
+
+  return (
+    <Pressable onPress={() => router.push('/workout/new')} style={{ borderRadius: t.radius.lg, overflow: 'hidden' }}>
+      {!imgError ? (
+        <ImageBackground source={{ uri: heroUri }} onError={() => setImgError(true)} style={{ minHeight: 130, justifyContent: 'center' }}>
+          <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#5B3FD6CC' }]} />
+          {Content}
+        </ImageBackground>
+      ) : (
+        <LinearGradient colors={[t.colors.secondary, t.colors.secondaryDark]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ minHeight: 130, justifyContent: 'center' }}>
+          <Ionicons name="body" size={130} color="#FFFFFF14" style={{ position: 'absolute', right: -10, top: -6 }} />
+          {Content}
+        </LinearGradient>
+      )}
+    </Pressable>
   );
 }
 
