@@ -46,7 +46,12 @@ export default function ActiveWorkout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <View style={{ padding: t.spacing.lg, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Text variant="h2">{store.name}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.sm, flex: 1 }}>
+          <Pressable onPress={() => router.replace('/(tabs)')} hitSlop={12}>
+            <Text variant="h3" color="textSecondary">‹</Text>
+          </Pressable>
+          <Text variant="h2">{store.name}</Text>
+        </View>
         {running ? (
           <Pressable onPress={stopRest} style={{ backgroundColor: t.colors.primary, borderRadius: t.radius.pill, paddingHorizontal: t.spacing.lg, paddingVertical: t.spacing.sm }}>
             <Text color="onPrimary" variant="bodyMedium">Repos {formatDuration(remaining)}</Text>
@@ -92,7 +97,8 @@ export default function ActiveWorkout() {
         ))}
       </ScrollView>
 
-      <View style={{ padding: t.spacing.lg }}>
+      <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
+        <Button label="+ Ajouter un exercice" variant="secondary" onPress={() => router.push('/workout/add-exercise')} />
         <Button label={saving ? 'Enregistrement…' : 'Terminer la séance'} onPress={finish} disabled={saving} />
       </View>
     </SafeAreaView>
