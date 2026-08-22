@@ -77,6 +77,8 @@ export default function ProfileScreen() {
           <Text variant="caption" color="textSecondary">Statut : {status}</Text>
         </View>
 
+        <Button label="🏅  Mes badges" variant="secondary" onPress={() => router.push('/achievements')} />
+
         {!isPremium ? (
           <Button label="Passer Premium" onPress={() => router.push('/paywall')} />
         ) : null}

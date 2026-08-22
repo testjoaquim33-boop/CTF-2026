@@ -34,10 +34,19 @@ export default function ActiveWorkout() {
     setSaving(false);
     if (!res.ok) { Alert.alert('Erreur', res.error ?? 'unknown'); return; }
     const prs = res.newPRs ?? [];
+    const badges = res.newBadges ?? [];
     store.reset();
+    const lines: string[] = [];
     if (prs.length > 0) {
-      const summary = prs.map((p) => `${p.exerciseName}: ${p.value} ${p.unit}`).join('\n');
-      Alert.alert('🔥 Nouveau record !', summary, [{ text: 'Génial', onPress: () => router.replace('/(tabs)') }]);
+      lines.push('🔥 Records', ...prs.map((p) => `• ${p.exerciseName}: ${p.value} ${p.unit}`));
+    }
+    if (badges.length > 0) {
+      if (lines.length) lines.push('');
+      lines.push('🏅 Badges débloqués', ...badges.map((b) => `• ${b.icon ?? '🏅'} ${b.name}`));
+    }
+    if (lines.length > 0) {
+      const title = badges.length > 0 && prs.length === 0 ? '🏅 Nouveau badge !' : '🔥 Séance terminée !';
+      Alert.alert(title, lines.join('\n'), [{ text: 'Génial', onPress: () => router.replace('/(tabs)') }]);
     } else {
       router.replace('/(tabs)');
     }

@@ -6,4 +6,5 @@ export * from './validators';
 export * from './onboarding';
 export * from './records';
 export * from './gamification';
+export * from './achievements';
 export * from './ranking';

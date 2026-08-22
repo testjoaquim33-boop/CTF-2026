@@ -2,12 +2,14 @@ import { supabase } from './supabase';
 import { detectNewPRs, type PersonalRecordType } from '@project_fit/shared';
 import type { ActiveExercise } from '../store/activeWorkout';
 import { awardWorkoutXp } from './gamification';
+import { fetchAchievements } from './achievements';
 
 export interface FinishResult {
   ok: boolean;
   error?: string;
   workoutId?: string;
   newPRs?: { exerciseName: string; type: PersonalRecordType; value: number; unit: string }[];
+  newBadges?: { name: string; icon: string | null }[];
 }
 
 /**
@@ -100,7 +102,17 @@ export async function finishWorkout(params: {
   const workingSets = params.exercises.reduce((n, ex) => n + ex.sets.filter((s) => !s.isWarmup).length, 0);
   await awardWorkoutXp({ userId, workingSets, newPRs: newPRs.length });
 
-  return { ok: true, workoutId, newPRs };
+  // Badges : évaluation + persistance des nouveaux débloqués (best-effort :
+  // ne doit jamais faire échouer l'enregistrement de la séance).
+  let newBadges: { name: string; icon: string | null }[] = [];
+  try {
+    const res = await fetchAchievements();
+    newBadges = res.newlyUnlocked.map((b) => ({ name: b.name, icon: b.icon }));
+  } catch {
+    // silencieux : les badges se resynchroniseront au prochain affichage.
+  }
+
+  return { ok: true, workoutId, newPRs, newBadges };
 }
 
 /** Historique des séances terminées (récentes d'abord). */
