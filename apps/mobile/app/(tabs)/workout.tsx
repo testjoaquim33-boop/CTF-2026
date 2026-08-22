@@ -1,25 +1,94 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, ImageBackground, Pressable, StyleSheet, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text, Button } from '../../src/components';
+import { WORKOUT_CATEGORIES, categoryImageUrl, type WorkoutCategory } from '../../src/features/workout/categories';
+import { pickCategoryExercises } from '../../src/services/workoutTemplates';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
 
 export default function WorkoutScreen() {
   const t = useTheme();
   const active = useActiveWorkout((s) => s.active);
+  const start = useActiveWorkout((s) => s.start);
+  const addExercise = useActiveWorkout((s) => s.addExercise);
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const startCategory = async (cat: WorkoutCategory) => {
+    setLoading(cat.slug);
+    const picks = await pickCategoryExercises(cat);
+    setLoading(null);
+    start(cat.name);
+    picks.forEach((p) => addExercise(p.id, p.name));
+    router.push('/workout/active');
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
-      <View style={{ flex: 1, padding: t.spacing.xl, gap: t.spacing.md, justifyContent: 'center' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }} edges={['top']}>
+      <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.md, paddingBottom: t.spacing.xxl }}>
         <Text variant="h1">Séance</Text>
+        <Text color="textSecondary">Choisis un type de séance ou pars sur du libre.</Text>
+
         {active ? (
-          <Button label="Reprendre la séance" onPress={() => router.push('/workout/active')} />
-        ) : (
-          <Button label="Nouvelle séance" onPress={() => router.push('/workout/new')} />
-        )}
-        <Button label="Parcourir les exercices" variant="secondary" onPress={() => router.push('/exercises')} />
-      </View>
+          <Pressable onPress={() => router.push('/workout/active')}
+            style={{ backgroundColor: t.colors.success + '22', borderColor: t.colors.success, borderWidth: 1,
+              borderRadius: t.radius.md, padding: t.spacing.lg, flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
+            <Ionicons name="play-circle" size={28} color={t.colors.success} />
+            <Text variant="bodyMedium" style={{ flex: 1 }}>Séance en cours — reprendre</Text>
+            <Ionicons name="chevron-forward" size={20} color={t.colors.success} />
+          </Pressable>
+        ) : null}
+
+        {WORKOUT_CATEGORIES.map((cat) => (
+          <CategoryCard key={cat.slug} cat={cat} loading={loading === cat.slug} onPress={() => startCategory(cat)} />
+        ))}
+
+        <Button label="+ Séance libre (choisir mes exercices)" variant="secondary" onPress={() => router.push('/workout/new')} style={{ marginTop: t.spacing.sm }} />
+      </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function CategoryCard({ cat, loading, onPress }: { cat: WorkoutCategory; loading: boolean; onPress: () => void }) {
+  const t = useTheme();
+  const [imgError, setImgError] = React.useState(false);
+
+  const Overlay = (
+    <>
+      <LinearGradient colors={[cat.color + 'E6', cat.color + '55', '#00000000']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+        style={StyleSheet.absoluteFillObject} />
+      <View style={{ padding: t.spacing.lg, minHeight: 130, justifyContent: 'center' }}>
+        <Text variant="h1" color="onPrimary">{cat.name}</Text>
+        <View style={{ flexDirection: 'row', gap: t.spacing.lg, marginTop: 6 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Ionicons name="time-outline" size={16} color="#FFFFFFDD" />
+            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.minutes} min</Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+            <Ionicons name="barbell-outline" size={16} color="#FFFFFFDD" />
+            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.exerciseCount} exercices</Text>
+          </View>
+        </View>
+        {loading ? <ActivityIndicator color="#fff" style={{ position: 'absolute', right: 16, top: 16 }} /> : null}
+      </View>
+    </>
+  );
+
+  return (
+    <Pressable onPress={onPress} disabled={loading} style={{ borderRadius: t.radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: t.colors.border }}>
+      {!imgError ? (
+        <ImageBackground source={{ uri: categoryImageUrl(cat.slug) }} onError={() => setImgError(true)} style={{ minHeight: 130 }}>
+          {Overlay}
+        </ImageBackground>
+      ) : (
+        <View style={{ minHeight: 130, backgroundColor: cat.color + '33' }}>
+          <Ionicons name="fitness" size={120} color="#FFFFFF14" style={{ position: 'absolute', right: -6, top: 4 }} />
+          {Overlay}
+        </View>
+      )}
+    </Pressable>
   );
 }
