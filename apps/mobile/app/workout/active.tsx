@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TextInput, Pressable, Alert } from 'react-native';
+import { View, ScrollView, TextInput, Pressable, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text, Button } from '../../src/components';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
+import { useExercise } from '../../src/hooks/useExercises';
 import { useRestTimer } from '../../src/hooks/useRestTimer';
 import { finishWorkout } from '../../src/services/workouts';
 import { formatDuration } from '@project_fit/shared';
@@ -72,7 +74,7 @@ export default function ActiveWorkout() {
         {store.exercises.map((ex, exIndex) => (
           <View key={exIndex} style={{ marginBottom: t.spacing.xl, backgroundColor: t.colors.bgElevated,
             borderRadius: t.radius.md, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.border }}>
-            <Text variant="h3" style={{ marginBottom: t.spacing.md }}>{ex.name}</Text>
+            <ExerciseHeader exerciseId={ex.exerciseId} name={ex.name} />
 
             {ex.sets.map((s, setIndex) => (
               <View key={setIndex} style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.sm, marginBottom: t.spacing.sm }}>
@@ -111,5 +113,28 @@ export default function ActiveWorkout() {
         <Button label={saving ? 'Enregistrement…' : 'Terminer la séance'} onPress={finish} disabled={saving} />
       </View>
     </SafeAreaView>
+  );
+}
+
+/** En-tête de carte d'exercice : vignette du mouvement (tappable -> fiche animée) + nom. */
+function ExerciseHeader({ exerciseId, name }: { exerciseId: string; name: string }) {
+  const t = useTheme();
+  const { data } = useExercise(exerciseId);
+  const [err, setErr] = useState(false);
+  const img = data?.image_url ?? null;
+  return (
+    <Pressable onPress={() => router.push(`/exercises/${exerciseId}`)}
+      style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, marginBottom: t.spacing.md }}>
+      <View style={{ width: 52, height: 52, borderRadius: t.radius.sm, overflow: 'hidden',
+        backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
+        {img && !err ? (
+          <Image source={{ uri: img }} onError={() => setErr(true)} resizeMode="contain" style={{ width: '100%', height: '100%' }} />
+        ) : (
+          <Ionicons name="barbell" size={24} color={t.colors.textMuted} />
+        )}
+      </View>
+      <Text variant="h3" style={{ flex: 1 }}>{name}</Text>
+      <Ionicons name="chevron-forward" size={20} color={t.colors.textMuted} />
+    </Pressable>
   );
 }
