@@ -18,7 +18,14 @@
 // Secret requis : supabase secrets set ANTHROPIC_API_KEY=sk-ant-...
 // ============================================================================
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import { corsHeaders } from '../_shared/cors.ts';
+
+// CORS inline (fonction auto-suffisante : déployable via le dashboard Supabase,
+// sans dépendance à ../_shared, ou via la CLI). Miroir de _shared/cors.ts.
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+};
 
 const AI_MODEL = Deno.env.get('AI_MODEL') ?? 'claude-haiku-4-5';
 const FREE_WEEKLY_LIMIT = Number(Deno.env.get('AI_FREE_WEEKLY_LIMIT') ?? '3');

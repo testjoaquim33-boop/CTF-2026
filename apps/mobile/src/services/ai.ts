@@ -23,9 +23,19 @@ export async function requestRecommendation(exerciseId: string, note = ''): Prom
     body: { exerciseId, note },
   });
   if (error) {
-    // Les erreurs applicatives (quota, config) reviennent dans data ; les erreurs réseau dans error.
-    const ctx = (data ?? {}) as { error?: string; limit?: number };
-    return { ok: false, error: ctx.error ?? error.message };
+    // supabase-js met le corps d'une réponse non-2xx (quota, ai_not_configured…)
+    // dans error.context (un Response), pas dans `data`.
+    const resp = (error as { context?: Response }).context;
+    if (resp && typeof resp.json === 'function') {
+      try {
+        const body = (await resp.json()) as { error?: string; safety_notice?: string };
+        if (body.safety_notice) return { ok: true, safetyNotice: body.safety_notice };
+        if (body.error) return { ok: false, error: body.error };
+      } catch {
+        // corps illisible -> on retombe sur le message générique
+      }
+    }
+    return { ok: false, error: error.message };
   }
   const d = data as { recommendation?: AiRecommendation; safety_notice?: string; error?: string };
   if (d.error) return { ok: false, error: d.error };
