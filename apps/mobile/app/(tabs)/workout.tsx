@@ -56,39 +56,49 @@ function CategoryCard({ cat, loading, onPress }: { cat: WorkoutCategory; loading
   const t = useTheme();
   const [imgError, setImgError] = React.useState(false);
 
-  const Overlay = (
-    <>
-      <LinearGradient colors={[cat.color + 'E6', cat.color + '55', '#00000000']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
-        style={StyleSheet.absoluteFillObject} />
-      <View style={{ padding: t.spacing.lg, minHeight: 130, justifyContent: 'center' }}>
-        <Text variant="h1" color="onPrimary">{cat.name}</Text>
-        <View style={{ flexDirection: 'row', gap: t.spacing.lg, marginTop: 6 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <Ionicons name="time-outline" size={16} color="#FFFFFFDD" />
-            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.minutes} min</Text>
-          </View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-            <Ionicons name="barbell-outline" size={16} color="#FFFFFFDD" />
-            <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.exerciseCount} exercices</Text>
-          </View>
-        </View>
-        {loading ? <ActivityIndicator color="#fff" style={{ position: 'absolute', right: 16, top: 16 }} /> : null}
-      </View>
-    </>
-  );
-
-  return (
-    <Pressable onPress={onPress} disabled={loading} style={{ borderRadius: t.radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: t.colors.border }}>
-      {!imgError ? (
-        <ImageBackground source={{ uri: categoryImageUrl(cat.slug) }} onError={() => setImgError(true)} style={{ minHeight: 130 }}>
-          {Overlay}
+  // Image finie (texte + durée déjà dessus) -> on l'affiche telle quelle.
+  if (!imgError) {
+    return (
+      <Pressable onPress={onPress} disabled={loading}
+        style={{ borderRadius: t.radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: t.colors.border }}>
+        <ImageBackground
+          source={{ uri: categoryImageUrl(cat.slug) }}
+          onError={() => setImgError(true)}
+          style={{ width: '100%', aspectRatio: 1.82, justifyContent: 'flex-start', alignItems: 'flex-end' }}
+        >
+          {loading ? (
+            <View style={[StyleSheet.absoluteFillObject, { backgroundColor: '#00000066', alignItems: 'center', justifyContent: 'center' }]}>
+              <ActivityIndicator color="#fff" />
+            </View>
+          ) : null}
         </ImageBackground>
-      ) : (
-        <View style={{ minHeight: 130, backgroundColor: cat.color + '33' }}>
-          <Ionicons name="fitness" size={120} color="#FFFFFF14" style={{ position: 'absolute', right: -6, top: 4 }} />
-          {Overlay}
+      </Pressable>
+    );
+  }
+
+  // Fallback (image absente) : dégradé + texte.
+  return (
+    <Pressable onPress={onPress} disabled={loading}
+      style={{ borderRadius: t.radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: t.colors.border }}>
+      <View style={{ minHeight: 130, backgroundColor: cat.color + '33' }}>
+        <LinearGradient colors={[cat.color + 'E6', cat.color + '55', '#00000000']} start={{ x: 0, y: 0.5 }} end={{ x: 1, y: 0.5 }}
+          style={StyleSheet.absoluteFillObject} />
+        <Ionicons name="fitness" size={120} color="#FFFFFF14" style={{ position: 'absolute', right: -6, top: 4 }} />
+        <View style={{ padding: t.spacing.lg, minHeight: 130, justifyContent: 'center' }}>
+          <Text variant="h1" color="onPrimary">{cat.name}</Text>
+          <View style={{ flexDirection: 'row', gap: t.spacing.lg, marginTop: 6 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Ionicons name="time-outline" size={16} color="#FFFFFFDD" />
+              <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.minutes} min</Text>
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Ionicons name="barbell-outline" size={16} color="#FFFFFFDD" />
+              <Text variant="caption" style={{ color: '#FFFFFFDD' }}>{cat.exerciseCount} exercices</Text>
+            </View>
+          </View>
+          {loading ? <ActivityIndicator color="#fff" style={{ position: 'absolute', right: 16, top: 16 }} /> : null}
         </View>
-      )}
+      </View>
     </Pressable>
   );
 }
