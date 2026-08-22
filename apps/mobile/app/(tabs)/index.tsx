@@ -36,7 +36,7 @@ export default function DashboardScreen() {
           {/* HEADER */}
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
             <View style={{ flex: 1 }}>
-              <Text style={{ fontSize: 30, fontWeight: '800', color: t.colors.text, letterSpacing: -0.5 }}>Bonjour {d.displayName} 👋</Text>
+              <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: '800', color: t.colors.text, letterSpacing: -0.5 }}>Bonjour {d.displayName} 👋</Text>
               <Text color="textSecondary" style={{ marginTop: 2 }}>Prêt à devenir la meilleure version de toi-même ?</Text>
             </View>
           </View>
@@ -57,7 +57,7 @@ export default function DashboardScreen() {
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1.2, color: t.colors.primaryMuted }}>NIVEAU {d.level} · {d.title.toUpperCase()}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
-                  <Text style={{ fontSize: 40, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{d.xp}</Text>
+                  <Text style={{ fontSize: 40, lineHeight: 46, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{d.xp}</Text>
                   <Text color="textSecondary" style={{ marginBottom: 8, fontWeight: '700' }}>XP</Text>
                 </View>
                 <View style={{ height: 8, backgroundColor: '#00000055', borderRadius: 999 }}>
@@ -108,7 +108,7 @@ export default function DashboardScreen() {
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1, color: t.colors.textMuted }}>POIDS ACTUEL</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 5 }}>
-                  <Text style={{ fontSize: 38, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{d.currentWeightKg ?? '—'}</Text>
+                  <Text style={{ fontSize: 38, lineHeight: 44, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{d.currentWeightKg ?? '—'}</Text>
                   <Text color="textSecondary" style={{ marginBottom: 7, fontWeight: '700' }}>kg</Text>
                 </View>
                 <Text color="textSecondary">Objectif : <Text style={{ color: t.colors.primary }}>{d.targetWeightKg ?? '—'} kg</Text></Text>
@@ -161,7 +161,7 @@ function NextSession({ minutes }: { minutes: number | null }) {
     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
       <View style={{ flex: 1 }}>
         <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1.2, color: '#FFFFFFAA' }}>PROCHAINE SÉANCE</Text>
-        <Text style={{ fontSize: 24, fontWeight: '800', color: '#fff', letterSpacing: -0.5 }}>Démarrer une séance</Text>
+        <Text style={{ fontSize: 24, lineHeight: 30, fontWeight: '800', color: '#fff', letterSpacing: -0.5 }}>Démarrer une séance</Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14, marginTop: 8 }}>
           <Row icon="time-outline" label={minutes ? `~${minutes} min` : 'À ton rythme'} />
           <Row icon="barbell-outline" label="Séance libre" />
@@ -207,7 +207,7 @@ function StatTile({ icon, color, value, label }: { icon: keyof typeof Ionicons.g
       <View style={{ width: 34, height: 34, borderRadius: 17, backgroundColor: color + '22', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
         <Ionicons name={icon} size={17} color={color} />
       </View>
-      <Text style={{ fontSize: 30, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{value}</Text>
+      <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{value}</Text>
       <Text style={{ fontSize: 11, fontWeight: '700', letterSpacing: 0.5, color: t.colors.textMuted, textTransform: 'uppercase' }}>{label}</Text>
     </View>
   );
