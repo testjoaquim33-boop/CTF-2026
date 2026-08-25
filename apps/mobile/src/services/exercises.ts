@@ -29,21 +29,44 @@ export interface ExerciseFilters {
   search?: string;
 }
 
+// Les colonnes i18n (name_fr, …) n'existent qu'après le patch SQL 0009.
+// On détecte leur présence une fois et on retombe proprement sur l'anglais tant
+// qu'elles manquent — l'app ne plante jamais si la migration n'est pas appliquée.
+let hasI18nColumns: boolean | null = null;
+const UNDEFINED_COLUMN = '42703';
+
+const LIST_COLS_I18N = 'id,slug,name,name_fr,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+const LIST_COLS_BASE = 'id,slug,name,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+const DETAIL_COLS_I18N = 'id,slug,name,name_fr,level,is_bodyweight,description,description_fr,instructions,instructions_fr,common_mistakes,common_mistakes_fr,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+const DETAIL_COLS_BASE = 'id,slug,name,level,is_bodyweight,description,instructions,common_mistakes,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+
 /** Liste les exercices actifs, filtrable. Lecture autorisée (contenu public authentifié). */
 export async function fetchExercises(filters: ExerciseFilters = {}): Promise<ExerciseListItem[]> {
-  let query = supabase
-    .from('exercises')
-    .select('id,slug,name,name_fr,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
-    .eq('is_active', true)
-    .order('name');
+  const run = async (withI18n: boolean) => {
+    let q = supabase
+      .from('exercises')
+      .select(withI18n ? LIST_COLS_I18N : LIST_COLS_BASE)
+      .eq('is_active', true)
+      .order('name');
+    if (filters.level) q = q.eq('level', filters.level);
+    if (filters.search) {
+      q = withI18n
+        ? q.or(`name.ilike.%${filters.search}%,name_fr.ilike.%${filters.search}%`)
+        : q.ilike('name', `%${filters.search}%`);
+    }
+    return q;
+  };
 
-  if (filters.level) query = query.eq('level', filters.level);
-  if (filters.search) query = query.or(`name.ilike.%${filters.search}%,name_fr.ilike.%${filters.search}%`);
-
-  const { data, error } = await query;
+  let { data, error } = await run(hasI18nColumns !== false);
+  if (error && error.code === UNDEFINED_COLUMN && hasI18nColumns !== false) {
+    hasI18nColumns = false;
+    ({ data, error } = await run(false));
+  } else if (!error && hasI18nColumns === null) {
+    hasI18nColumns = true;
+  }
   if (error) throw error;
-  const rows = (data ?? []) as unknown as ExerciseListItem[];
-  // Filtre par groupe musculaire côté client (le join rend le filtre SQL verbeux).
+
+  const rows = (data ?? []).map((r) => ({ name_fr: null, ...(r as Record<string, unknown>) })) as unknown as ExerciseListItem[];
   return filters.muscleGroup
     ? rows.filter((r) => r.primary_muscle?.group === filters.muscleGroup)
     : rows;
@@ -100,11 +123,21 @@ export async function fetchExerciseRecords(exerciseId: string): Promise<Exercise
 }
 
 export async function fetchExerciseById(id: string): Promise<ExerciseDetail | null> {
-  const { data, error } = await supabase
+  const run = (withI18n: boolean) => supabase
     .from('exercises')
-    .select('id,slug,name,name_fr,level,is_bodyweight,description,description_fr,instructions,instructions_fr,common_mistakes,common_mistakes_fr,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
+    .select(withI18n ? DETAIL_COLS_I18N : DETAIL_COLS_BASE)
     .eq('id', id)
     .single();
+
+  let { data, error } = await run(hasI18nColumns !== false);
+  if (error && error.code === UNDEFINED_COLUMN && hasI18nColumns !== false) {
+    hasI18nColumns = false;
+    ({ data, error } = await run(false));
+  } else if (!error && hasI18nColumns === null) {
+    hasI18nColumns = true;
+  }
   if (error) throw error;
-  return (data as unknown as ExerciseDetail) ?? null;
+  if (!data) return null;
+  // Colonnes FR absentes -> null (repli EN géré par l'app).
+  return { name_fr: null, description_fr: null, instructions_fr: null, common_mistakes_fr: null, ...(data as Record<string, unknown>) } as unknown as ExerciseDetail;
 }
