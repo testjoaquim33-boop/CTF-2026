@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Text, Button, ProgressBar } from '../../components';
 import { ONBOARDING_STEPS, type OnboardingStep } from '@project_fit/shared';
+import { useT } from '../../i18n/useT';
 
 interface Props {
   step: OnboardingStep;
@@ -16,8 +17,9 @@ interface Props {
   children: React.ReactNode;
 }
 
-export function StepScaffold({ step, title, subtitle, canContinue, onNext, nextLabel = 'Continuer', children }: Props) {
+export function StepScaffold({ step, title, subtitle, canContinue, onNext, nextLabel, children }: Props) {
   const t = useTheme();
+  const tr = useT();
   const idx = ONBOARDING_STEPS.indexOf(step);
   const progress = (idx + 1) / ONBOARDING_STEPS.length;
   return (
@@ -26,7 +28,7 @@ export function StepScaffold({ step, title, subtitle, canContinue, onNext, nextL
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
           {router.canGoBack() ? (
             <Pressable onPress={() => router.back()} hitSlop={12}>
-              <Text variant="h3" color="textSecondary">‹ Retour</Text>
+              <Text variant="h3" color="textSecondary">{tr('onb.back')}</Text>
             </Pressable>
           ) : null}
           <View style={{ flex: 1 }}>
@@ -41,7 +43,7 @@ export function StepScaffold({ step, title, subtitle, canContinue, onNext, nextL
         {children}
       </ScrollView>
       <View style={{ padding: t.spacing.lg }}>
-        <Button label={nextLabel} onPress={onNext} disabled={!canContinue} />
+        <Button label={nextLabel ?? tr('common.continue')} onPress={onNext} disabled={!canContinue} />
       </View>
     </SafeAreaView>
   );

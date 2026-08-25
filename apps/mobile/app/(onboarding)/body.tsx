@@ -7,6 +7,7 @@ import { StepScaffold } from '../../src/features/onboarding/StepScaffold';
 import { useOnboardingStore } from '../../src/store/onboarding';
 import { validateStep } from '@project_fit/shared';
 import { saveOnboarding } from '../../src/services/onboarding';
+import { useT } from '../../src/i18n/useT';
 
 function NumberField({ label, value, onChange, suffix }: {
   label: string; value: string; onChange: (v: string) => void; suffix?: string;
@@ -32,6 +33,7 @@ function NumberField({ label, value, onChange, suffix }: {
 
 export default function BodyStep() {
   const { draft, set } = useOnboardingStore();
+  const tr = useT();
   const [saving, setSaving] = useState(false);
   const [height, setHeight] = useState(draft.heightCm?.toString() ?? '');
   const [weight, setWeight] = useState(draft.weightKg?.toString() ?? '');
@@ -46,18 +48,18 @@ export default function BodyStep() {
     set(patch);
     const merged = { ...draft, ...patch };
     const err = validateStep('body', merged);
-    if (err) { Alert.alert('Vérifie tes informations', err); return; }
+    if (err) { Alert.alert(tr('onb.body.checkInfo'), err); return; }
 
     setSaving(true);
     const res = await saveOnboarding(merged);
     setSaving(false);
     if (!res.ok) {
       if (res.error === 'not_authenticated') {
-        Alert.alert('Connecte-toi', 'Crée un compte ou connecte-toi pour enregistrer ton profil.',
-          [{ text: 'OK', onPress: () => router.replace('/(auth)/sign-in') }]);
+        Alert.alert(tr('onb.body.signinTitle'), tr('onb.body.signinMsg'),
+          [{ text: tr('common.ok'), onPress: () => router.replace('/(auth)/sign-in') }]);
         return;
       }
-      Alert.alert('Erreur', res.error ?? 'unknown'); return;
+      Alert.alert(tr('common.error'), res.error ?? 'unknown'); return;
     }
     router.replace('/(tabs)');
   };
@@ -67,15 +69,15 @@ export default function BodyStep() {
   return (
     <StepScaffold
       step="body"
-      title="Tes informations"
-      subtitle="Utilisées pour personnaliser ton programme et calculer ta force relative"
+      title={tr('onb.title.body')}
+      subtitle={tr('onb.body.subtitle')}
       canContinue={valid && !saving}
-      nextLabel={saving ? 'Enregistrement…' : 'Terminer'}
+      nextLabel={saving ? tr('onb.body.saving') : tr('onb.body.finish')}
       onNext={onFinish}
     >
-      <NumberField label="Taille" value={height} onChange={setHeight} suffix="cm" />
-      <NumberField label="Poids actuel" value={weight} onChange={setWeight} suffix="kg" />
-      <NumberField label="Poids objectif (optionnel)" value={target} onChange={setTarget} suffix="kg" />
+      <NumberField label={tr('onb.body.height')} value={height} onChange={setHeight} suffix="cm" />
+      <NumberField label={tr('onb.body.weight')} value={weight} onChange={setWeight} suffix="kg" />
+      <NumberField label={tr('onb.body.target')} value={target} onChange={setTarget} suffix="kg" />
     </StepScaffold>
   );
 }

@@ -4,29 +4,29 @@ import { router, Link } from 'expo-router';
 import { AuthForm } from '../../src/features/auth/AuthForm';
 import { Text } from '../../src/components';
 import { signUpWithEmail } from '../../src/services/auth';
+import { useT } from '../../src/i18n/useT';
 
 export default function SignUp() {
+  const tr = useT();
   return (
     <AuthForm
-      title="Créer un compte"
-      submitLabel="S'inscrire"
+      title={tr('auth.signUpTitle')}
+      submitLabel={tr('auth.signUpSubmit')}
       fields={[
-        { key: 'email', label: 'Email' },
-        { key: 'password', label: 'Mot de passe (8+ car., 1 lettre + 1 chiffre)', secure: true },
-        { key: 'confirm', label: 'Confirmer le mot de passe', secure: true },
+        { key: 'email', label: tr('auth.email') },
+        { key: 'password', label: tr('auth.passwordRule'), secure: true },
+        { key: 'confirm', label: tr('auth.confirmPassword'), secure: true },
       ]}
       onSubmit={async (v) => {
         const res = await signUpWithEmail(v.email ?? '', v.password ?? '', v.confirm ?? '');
         if (!res.ok) return res.error ?? 'error';
         if (res.hasSession) {
-          // Session active -> on peut faire l'onboarding tout de suite.
           router.replace('/(onboarding)');
         } else {
-          // Confirmation d'email requise : pas de session encore.
           Alert.alert(
-            'Vérifie ton email',
-            "Nous t'avons envoyé un lien de confirmation. Confirme ton adresse puis connecte-toi.",
-            [{ text: 'OK', onPress: () => router.replace('/(auth)/sign-in') }],
+            tr('auth.checkEmailTitle'),
+            tr('auth.checkEmailMsg'),
+            [{ text: tr('common.ok'), onPress: () => router.replace('/(auth)/sign-in') }],
           );
         }
         return null;
@@ -34,7 +34,7 @@ export default function SignUp() {
       footer={
         <Link href="/(auth)/sign-in" asChild>
           <Pressable style={{ marginTop: 16, alignItems: 'center' }}>
-            <Text color="textSecondary">Déjà un compte ? <Text color="primary">Se connecter</Text></Text>
+            <Text color="textSecondary">{tr('auth.haveAccount')} <Text color="primary">{tr('auth.signInSubmit')}</Text></Text>
           </Pressable>
         </Link>
       }

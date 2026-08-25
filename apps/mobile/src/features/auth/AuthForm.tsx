@@ -3,6 +3,7 @@ import { View, TextInput, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Text, Button } from '../../components';
+import { useT } from '../../i18n/useT';
 
 interface Field { key: string; label: string; secure?: boolean; }
 
@@ -16,6 +17,7 @@ export function AuthForm({
   footer?: React.ReactNode;
 }) {
   const t = useTheme();
+  const tr = useT();
   const [values, setValues] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +25,7 @@ export function AuthForm({
     setLoading(true);
     const err = await onSubmit(values);
     setLoading(false);
-    if (err) Alert.alert('Oups', err);
+    if (err) Alert.alert(tr('auth.errorTitle'), err);
   };
 
   return (
