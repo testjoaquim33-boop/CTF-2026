@@ -3,6 +3,7 @@ import { detectNewPRs, type PersonalRecordType } from '@project_fit/shared';
 import type { ActiveExercise } from '../store/activeWorkout';
 import { awardWorkoutXp } from './gamification';
 import { fetchAchievements } from './achievements';
+import { submitToLeaderboard } from './ranking';
 
 export interface FinishResult {
   ok: boolean;
@@ -10,6 +11,7 @@ export interface FinishResult {
   workoutId?: string;
   newPRs?: { exerciseName: string; type: PersonalRecordType; value: number; unit: string }[];
   newBadges?: { name: string; icon: string | null }[];
+  newRanks?: { exerciseName: string; rank: string }[];
 }
 
 /**
@@ -112,7 +114,36 @@ export async function finishWorkout(params: {
     // silencieux : les badges se resynchroniseront au prochain affichage.
   }
 
-  return { ok: true, workoutId, newPRs, newBadges };
+  // AUTO-CLASSEMENT (best-effort). Recalcule le rang des exercices travaillés
+  // à partir des données RÉELLEMENT enregistrées, côté serveur (anti-triche :
+  // le client n'écrit jamais dans leaderboard_entries). Ne fait jamais échouer
+  // la séance : un exo non classable ou sans pesée est simplement ignoré.
+  const newRanks: NonNullable<FinishResult['newRanks']> = [];
+  try {
+    const ids = Array.from(new Set(params.exercises.map((e) => e.exerciseId)));
+    const nameById = new Map(params.exercises.map((e) => [e.exerciseId, e.name]));
+
+    // Rangs actuels (avant recalcul) pour détecter les montées de rang.
+    const { data: priorRows } = await supabase.from('leaderboard_entries')
+      .select('exercise_id,ranks:rank_id(slug)').eq('user_id', userId).in('exercise_id', ids);
+    const prior = new Map<string, string | null>();
+    for (const r of priorRows ?? []) {
+      prior.set(r.exercise_id as string, (r as unknown as { ranks?: { slug?: string } }).ranks?.slug ?? null);
+    }
+
+    const results = await Promise.allSettled(ids.map((id) => submitToLeaderboard(id)));
+    results.forEach((res, i) => {
+      if (res.status !== 'fulfilled' || !res.value.ok || !res.value.rank) return;
+      const id = ids[i];
+      if (res.value.rank !== (prior.get(id) ?? null)) {
+        newRanks.push({ exerciseName: nameById.get(id) ?? '', rank: res.value.rank });
+      }
+    });
+  } catch {
+    // silencieux : les rangs se recalculeront à la prochaine séance / publication.
+  }
+
+  return { ok: true, workoutId, newPRs, newBadges, newRanks };
 }
 
 /** Historique des séances terminées (récentes d'abord). */

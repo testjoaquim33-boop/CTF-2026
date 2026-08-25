@@ -16,6 +16,11 @@ import { useLocalized } from '../../src/i18n/useLocalized';
 
 const REST_SECONDS = 120;
 
+const RANK_EMOJI: Record<string, string> = {
+  bronze: '🥉', silver: '🥈', gold: '🥇', platinum: '💎', diamond: '🔷', elite: '👑',
+};
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
 export default function ActiveWorkout() {
   const t = useTheme();
   const tr = useT();
@@ -41,10 +46,15 @@ export default function ActiveWorkout() {
     if (!res.ok) { Alert.alert(tr('common.error'), res.error ?? 'unknown'); return; }
     const prs = res.newPRs ?? [];
     const badges = res.newBadges ?? [];
+    const ranks = res.newRanks ?? [];
     store.reset();
     const lines: string[] = [];
     if (prs.length > 0) {
       lines.push(tr('act.records'), ...prs.map((p) => `• ${p.exerciseName}: ${p.value} ${p.unit}`));
+    }
+    if (ranks.length > 0) {
+      if (lines.length) lines.push('');
+      lines.push(tr('act.ranks'), ...ranks.map((r) => `• ${RANK_EMOJI[r.rank] ?? '🏆'} ${r.exerciseName}: ${capitalize(r.rank)}`));
     }
     if (badges.length > 0) {
       if (lines.length) lines.push('');
