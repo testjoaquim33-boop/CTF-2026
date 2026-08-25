@@ -12,6 +12,7 @@ import { useRestTimer } from '../../src/hooks/useRestTimer';
 import { finishWorkout } from '../../src/services/workouts';
 import { formatDuration } from '@project_fit/shared';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 const REST_SECONDS = 120;
 
@@ -86,7 +87,7 @@ export default function ActiveWorkout() {
             {/* en-têtes de colonnes */}
             {ex.sets.length > 0 ? (
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8, paddingHorizontal: 2 }}>
-                <Text style={{ width: 30, fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>SÉRIE</Text>
+                <Text style={{ width: 30, fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5, textAlign: 'center' }}>N°</Text>
                 <Text style={{ flex: 1, textAlign: 'center', fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>KG</Text>
                 <View style={{ width: 16 }} />
                 <Text style={{ flex: 1, textAlign: 'center', fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>REPS</Text>
@@ -155,16 +156,20 @@ export default function ActiveWorkout() {
   );
 }
 
-/** En-tête de carte d'exercice : vignette du mouvement (tappable -> fiche animée) + nom. */
+/** En-tête de carte d'exercice : vignette du mouvement (tappable -> fiche animée) + nom.
+ *  Le nom est re-localisé en direct (via la fiche) pour suivre la langue courante,
+ *  même si l'exercice a été ajouté dans une autre langue. */
 function ExerciseHeader({ exerciseId, name }: { exerciseId: string; name: string }) {
   const t = useTheme();
+  const { exName } = useLocalized();
   const { data } = useExercise(exerciseId);
   const [err, setErr] = useState(false);
   const img = data?.image_url ?? null;
+  const label = data ? exName(data) : name;
   return (
     <Pressable onPress={() => router.push(`/exercises/${exerciseId}`)}
-      style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, marginBottom: t.spacing.md }}>
-      <View style={{ width: 52, height: 52, borderRadius: t.radius.sm, overflow: 'hidden',
+      style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+      <View style={{ width: 50, height: 50, borderRadius: 14, overflow: 'hidden',
         backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' }}>
         {img && !err ? (
           <Image source={{ uri: img }} onError={() => setErr(true)} resizeMode="contain" style={{ width: '100%', height: '100%' }} />
@@ -172,7 +177,7 @@ function ExerciseHeader({ exerciseId, name }: { exerciseId: string; name: string
           <Ionicons name="barbell" size={24} color={t.colors.textMuted} />
         )}
       </View>
-      <Text variant="h3" style={{ flex: 1 }}>{name}</Text>
+      <Text style={{ flex: 1, fontSize: 17, fontWeight: '800', color: t.colors.text }} numberOfLines={2}>{label}</Text>
       <Ionicons name="chevron-forward" size={20} color={t.colors.textMuted} />
     </Pressable>
   );
