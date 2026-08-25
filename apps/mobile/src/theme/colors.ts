@@ -20,6 +20,9 @@ export interface ColorScheme {
   warning: string;
   danger: string;
   info: string;
+  lime: string;           // teintes de gamification (stats, streak, badges)
+  cyan: string;
+  pink: string;
   rank: RankColors;
   muscle: MuscleColors;
   bg: string;
@@ -47,38 +50,44 @@ const muscleColors: MuscleColors = {
 };
 
 export const darkColors: ColorScheme = {
-  primary: '#FF5A36',
-  primaryMuted: '#FF8A6B',
-  primaryDark: '#C23A1E',
-  secondary: '#7C5CFF',
-  secondaryDark: '#5B3FD6',
-  success: '#3ED598',
+  primary: '#FF5A1F',       // orange feu
+  primaryMuted: '#FF9166',
+  primaryDark: '#C4360F',
+  secondary: '#8B5CFF',     // violet
+  secondaryDark: '#6A3EE0',
+  success: '#33E0A3',
   warning: '#FFB020',
-  danger: '#FF4D4F',
-  info: '#4D9BFF',
+  danger: '#FF4D5E',
+  info: '#25D8F0',
+  lime: '#B6FF3B',
+  cyan: '#25D8F0',
+  pink: '#FF4D8D',
   rank: rankColors,
   muscle: muscleColors,
-  bg: '#0C0C12',
-  bgElevated: '#17171F',
-  bgCard: '#1C1C26',
-  bgInput: '#22222E',
-  border: '#2C2C3A',
-  text: '#F7F7FA',
-  textSecondary: '#ADADBB',
-  textMuted: '#6E6E7E',
+  bg: '#08070E',
+  bgElevated: '#1C1830',
+  bgCard: '#16131F',
+  bgInput: '#221D33',
+  border: '#2C2740',
+  text: '#F6F4FF',
+  textSecondary: '#A49FC0',
+  textMuted: '#6E698C',
   onPrimary: '#FFFFFF',
 };
 
 export const lightColors: ColorScheme = {
-  primary: '#FF5A36',
-  primaryMuted: '#FF8A6B',
-  primaryDark: '#C23A1E',
-  secondary: '#7C5CFF',
-  secondaryDark: '#5B3FD6',
-  success: '#22B37A',
+  primary: '#F0480F',
+  primaryMuted: '#FF8A5C',
+  primaryDark: '#C4360F',
+  secondary: '#7A45FF',
+  secondaryDark: '#5B2FD6',
+  success: '#12B583',
   warning: '#E6941A',
-  danger: '#E23B3D',
-  info: '#2E7DE0',
+  danger: '#E23B4D',
+  info: '#0FA6C0',
+  lime: '#66C400',
+  cyan: '#0FA6C0',
+  pink: '#E23B7A',
   rank: rankColors,
   muscle: muscleColors,
   bg: '#F6F6F9',
