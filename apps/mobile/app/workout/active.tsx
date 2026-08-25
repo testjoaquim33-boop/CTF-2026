@@ -10,11 +10,13 @@ import { useExercise } from '../../src/hooks/useExercises';
 import { useRestTimer } from '../../src/hooks/useRestTimer';
 import { finishWorkout } from '../../src/services/workouts';
 import { formatDuration } from '@project_fit/shared';
+import { useT } from '../../src/i18n/useT';
 
 const REST_SECONDS = 120;
 
 export default function ActiveWorkout() {
   const t = useTheme();
+  const tr = useT();
   const store = useActiveWorkout();
   const { remaining, running, startRest, stopRest } = useRestTimer();
   const [saving, setSaving] = useState(false);
@@ -34,21 +36,21 @@ export default function ActiveWorkout() {
       name: store.name, startedAt: store.startedAt, clientUuid: store.clientUuid!, exercises: store.exercises,
     });
     setSaving(false);
-    if (!res.ok) { Alert.alert('Erreur', res.error ?? 'unknown'); return; }
+    if (!res.ok) { Alert.alert(tr('common.error'), res.error ?? 'unknown'); return; }
     const prs = res.newPRs ?? [];
     const badges = res.newBadges ?? [];
     store.reset();
     const lines: string[] = [];
     if (prs.length > 0) {
-      lines.push('🔥 Records', ...prs.map((p) => `• ${p.exerciseName}: ${p.value} ${p.unit}`));
+      lines.push(tr('act.records'), ...prs.map((p) => `• ${p.exerciseName}: ${p.value} ${p.unit}`));
     }
     if (badges.length > 0) {
       if (lines.length) lines.push('');
-      lines.push('🏅 Badges débloqués', ...badges.map((b) => `• ${b.icon ?? '🏅'} ${b.name}`));
+      lines.push(tr('act.badges'), ...badges.map((b) => `• ${b.icon ?? '🏅'} ${b.name}`));
     }
     if (lines.length > 0) {
-      const title = badges.length > 0 && prs.length === 0 ? '🏅 Nouveau badge !' : '🔥 Séance terminée !';
-      Alert.alert(title, lines.join('\n'), [{ text: 'Génial', onPress: () => router.replace('/(tabs)') }]);
+      const title = badges.length > 0 && prs.length === 0 ? tr('act.newBadgeTitle') : tr('act.doneTitle');
+      Alert.alert(title, lines.join('\n'), [{ text: tr('act.great'), onPress: () => router.replace('/(tabs)') }]);
     } else {
       router.replace('/(tabs)');
     }
@@ -65,7 +67,7 @@ export default function ActiveWorkout() {
         </View>
         {running ? (
           <Pressable onPress={stopRest} style={{ backgroundColor: t.colors.primary, borderRadius: t.radius.pill, paddingHorizontal: t.spacing.lg, paddingVertical: t.spacing.sm }}>
-            <Text color="onPrimary" variant="bodyMedium">Repos {formatDuration(remaining)}</Text>
+            <Text color="onPrimary" variant="bodyMedium">{tr('act.rest', { time: formatDuration(remaining) })}</Text>
           </Pressable>
         ) : null}
       </View>
@@ -102,15 +104,15 @@ export default function ActiveWorkout() {
             ))}
 
             <Pressable onPress={() => store.addSet(exIndex)} style={{ marginTop: t.spacing.sm }}>
-              <Text color="primary">+ Ajouter une série</Text>
+              <Text color="primary">{tr('act.addSet')}</Text>
             </Pressable>
           </View>
         ))}
       </ScrollView>
 
       <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-        <Button label="+ Ajouter un exercice" variant="secondary" onPress={() => router.push('/workout/add-exercise')} />
-        <Button label={saving ? 'Enregistrement…' : 'Terminer la séance'} onPress={finish} disabled={saving} />
+        <Button label={tr('act.addExercise')} variant="secondary" onPress={() => router.push('/workout/add-exercise')} />
+        <Button label={saving ? tr('act.saving') : tr('act.finish')} onPress={finish} disabled={saving} />
       </View>
     </SafeAreaView>
   );

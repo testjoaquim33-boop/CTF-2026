@@ -7,27 +7,29 @@ import { Text, Button, RankBadge, FilterChips, ExerciseThumb, muscleColor } from
 import { useExercises } from '../../src/hooks/useExercises';
 import { fetchMyEntries, submitToLeaderboard, fetchPublicLeaderboard } from '../../src/services/ranking';
 import { MUSCLE_GROUPS } from '../../src/features/exercises/groups';
-
-const ERR: Record<string, string> = {
-  no_data: 'Enregistre d\'abord une séance avec cet exercice.',
-  implausible_weight: 'Valeur de charge invalide.',
-  implausible_bodyweight: 'Renseigne ton poids de corps (onboarding).',
-};
+import { useT } from '../../src/i18n/useT';
 
 export default function RankingScreen() {
   const t = useTheme();
+  const tr = useT();
   const [group, setGroup] = useState<string | undefined>();
   const [search, setSearch] = useState('');
   const exercises = useExercises({ muscleGroup: group, search });
   const my = useQuery({ queryKey: ['myEntries'], queryFn: fetchMyEntries });
   const [busy, setBusy] = useState<string | null>(null);
+  const groups = MUSCLE_GROUPS.map((g) => ({ id: g.id, label: tr(`mg.${g.id}`) }));
 
   const publish = async (exerciseId: string) => {
     setBusy(exerciseId);
     const res = await submitToLeaderboard(exerciseId);
     setBusy(null);
-    if (!res.ok) { Alert.alert('Impossible de publier', ERR[res.error ?? ''] ?? res.error ?? 'Erreur'); return; }
-    Alert.alert('Publié !', res.rank ? `Rang: ${res.rank}` : 'Score publié');
+    if (!res.ok) {
+      const key = `rk.err.${res.error ?? ''}`;
+      const msg = tr(key);
+      Alert.alert(tr('rk.cantPublish'), msg !== key ? msg : (res.error ?? tr('common.error')));
+      return;
+    }
+    Alert.alert(tr('rk.published'), res.rank ? tr('rk.rank', { rank: res.rank }) : tr('rk.scorePublished'));
     my.refetch();
   };
   const rankOf = (exId: string) => my.data?.find((e) => e.exercise_id === exId)?.rankSlug ?? null;
@@ -35,12 +37,12 @@ export default function RankingScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-        <Text variant="h1">Classement</Text>
-        <Text color="textSecondary">Classé sur la force relative (charge / poids de corps). Publie n'importe quel exercice.</Text>
-        <TextInput placeholder="Rechercher un exercice…" placeholderTextColor={t.colors.textMuted}
+        <Text variant="h1">{tr('rk.title')}</Text>
+        <Text color="textSecondary">{tr('rk.subtitle')}</Text>
+        <TextInput placeholder={tr('rk.search')} placeholderTextColor={t.colors.textMuted}
           value={search} onChangeText={setSearch}
           style={{ backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.md, padding: t.spacing.md }} />
-        <FilterChips options={MUSCLE_GROUPS} value={group} onChange={setGroup} />
+        <FilterChips options={groups} value={group} onChange={setGroup} />
       </View>
 
       {exercises.isLoading ? <ActivityIndicator color={t.colors.primary} /> : (
@@ -64,7 +66,7 @@ export default function RankingScreen() {
                 <View style={{ flexDirection: 'row', gap: t.spacing.sm }}>
                   <Pressable onPress={() => publish(item.id)} disabled={busy === item.id}
                     style={{ flex: 1, backgroundColor: t.colors.primary, borderRadius: t.radius.sm, paddingVertical: t.spacing.sm, alignItems: 'center' }}>
-                    <Text color="onPrimary" variant="caption">{busy === item.id ? '…' : 'Publier mon score'}</Text>
+                    <Text color="onPrimary" variant="caption">{busy === item.id ? '…' : tr('rk.publish')}</Text>
                   </Pressable>
                 </View>
                 <PublicList exerciseId={item.id} />
@@ -79,19 +81,20 @@ export default function RankingScreen() {
 
 function PublicList({ exerciseId }: { exerciseId: string }) {
   const t = useTheme();
+  const tr = useT();
   const [open, setOpen] = useState(false);
   const q = useQuery({ queryKey: ['public-lb', exerciseId], queryFn: () => fetchPublicLeaderboard(exerciseId), enabled: open });
   return (
     <View>
       <Pressable onPress={() => setOpen((o) => !o)}>
-        <Text color="primary" variant="caption">{open ? 'Masquer le classement' : 'Voir le classement mondial'}</Text>
+        <Text color="primary" variant="caption">{open ? tr('rk.hideLb') : tr('rk.viewLb')}</Text>
       </Pressable>
       {open ? (
         q.isLoading ? <ActivityIndicator color={t.colors.primary} /> :
-        (q.data ?? []).length === 0 ? <Text color="textMuted" variant="caption">Personne pour l'instant — sois le premier !</Text> :
+        (q.data ?? []).length === 0 ? <Text color="textMuted" variant="caption">{tr('rk.nobody')}</Text> :
         (q.data ?? []).map((r, i) => (
           <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 4 }}>
-            <Text variant="caption">{i + 1}. {r.display_name ?? 'Anonyme'}</Text>
+            <Text variant="caption">{i + 1}. {r.display_name ?? tr('rk.anon')}</Text>
             <Text variant="caption" color="textSecondary">{r.best_score.toFixed(2)}×</Text>
           </View>
         ))

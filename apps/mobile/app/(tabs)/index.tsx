@@ -10,7 +10,6 @@ import { Text, Ring, HexBadge, LineChart, AmbientOrbs } from '../../src/componen
 import { fetchDashboard, type Dashboard } from '../../src/services/dashboard';
 import { useT } from '../../src/i18n/useT';
 
-const PR_LABELS: Record<string, string> = { est_1rm: '1RM est.', max_weight: 'Charge', max_reps: 'Reps', max_volume: 'Volume' };
 const DAY_LETTERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
 export default function DashboardScreen() {
@@ -146,11 +145,11 @@ export default function DashboardScreen() {
                 <View style={{ width: 42, height: 42, borderRadius: 21, backgroundColor: t.colors.warning + '22', alignItems: 'center', justifyContent: 'center' }}>
                   <Ionicons name="trophy" size={20} color={t.colors.warning} />
                 </View>
-                <Text color="textSecondary" style={{ flex: 1 }}>Termine une séance pour décrocher tes premiers records 💪</Text>
+                <Text color="textSecondary" style={{ flex: 1 }}>{tr('pg.noRecords')}</Text>
               </View>
             ) : d.recentPRs.map((pr, i) => (
               <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8 }}>
-                <Text style={{ flex: 1 }}>{pr.exerciseName} <Text color="textMuted" variant="caption">({PR_LABELS[pr.type] ?? pr.type})</Text></Text>
+                <Text style={{ flex: 1 }}>{pr.exerciseName} <Text color="textMuted" variant="caption">({tr(`pr.${pr.type}`) !== `pr.${pr.type}` ? tr(`pr.${pr.type}`) : pr.type})</Text></Text>
                 <Text color="primary" style={{ fontWeight: '800' }}>{pr.value} {pr.unit}</Text>
               </View>
             ))}

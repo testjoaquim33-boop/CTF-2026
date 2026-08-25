@@ -9,7 +9,6 @@ import { Text, Button, muscleColor } from '../../src/components';
 import { useExercise } from '../../src/hooks/useExercises';
 import { fetchExerciseHistory, fetchExerciseRecords } from '../../src/services/exercises';
 import { fetchPublicLeaderboard } from '../../src/services/ranking';
-import { LEVEL_LABELS_SHORT } from '../../src/features/exercises/groups';
 import { useT } from '../../src/i18n/useT';
 import { useSettings } from '../../src/store/settings';
 
@@ -67,7 +66,7 @@ export default function ExerciseDetailScreen() {
           <Text variant="h1">{data.name}</Text>
           <Text color="textSecondary">{tr('ex.primary')} <Text style={{ color: mc }}>{data.primary_muscle?.name ?? '—'}</Text></Text>
           <View style={{ flexDirection: 'row', gap: t.spacing.sm, flexWrap: 'wrap', marginTop: 2 }}>
-            <Chip color={t.colors.info} label={LEVEL_LABELS_SHORT[data.level] ?? data.level} />
+            <Chip color={t.colors.info} label={tr(`onb.lvl.${data.level}`)} />
             {data.is_bodyweight ? <Chip color={t.colors.success} label={tr('ex.bodyweight')} /> : null}
           </View>
         </View>

@@ -6,10 +6,12 @@ import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text, Button } from '../../src/components';
 import { useExercises } from '../../src/hooks/useExercises';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
+import { useT } from '../../src/i18n/useT';
 
 export default function NewWorkout() {
   const t = useTheme();
-  const [name, setName] = useState('Séance');
+  const tr = useT();
+  const [name, setName] = useState(tr('nw.defaultName'));
   const [picked, setPicked] = useState<{ id: string; name: string }[]>([]);
   const { data } = useExercises({});
   const start = useActiveWorkout((s) => s.start);
@@ -27,10 +29,10 @@ export default function NewWorkout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-        <Text variant="h1">Nouvelle séance</Text>
-        <TextInput value={name} onChangeText={setName} placeholder="Nom" placeholderTextColor={t.colors.textMuted}
+        <Text variant="h1">{tr('nw.title')}</Text>
+        <TextInput value={name} onChangeText={setName} placeholder={tr('nw.name')} placeholderTextColor={t.colors.textMuted}
           style={{ backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.md, padding: t.spacing.md }} />
-        <Text color="textSecondary" variant="caption">Choisis des exercices ({picked.length})</Text>
+        <Text color="textSecondary" variant="caption">{tr('nw.pick', { n: picked.length })}</Text>
       </View>
       <FlatList
         data={data ?? []}
@@ -49,7 +51,7 @@ export default function NewWorkout() {
         }}
       />
       <View style={{ padding: t.spacing.lg }}>
-        <Button label="Démarrer la séance" onPress={begin} disabled={picked.length === 0} />
+        <Button label={tr('nw.start')} onPress={begin} disabled={picked.length === 0} />
       </View>
     </SafeAreaView>
   );

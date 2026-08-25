@@ -7,14 +7,17 @@ import { Text, FilterChips, ExerciseThumb, muscleColor } from '../../src/compone
 import { useExercises } from '../../src/hooks/useExercises';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
 import { MUSCLE_GROUPS } from '../../src/features/exercises/groups';
+import { useT } from '../../src/i18n/useT';
 
 export default function AddExercise() {
   const t = useTheme();
+  const tr = useT();
   const [group, setGroup] = useState<string | undefined>();
   const [search, setSearch] = useState('');
   const { data, isLoading } = useExercises({ muscleGroup: group, search });
   const addExercise = useActiveWorkout((s) => s.addExercise);
   const existing = useActiveWorkout((s) => s.exercises);
+  const groups = MUSCLE_GROUPS.map((g) => ({ id: g.id, label: tr(`mg.${g.id}`) }));
 
   const add = (id: string, name: string) => {
     addExercise(id, name);
@@ -26,14 +29,14 @@ export default function AddExercise() {
       <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
           <Pressable onPress={() => router.back()} hitSlop={12}>
-            <Text variant="h3" color="textSecondary">‹ Retour</Text>
+            <Text variant="h3" color="textSecondary">{tr('onb.back')}</Text>
           </Pressable>
-          <Text variant="h2" style={{ flex: 1 }}>Ajouter un exercice</Text>
+          <Text variant="h2" style={{ flex: 1 }}>{tr('ax.title')}</Text>
         </View>
-        <TextInput placeholder="Rechercher…" placeholderTextColor={t.colors.textMuted}
+        <TextInput placeholder={tr('common.search')} placeholderTextColor={t.colors.textMuted}
           value={search} onChangeText={setSearch}
           style={{ backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.md, padding: t.spacing.md }} />
-        <FilterChips options={MUSCLE_GROUPS} value={group} onChange={setGroup} />
+        <FilterChips options={groups} value={group} onChange={setGroup} />
       </View>
       {isLoading ? <ActivityIndicator color={t.colors.primary} /> : (
         <FlatList
