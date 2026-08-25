@@ -34,7 +34,10 @@ Deno.serve(async (req: Request) => {
 
   const body = await req.json().catch(() => ({}));
   const exerciseId: string | undefined = body?.exerciseId;
-  if (!exerciseId) return json({ error: 'missing_exercise' }, 400);
+  // Refus « métier » (données manquantes/anti-triche) → HTTP 200 avec un motif
+  // dans le corps : la lib supabase-js masque le corps des réponses non-2xx,
+  // donc on garde 200 pour que l'app affiche toujours un message clair.
+  if (!exerciseId) return json({ error: 'missing_exercise' }, 200);
 
   const admin = createClient(supabaseUrl, serviceKey);
 
@@ -44,7 +47,7 @@ Deno.serve(async (req: Request) => {
   const { data: bw } = await admin.from('body_metrics').select('weight_kg')
     .eq('user_id', userId).order('date', { ascending: false }).limit(1).maybeSingle();
   const bodyweight = bw ? Number(bw.weight_kg) : 0;
-  if (!(bodyweight >= 30) || bodyweight > 400) return json({ error: 'implausible_bodyweight' }, 422);
+  if (!(bodyweight >= 30) || bodyweight > 400) return json({ error: 'implausible_bodyweight' }, 200);
 
   // L'exercice est-il au poids du corps ? (pompes, tractions, dips…)
   const { data: exRow } = await admin.from('exercises').select('is_bodyweight').eq('id', exerciseId).maybeSingle();
@@ -58,7 +61,7 @@ Deno.serve(async (req: Request) => {
     .eq('is_warmup', false)
     .order('weight_kg', { ascending: false }).limit(1);
   const top = (sets ?? [])[0] as { weight_kg: number; reps: number } | undefined;
-  if (!top) return json({ error: 'no_data' }, 400);
+  if (!top) return json({ error: 'no_data' }, 200);
 
   // Charge effective soulevée : pour un exercice au poids du corps, la
   // résistance = poids de corps + charge ajoutée (lest). Sinon, charge externe.
@@ -68,7 +71,7 @@ Deno.serve(async (req: Request) => {
 
   // ANTI-TRICHE (bornes de plausibilité) sur la charge effective
   const err = validatePerformance(effectiveLoad, reps, bodyweight);
-  if (err) return json({ error: err }, 422);
+  if (err) return json({ error: err }, 200);
 
   // Meilleur 1RM estimé. Pour un exercice au poids du corps, on l'estime
   // directement depuis la charge effective (le PR stocké n'inclut pas le poids
