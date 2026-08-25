@@ -38,12 +38,19 @@ Deno.serve(async (req: Request) => {
 
   const admin = createClient(supabaseUrl, serviceKey);
 
-  // Poids de corps le plus récent
+  // Poids de corps le plus récent — REQUIS (score = force relative = charge/poids).
+  // On le vérifie en premier : c'est le blocage le plus courant, et le message
+  // « ajoute ta pesée » est le plus actionnable pour l'utilisateur.
   const { data: bw } = await admin.from('body_metrics').select('weight_kg')
     .eq('user_id', userId).order('date', { ascending: false }).limit(1).maybeSingle();
   const bodyweight = bw ? Number(bw.weight_kg) : 0;
+  if (!(bodyweight >= 30) || bodyweight > 400) return json({ error: 'implausible_bodyweight' }, 422);
 
-  // Meilleure série de travail (charge max) pour l'anti-triche
+  // L'exercice est-il au poids du corps ? (pompes, tractions, dips…)
+  const { data: exRow } = await admin.from('exercises').select('is_bodyweight').eq('id', exerciseId).maybeSingle();
+  const isBodyweight = !!exRow?.is_bodyweight;
+
+  // Meilleure série de travail (charge ajoutée max) pour l'anti-triche
   const { data: sets } = await admin.from('sets')
     .select('weight_kg,reps,is_warmup,workout_exercises!inner(exercise_id,workouts!inner(user_id))')
     .eq('workout_exercises.exercise_id', exerciseId)
@@ -53,15 +60,26 @@ Deno.serve(async (req: Request) => {
   const top = (sets ?? [])[0] as { weight_kg: number; reps: number } | undefined;
   if (!top) return json({ error: 'no_data' }, 400);
 
-  // ANTI-TRICHE (bornes de plausibilité)
-  const err = validatePerformance(Number(top.weight_kg), Number(top.reps), bodyweight);
+  // Charge effective soulevée : pour un exercice au poids du corps, la
+  // résistance = poids de corps + charge ajoutée (lest). Sinon, charge externe.
+  const addedLoad = Number(top.weight_kg);
+  const reps = Number(top.reps);
+  const effectiveLoad = isBodyweight ? bodyweight + addedLoad : addedLoad;
+
+  // ANTI-TRICHE (bornes de plausibilité) sur la charge effective
+  const err = validatePerformance(effectiveLoad, reps, bodyweight);
   if (err) return json({ error: err }, 422);
 
-  // Meilleur 1RM estimé
-  const { data: prs } = await admin.from('personal_records')
-    .select('value').eq('user_id', userId).eq('exercise_id', exerciseId).eq('type', 'est_1rm')
-    .order('value', { ascending: false }).limit(1).maybeSingle();
-  const bestE1rm = prs ? Number(prs.value) : estimateE1rm(Number(top.weight_kg), Number(top.reps));
+  // Meilleur 1RM estimé. Pour un exercice au poids du corps, on l'estime
+  // directement depuis la charge effective (le PR stocké n'inclut pas le poids
+  // de corps). Sinon on prend le meilleur PR est_1rm si disponible.
+  let bestE1rm = estimateE1rm(effectiveLoad, reps);
+  if (!isBodyweight) {
+    const { data: prs } = await admin.from('personal_records')
+      .select('value').eq('user_id', userId).eq('exercise_id', exerciseId).eq('type', 'est_1rm')
+      .order('value', { ascending: false }).limit(1).maybeSingle();
+    if (prs) bestE1rm = Number(prs.value);
+  }
   const score = bestE1rm / bodyweight;
 
   // Sexe (pour les seuils)
