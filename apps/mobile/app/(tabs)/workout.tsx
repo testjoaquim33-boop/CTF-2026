@@ -10,10 +10,12 @@ import { WORKOUT_CATEGORIES, categoryImageUrl, type WorkoutCategory } from '../.
 import { pickCategoryExercises } from '../../src/services/workoutTemplates';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 export default function WorkoutScreen() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const active = useActiveWorkout((s) => s.active);
   const start = useActiveWorkout((s) => s.start);
   const addExercise = useActiveWorkout((s) => s.addExercise);
@@ -24,7 +26,7 @@ export default function WorkoutScreen() {
     const picks = await pickCategoryExercises(cat);
     setLoading(null);
     start(tr(`wk.cat.${cat.slug}`));
-    picks.forEach((p) => addExercise(p.id, p.name));
+    picks.forEach((p) => addExercise(p.id, exName(p)));
     router.push('/workout/active');
   };
 

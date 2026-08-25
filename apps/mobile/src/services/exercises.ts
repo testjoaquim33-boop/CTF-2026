@@ -5,6 +5,7 @@ export interface ExerciseListItem {
   id: string;
   slug: string;
   name: string;
+  name_fr: string | null;
   level: Level;
   is_bodyweight: boolean;
   primary_muscle: { slug: string; name: string; group: string } | null;
@@ -12,8 +13,11 @@ export interface ExerciseListItem {
 
 export interface ExerciseDetail extends ExerciseListItem {
   description: string | null;
+  description_fr: string | null;
   instructions: string[];
+  instructions_fr: string[] | null;
   common_mistakes: string[];
+  common_mistakes_fr: string[] | null;
   difficulty: number;
   video_url: string | null;
   image_url: string | null;
@@ -29,12 +33,12 @@ export interface ExerciseFilters {
 export async function fetchExercises(filters: ExerciseFilters = {}): Promise<ExerciseListItem[]> {
   let query = supabase
     .from('exercises')
-    .select('id,slug,name,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
+    .select('id,slug,name,name_fr,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
     .eq('is_active', true)
     .order('name');
 
   if (filters.level) query = query.eq('level', filters.level);
-  if (filters.search) query = query.ilike('name', `%${filters.search}%`);
+  if (filters.search) query = query.or(`name.ilike.%${filters.search}%,name_fr.ilike.%${filters.search}%`);
 
   const { data, error } = await query;
   if (error) throw error;
@@ -98,7 +102,7 @@ export async function fetchExerciseRecords(exerciseId: string): Promise<Exercise
 export async function fetchExerciseById(id: string): Promise<ExerciseDetail | null> {
   const { data, error } = await supabase
     .from('exercises')
-    .select('id,slug,name,level,is_bodyweight,description,instructions,common_mistakes,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
+    .select('id,slug,name,name_fr,level,is_bodyweight,description,description_fr,instructions,instructions_fr,common_mistakes,common_mistakes_fr,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)')
     .eq('id', id)
     .single();
   if (error) throw error;

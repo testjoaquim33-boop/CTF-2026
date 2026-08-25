@@ -7,10 +7,12 @@ import { Text, Button } from '../../src/components';
 import { useExercises } from '../../src/hooks/useExercises';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 export default function NewWorkout() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const [name, setName] = useState(tr('nw.defaultName'));
   const [picked, setPicked] = useState<{ id: string; name: string }[]>([]);
   const { data } = useExercises({});
@@ -41,11 +43,11 @@ export default function NewWorkout() {
         renderItem={({ item }) => {
           const on = picked.some((x) => x.id === item.id);
           return (
-            <Pressable onPress={() => toggle(item.id, item.name)}
+            <Pressable onPress={() => toggle(item.id, exName(item))}
               style={{ padding: t.spacing.md, marginBottom: t.spacing.sm, borderRadius: t.radius.md,
                 backgroundColor: on ? t.colors.primary + '22' : t.colors.bgElevated,
                 borderWidth: 1, borderColor: on ? t.colors.primary : t.colors.border }}>
-              <Text>{item.name}</Text>
+              <Text>{exName(item)}</Text>
             </Pressable>
           );
         }}

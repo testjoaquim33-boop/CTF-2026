@@ -8,10 +8,12 @@ import { useExercises } from '../../src/hooks/useExercises';
 import { MUSCLE_GROUPS } from '../../src/features/exercises/groups';
 import type { Level } from '@project_fit/shared';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 export default function ExerciseListScreen() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const [group, setGroup] = useState<string | undefined>();
   const [level, setLevel] = useState<Level | undefined>();
   const [search, setSearch] = useState('');
@@ -61,9 +63,9 @@ export default function ExerciseListScreen() {
                   borderLeftWidth: 4, borderLeftColor: mc,
                   borderWidth: 1, borderColor: t.colors.border }}
               >
-                <ExerciseThumb group={item.primary_muscle?.group} name={item.name} size={52} />
+                <ExerciseThumb group={item.primary_muscle?.group} name={exName(item)} size={52} />
                 <View style={{ flex: 1 }}>
-                  <Text variant="bodyMedium">{item.name}</Text>
+                  <Text variant="bodyMedium">{exName(item)}</Text>
                   <Text variant="caption" color="textSecondary" style={{ marginTop: 2 }}>
                     {item.primary_muscle?.name ?? '—'} · {tr(`onb.lvl.${item.level}`)}
                     {item.is_bodyweight ? ` · ${tr('ex.bodyweight')}` : ''}

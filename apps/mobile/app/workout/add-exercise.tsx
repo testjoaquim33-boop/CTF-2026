@@ -8,10 +8,12 @@ import { useExercises } from '../../src/hooks/useExercises';
 import { useActiveWorkout } from '../../src/store/activeWorkout';
 import { MUSCLE_GROUPS } from '../../src/features/exercises/groups';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 export default function AddExercise() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const [group, setGroup] = useState<string | undefined>();
   const [search, setSearch] = useState('');
   const { data, isLoading } = useExercises({ muscleGroup: group, search });
@@ -47,13 +49,13 @@ export default function AddExercise() {
             const mc = muscleColor(t.colors, item.primary_muscle?.group);
             const already = existing.some((e) => e.exerciseId === item.id);
             return (
-              <Pressable onPress={() => add(item.id, item.name)}
+              <Pressable onPress={() => add(item.id, exName(item))}
                 style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, backgroundColor: t.colors.bgCard,
                   borderRadius: t.radius.md, padding: t.spacing.md, marginBottom: t.spacing.md,
                   borderWidth: 1, borderColor: t.colors.border, borderLeftWidth: 4, borderLeftColor: mc }}>
                 <ExerciseThumb group={item.primary_muscle?.group} size={44} />
                 <View style={{ flex: 1 }}>
-                  <Text variant="bodyMedium">{item.name}</Text>
+                  <Text variant="bodyMedium">{exName(item)}</Text>
                   <Text variant="caption" color="textSecondary">{item.primary_muscle?.name ?? '—'}</Text>
                 </View>
                 <Text style={{ color: already ? t.colors.success : mc, fontSize: 22 }}>{already ? '✓' : '+'}</Text>

@@ -11,6 +11,7 @@ import { fetchExerciseHistory, fetchExerciseRecords } from '../../src/services/e
 import { fetchPublicLeaderboard } from '../../src/services/ranking';
 import { useT } from '../../src/i18n/useT';
 import { useSettings } from '../../src/store/settings';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 const GROUP_EMOJI: Record<string, string> = {
   push: '🔥', pull: '🎯', legs: '🦵', core: '🧱', posterior: '⚡', arms: '💪',
@@ -27,6 +28,7 @@ export default function ExerciseDetailScreen() {
   const t = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const tr = useT();
+  const { exName } = useLocalized();
   const { data, isLoading } = useExercise(id ?? '');
   const [tab, setTab] = useState<Tab>('summary');
 
@@ -54,7 +56,7 @@ export default function ExerciseDetailScreen() {
             alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: t.colors.border }}>
           <Ionicons name="chevron-back" size={22} color={t.colors.text} />
         </Pressable>
-        <Text variant="h3" numberOfLines={1} style={{ flex: 1, textAlign: 'center' }}>{data.name}</Text>
+        <Text variant="h3" numberOfLines={1} style={{ flex: 1, textAlign: 'center' }}>{exName(data)}</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -63,7 +65,7 @@ export default function ExerciseDetailScreen() {
         <Hero imageUrl={data.image_url} emoji={GROUP_EMOJI[group] ?? '💪'} />
 
         <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-          <Text variant="h1">{data.name}</Text>
+          <Text variant="h1">{exName(data)}</Text>
           <Text color="textSecondary">{tr('ex.primary')} <Text style={{ color: mc }}>{data.primary_muscle?.name ?? '—'}</Text></Text>
           <View style={{ flexDirection: 'row', gap: t.spacing.sm, flexWrap: 'wrap', marginTop: 2 }}>
             <Chip color={t.colors.info} label={tr(`onb.lvl.${data.level}`)} />
@@ -139,11 +141,13 @@ function Hero({ imageUrl, emoji }: { imageUrl: string | null; emoji: string }) {
 function ResumeTab({ data, exerciseId }: { data: NonNullable<ReturnType<typeof useExercise>['data']>; exerciseId: string }) {
   const t = useTheme();
   const tr = useT();
+  const { pick } = useLocalized();
   const records = useQuery({ queryKey: ['ex-records', exerciseId], queryFn: () => fetchExerciseRecords(exerciseId) });
   const recs = records.data ?? [];
+  const description = pick(data.description, data.description_fr);
   return (
     <View style={{ gap: t.spacing.md }}>
-      {data.description ? <Text>{data.description}</Text> : null}
+      {description ? <Text>{description}</Text> : null}
 
       {data.video_url ? (
         <Button label={tr('ex.video')} variant="secondary" onPress={() => Linking.openURL(data.video_url!)} />
@@ -198,11 +202,14 @@ function HistoryTab({ exerciseId }: { exerciseId: string }) {
 function InstructionsTab({ data, mc }: { data: NonNullable<ReturnType<typeof useExercise>['data']>; mc: string }) {
   const t = useTheme();
   const tr = useT();
+  const { pick } = useLocalized();
+  const instructions = pick(data.instructions, data.instructions_fr) ?? [];
+  const mistakes = pick(data.common_mistakes, data.common_mistakes_fr) ?? [];
   return (
     <View style={{ gap: t.spacing.md }}>
-      {data.instructions?.length ? (
+      {instructions.length ? (
         <View style={{ gap: t.spacing.sm }}>
-          {data.instructions.map((ins, i) => (
+          {instructions.map((ins, i) => (
             <View key={i} style={{ flexDirection: 'row', gap: t.spacing.sm }}>
               <View style={{ width: 24, height: 24, borderRadius: 12, backgroundColor: mc + '22', alignItems: 'center', justifyContent: 'center' }}>
                 <Text variant="caption" style={{ color: mc, fontWeight: '800' }}>{i + 1}</Text>
@@ -213,11 +220,11 @@ function InstructionsTab({ data, mc }: { data: NonNullable<ReturnType<typeof use
         </View>
       ) : <Text color="textMuted">{tr('ex.noInstructions')}</Text>}
 
-      {data.common_mistakes?.length ? (
+      {mistakes.length ? (
         <View style={{ backgroundColor: t.colors.bgCard, borderRadius: t.radius.md, padding: t.spacing.lg,
           borderWidth: 1, borderColor: t.colors.border, borderLeftWidth: 4, borderLeftColor: t.colors.warning, marginTop: t.spacing.sm }}>
           <Text variant="h3" style={{ marginBottom: t.spacing.sm }}>{tr('ex.mistakes')}</Text>
-          {data.common_mistakes.map((m, i) => (
+          {mistakes.map((m, i) => (
             <Text key={i} color="textSecondary" style={{ marginBottom: 4 }}>• {m}</Text>
           ))}
         </View>

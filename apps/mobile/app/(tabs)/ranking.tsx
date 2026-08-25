@@ -8,10 +8,12 @@ import { useExercises } from '../../src/hooks/useExercises';
 import { fetchMyEntries, submitToLeaderboard, fetchPublicLeaderboard } from '../../src/services/ranking';
 import { MUSCLE_GROUPS } from '../../src/features/exercises/groups';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 export default function RankingScreen() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const [group, setGroup] = useState<string | undefined>();
   const [search, setSearch] = useState('');
   const exercises = useExercises({ muscleGroup: group, search });
@@ -58,7 +60,7 @@ export default function RankingScreen() {
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
                   <ExerciseThumb group={item.primary_muscle?.group} size={44} />
                   <View style={{ flex: 1 }}>
-                    <Text variant="bodyMedium">{item.name}</Text>
+                    <Text variant="bodyMedium">{exName(item)}</Text>
                     <Text variant="caption" color="textSecondary">{item.primary_muscle?.name ?? '—'}</Text>
                   </View>
                   <RankBadge slug={rankOf(item.id)} />

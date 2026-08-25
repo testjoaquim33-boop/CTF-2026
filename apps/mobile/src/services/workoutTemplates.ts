@@ -1,7 +1,7 @@
 import { fetchExercises } from './exercises';
 import type { WorkoutCategory } from '../features/workout/categories';
 
-export interface PickedExercise { id: string; name: string }
+export interface PickedExercise { id: string; name: string; name_fr: string | null }
 
 /** Sélectionne des exercices correspondant à une catégorie (mélangés). */
 export async function pickCategoryExercises(cat: WorkoutCategory): Promise<PickedExercise[]> {
@@ -13,5 +13,5 @@ export async function pickCategoryExercises(cat: WorkoutCategory): Promise<Picke
   }
   // mélange léger + limite
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, cat.exerciseCount).map((e) => ({ id: e.id, name: e.name }));
+  return shuffled.slice(0, cat.exerciseCount).map((e) => ({ id: e.id, name: e.name, name_fr: e.name_fr }));
 }
