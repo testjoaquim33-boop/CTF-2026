@@ -3,7 +3,25 @@ import { levelForXp, type LevelRow, type PersonalRecordType } from '@project_fit
 
 export interface DayDot { date: string; trained: boolean }
 export interface WeekBar { label: string; count: number }
-export interface DashPR { exerciseName: string; type: PersonalRecordType; value: number; unit: string }
+export interface DashPR { name: string; name_fr: string | null; type: PersonalRecordType; value: number; unit: string }
+
+/** Records récents avec nom localisable. Résilient si la colonne name_fr
+ *  n'existe pas encore (migration i18n non appliquée) → repli sur name seul. */
+async function fetchRecentPRs(userId: string): Promise<DashPR[]> {
+  const run = (cols: string) => supabase.from('personal_records').select(cols)
+    .eq('user_id', userId).order('achieved_at', { ascending: false }).limit(5);
+  let res = await run('type,value,unit,exercise:exercises!exercise_id(name,name_fr)');
+  if (res.error && res.error.code === '42703') {
+    res = await run('type,value,unit,exercise:exercises!exercise_id(name)');
+  }
+  return (res.data ?? []).map((r) => {
+    const ex = (r as unknown as { exercise?: { name?: string; name_fr?: string | null } }).exercise;
+    return {
+      name: ex?.name ?? '—', name_fr: ex?.name_fr ?? null,
+      type: r.type as PersonalRecordType, value: Number(r.value), unit: r.unit as string,
+    };
+  });
+}
 
 export interface Dashboard {
   displayName: string;
@@ -33,14 +51,12 @@ export async function fetchDashboard(): Promise<Dashboard> {
 
   const since = new Date(); since.setUTCDate(since.getUTCDate() - 45);
 
-  const [statsRes, levelsRes, workoutsRes, prRes, bodyRes, goalRes, profileRes] = await Promise.all([
+  const [statsRes, levelsRes, workoutsRes, recentPRs, bodyRes, goalRes, profileRes] = await Promise.all([
     supabase.from('user_stats').select('xp,streak_days').eq('user_id', userId).maybeSingle(),
     supabase.from('levels').select('level,min_xp,title'),
     supabase.from('workouts').select('started_at').eq('user_id', userId).eq('status', 'completed')
       .gte('started_at', since.toISOString()).order('started_at', { ascending: false }),
-    supabase.from('personal_records')
-      .select('type,value,unit,exercise:exercises!exercise_id(name)')
-      .eq('user_id', userId).order('achieved_at', { ascending: false }).limit(5),
+    fetchRecentPRs(userId),
     supabase.from('body_metrics').select('date,weight_kg').eq('user_id', userId).order('date', { ascending: true }),
     supabase.from('goals').select('target_weight_kg,session_minutes').eq('user_id', userId).eq('active', true).maybeSingle(),
     supabase.from('profiles').select('display_name').eq('id', userId).maybeSingle(),
@@ -76,10 +92,6 @@ export async function fetchDashboard(): Promise<Dashboard> {
   const weekWorkouts = weeks[weeks.length - 1]?.count ?? 0;
 
   const body = bodyRes.data ?? [];
-  const recentPRs: DashPR[] = (prRes.data ?? []).map((r) => ({
-    exerciseName: (r as unknown as { exercise?: { name?: string } }).exercise?.name ?? '—',
-    type: r.type as PersonalRecordType, value: Number(r.value), unit: r.unit as string,
-  }));
 
   const rawName = profileRes.data?.display_name ?? '';
   const displayName = (rawName.split(/[\s@]/)[0] || 'Champion');

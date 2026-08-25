@@ -9,10 +9,12 @@ import { fetchHomeStats } from '../src/services/gamification';
 import { fetchMyEntries } from '../src/services/ranking';
 import { track, EVENTS } from '../src/services/analytics';
 import { useT } from '../src/i18n/useT';
+import { useLocalized } from '../src/i18n/useLocalized';
 
 export default function GymCard() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const ref = useRef<View>(null);
   const [sharing, setSharing] = useState(false);
   const home = useQuery({ queryKey: ['home'], queryFn: fetchHomeStats });
@@ -52,7 +54,7 @@ export default function GymCard() {
         <View style={{ height: 1, backgroundColor: t.colors.border, marginVertical: t.spacing.sm }} />
         {(entries.data ?? []).slice(0, 4).map((e) => (
           <View key={e.exercise_id} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Text variant="bodyMedium">{e.exerciseName}</Text>
+            <Text variant="bodyMedium">{exName(e)}</Text>
             <RankBadge slug={e.rankSlug} />
           </View>
         ))}

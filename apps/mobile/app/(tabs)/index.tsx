@@ -9,11 +9,13 @@ import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text, Ring, HexBadge, LineChart, AmbientOrbs } from '../../src/components';
 import { fetchDashboard, type Dashboard } from '../../src/services/dashboard';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 
 export default function DashboardScreen() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const { width } = useWindowDimensions();
   const { data, isLoading, refetch, isRefetching } = useQuery({ queryKey: ['dashboard'], queryFn: fetchDashboard });
 
@@ -153,7 +155,7 @@ export default function DashboardScreen() {
               </View>
             ) : d.recentPRs.map((pr, i) => (
               <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8 }}>
-                <Text style={{ flex: 1 }}>{pr.exerciseName} <Text color="textMuted" variant="caption">({tr(`pr.${pr.type}`) !== `pr.${pr.type}` ? tr(`pr.${pr.type}`) : pr.type})</Text></Text>
+                <Text style={{ flex: 1 }}>{exName(pr)} <Text color="textMuted" variant="caption">({tr(`pr.${pr.type}`) !== `pr.${pr.type}` ? tr(`pr.${pr.type}`) : pr.type})</Text></Text>
                 <Text color="primary" style={{ fontWeight: '800' }}>{pr.value} {pr.unit}</Text>
               </View>
             ))}

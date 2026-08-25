@@ -2,7 +2,8 @@ import { supabase } from './supabase';
 
 export interface MyEntry {
   exercise_id: string;
-  exerciseName: string;
+  name: string;
+  name_fr: string | null;
   best_score: number;
   best_e1rm: number | null;
   rankSlug: string | null;
@@ -28,18 +29,22 @@ export async function fetchMyEntries(): Promise<MyEntry[]> {
   const { data: userData } = await supabase.auth.getUser();
   const userId = userData.user?.id;
   if (!userId) return [];
-  const { data, error } = await supabase
-    .from('leaderboard_entries')
-    .select('exercise_id,best_score,best_e1rm,exercise:exercises!exercise_id(name),rank:ranks!rank_id(slug)')
-    .eq('user_id', userId);
-  if (error) throw error;
-  return (data ?? []).map((r) => ({
-    exercise_id: r.exercise_id as string,
-    exerciseName: (r as unknown as { exercise?: { name?: string } }).exercise?.name ?? '—',
-    best_score: Number(r.best_score),
-    best_e1rm: r.best_e1rm != null ? Number(r.best_e1rm) : null,
-    rankSlug: (r as unknown as { rank?: { slug?: string } }).rank?.slug ?? null,
-  }));
+  const run = (cols: string) => supabase.from('leaderboard_entries').select(cols).eq('user_id', userId);
+  let res = await run('exercise_id,best_score,best_e1rm,exercise:exercises!exercise_id(name,name_fr),rank:ranks!rank_id(slug)');
+  if (res.error && res.error.code === '42703') {
+    res = await run('exercise_id,best_score,best_e1rm,exercise:exercises!exercise_id(name),rank:ranks!rank_id(slug)');
+  }
+  if (res.error) throw res.error;
+  return (res.data ?? []).map((r) => {
+    const ex = (r as unknown as { exercise?: { name?: string; name_fr?: string | null } }).exercise;
+    return {
+      exercise_id: r.exercise_id as string,
+      name: ex?.name ?? '—', name_fr: ex?.name_fr ?? null,
+      best_score: Number(r.best_score),
+      best_e1rm: r.best_e1rm != null ? Number(r.best_e1rm) : null,
+      rankSlug: (r as unknown as { rank?: { slug?: string } }).rank?.slug ?? null,
+    };
+  });
 }
 
 export async function fetchPublicLeaderboard(exerciseId: string, limit = 50): Promise<PublicRow[]> {

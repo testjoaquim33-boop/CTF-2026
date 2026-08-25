@@ -7,6 +7,7 @@ import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text, MiniBarChart } from '../../src/components';
 import { fetchProgressSummary } from '../../src/services/progress';
 import { useT } from '../../src/i18n/useT';
+import { useLocalized } from '../../src/i18n/useLocalized';
 
 function StatTile({ icon, color, label, value }: { icon: keyof typeof Ionicons.glyphMap; color: string; label: string; value: string }) {
   const t = useTheme();
@@ -34,6 +35,7 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 export default function ProgressScreen() {
   const t = useTheme();
   const tr = useT();
+  const { exName } = useLocalized();
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ['progress'], queryFn: fetchProgressSummary,
   });
@@ -86,7 +88,7 @@ export default function ProgressScreen() {
                   <Ionicons name="medal" size={18} color={t.colors.primary} />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text variant="bodyMedium" numberOfLines={1}>{pr.exerciseName}</Text>
+                  <Text variant="bodyMedium" numberOfLines={1}>{exName(pr)}</Text>
                   <Text variant="caption" color="textMuted">{tr(`pr.${pr.type}`) !== `pr.${pr.type}` ? tr(`pr.${pr.type}`) : pr.type}</Text>
                 </View>
                 <Text style={{ fontWeight: '900', fontSize: 16, color: t.colors.primary }}>{pr.value} {pr.unit}</Text>
