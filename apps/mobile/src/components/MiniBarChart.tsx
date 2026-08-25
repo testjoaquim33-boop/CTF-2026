@@ -2,11 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import { Text } from './Text';
+import { useT } from '../i18n/useT';
 
 /** Petit graphique à barres (sans dépendance native). values : nombres. */
 export function MiniBarChart({ values, height = 120 }: { values: number[]; height?: number }) {
   const t = useTheme();
-  if (values.length === 0) return <Text color="textMuted">Pas encore de données</Text>;
+  const tr = useT();
+  if (values.length === 0) return <Text color="textMuted">{tr('common.noData')}</Text>;
   const max = Math.max(...values);
   const min = Math.min(...values);
   const range = max - min || 1;

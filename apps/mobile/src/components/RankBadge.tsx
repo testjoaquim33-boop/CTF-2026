@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { useTheme } from '../theme/ThemeProvider';
 import { Text } from './Text';
+import { useT } from '../i18n/useT';
 
 const RANK_META: Record<string, { label: string; emoji: string; colorKey: keyof import('../theme/colors').RankColors }> = {
   bronze: { label: 'Bronze', emoji: '🥉', colorKey: 'bronze' },
@@ -14,8 +15,9 @@ const RANK_META: Record<string, { label: string; emoji: string; colorKey: keyof 
 
 export function RankBadge({ slug }: { slug: string | null }) {
   const t = useTheme();
+  const tr = useT();
   if (!slug || !RANK_META[slug]) {
-    return <Text variant="caption" color="textMuted">Non classé</Text>;
+    return <Text variant="caption" color="textMuted">{tr('common.unranked')}</Text>;
   }
   const meta = RANK_META[slug];
   const color = t.colors.rank[meta.colorKey];

@@ -23,6 +23,8 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'common.loading': 'Chargement…',
     'common.continue': 'Continuer',
     'common.ok': 'OK',
+    'common.unranked': 'Non classé',
+    'common.noData': 'Pas encore de données',
 
     // Onboarding
     'onb.welcome.tagline': 'Ton coach fitness intelligent. Programmes personnalisés, suivi, records et classements.',
@@ -144,6 +146,12 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'home.nextSession': 'PROCHAINE SÉANCE',
     'home.startSession': 'Démarrer une séance',
     'home.minutes': '~{n} min',
+    'home.progression': 'Ta progression',
+    'home.currentWeight': 'POIDS ACTUEL',
+    'home.objective': 'Objectif :',
+    'home.toGo': '{v} kg à atteindre',
+    'home.weighEmpty': 'Ajoute des pesées pour voir ta courbe',
+    'home.days': 'L,M,M,J,V,S,D',
 
     // Badges
     'ach.title': 'Badges',
@@ -340,6 +348,8 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'common.loading': 'Loading…',
     'common.continue': 'Continue',
     'common.ok': 'OK',
+    'common.unranked': 'Unranked',
+    'common.noData': 'No data yet',
 
     // Onboarding
     'onb.welcome.tagline': 'Your smart fitness coach. Personalized programs, tracking, records and leaderboards.',
@@ -458,6 +468,12 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'home.nextSession': 'NEXT SESSION',
     'home.startSession': 'Start a session',
     'home.minutes': '~{n} min',
+    'home.progression': 'Your progress',
+    'home.currentWeight': 'CURRENT WEIGHT',
+    'home.objective': 'Target:',
+    'home.toGo': '{v} kg to go',
+    'home.weighEmpty': 'Add weigh-ins to see your chart',
+    'home.days': 'M,T,W,T,F,S,S',
 
     'ach.title': 'Badges',
     'ach.unlockedCount': '{n} / {total} unlocked',

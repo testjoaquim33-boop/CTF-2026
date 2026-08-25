@@ -10,7 +10,6 @@ import { Text, Ring, HexBadge, LineChart, AmbientOrbs } from '../../src/componen
 import { fetchDashboard, type Dashboard } from '../../src/services/dashboard';
 import { useT } from '../../src/i18n/useT';
 
-const DAY_LETTERS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 
 export default function DashboardScreen() {
   const t = useTheme();
@@ -25,6 +24,7 @@ export default function DashboardScreen() {
   const weightPct = (d.currentWeightKg != null && d.targetWeightKg != null && d.startWeightKg != null && d.startWeightKg !== d.targetWeightKg)
     ? Math.max(0, Math.min(1, Math.abs(d.currentWeightKg - d.startWeightKg) / Math.abs(d.targetWeightKg - d.startWeightKg))) : 0;
   const toGo = (d.currentWeightKg != null && d.targetWeightKg != null) ? Math.round((d.targetWeightKg - d.currentWeightKg) * 10) / 10 : null;
+  const dayLetters = tr('home.days').split(',');
 
   return (
     <View style={{ flex: 1, backgroundColor: t.colors.bg }}>
@@ -110,7 +110,7 @@ export default function DashboardScreen() {
                       borderWidth: on ? 0 : 1.5, borderColor: isToday ? t.colors.primary : t.colors.border,
                       alignItems: 'center', justifyContent: 'center' }}>
                       <Text variant="caption" color={on ? 'onPrimary' : (isToday ? 'primary' : 'textMuted')} style={{ fontWeight: '800' }}>
-                        {on ? '✓' : DAY_LETTERS[i]}
+                        {on ? '✓' : dayLetters[i]}
                       </Text>
                     </View>
                   </View>
@@ -120,16 +120,16 @@ export default function DashboardScreen() {
           </Widget>
 
           {/* PROGRESSION */}
-          <Widget title="Ta progression">
+          <Widget title={tr('home.progression')}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 14, gap: 16 }}>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1, color: t.colors.textMuted }}>POIDS ACTUEL</Text>
+                <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1, color: t.colors.textMuted }}>{tr('home.currentWeight')}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 5 }}>
                   <Text style={{ fontSize: 38, lineHeight: 44, fontWeight: '800', color: t.colors.text, letterSpacing: -1 }}>{d.currentWeightKg ?? '—'}</Text>
                   <Text color="textSecondary" style={{ marginBottom: 7, fontWeight: '700' }}>kg</Text>
                 </View>
-                <Text color="textSecondary">Objectif : <Text style={{ color: t.colors.primary }}>{d.targetWeightKg ?? '—'} kg</Text></Text>
-                {toGo != null ? <Text style={{ color: t.colors.success, marginTop: 4, fontWeight: '600' }}>{toGo > 0 ? '+' : ''}{toGo} kg à atteindre</Text> : null}
+                <Text color="textSecondary">{tr('home.objective')} <Text style={{ color: t.colors.primary }}>{d.targetWeightKg ?? '—'} kg</Text></Text>
+                {toGo != null ? <Text style={{ color: t.colors.success, marginTop: 4, fontWeight: '600' }}>{tr('home.toGo', { v: `${toGo > 0 ? '+' : ''}${toGo}` })}</Text> : null}
               </View>
               <Ring progress={weightPct} size={104} color={t.colors.primary} />
             </View>

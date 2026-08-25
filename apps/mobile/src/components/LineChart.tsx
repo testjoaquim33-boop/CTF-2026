@@ -3,14 +3,16 @@ import { View } from 'react-native';
 import Svg, { Polyline, Circle, Defs, LinearGradient, Stop, Polygon } from 'react-native-svg';
 import { useTheme } from '../theme/ThemeProvider';
 import { Text } from './Text';
+import { useT } from '../i18n/useT';
 
 export function LineChart({ values, width = 300, height = 70, color }: {
   values: number[]; width?: number; height?: number; color?: string;
 }) {
   const t = useTheme();
+  const tr = useT();
   const c = color ?? t.colors.secondary;
   if (values.length < 2) {
-    return <Text variant="caption" color="textMuted">Ajoute des pesées pour voir ta courbe</Text>;
+    return <Text variant="caption" color="textMuted">{tr('home.weighEmpty')}</Text>;
   }
   const min = Math.min(...values), max = Math.max(...values);
   const range = max - min || 1;
