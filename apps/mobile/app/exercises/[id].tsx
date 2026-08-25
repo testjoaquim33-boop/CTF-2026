@@ -74,13 +74,15 @@ export default function ExerciseDetailScreen() {
         </View>
 
         {/* TABS */}
-        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: t.colors.border, paddingHorizontal: t.spacing.md }}>
+        <View style={{ flexDirection: 'row', gap: 6, marginHorizontal: t.spacing.lg, marginBottom: t.spacing.sm,
+          backgroundColor: t.colors.bgCard, borderRadius: t.radius.pill, padding: 4, borderWidth: 1, borderColor: t.colors.border }}>
           {TAB_IDS.map((id2) => {
             const active = tab === id2;
             return (
-              <Pressable key={id2} onPress={() => setTab(id2)} style={{ flex: 1, paddingVertical: t.spacing.md, alignItems: 'center' }}>
-                <Text variant="caption" style={{ color: active ? t.colors.primary : t.colors.textMuted, fontWeight: active ? '800' : '600' }}>{tr(`ex.tab.${id2}`)}</Text>
-                {active ? <View style={{ height: 2, backgroundColor: t.colors.primary, width: '70%', marginTop: 6, borderRadius: 2 }} /> : null}
+              <Pressable key={id2} onPress={() => setTab(id2)}
+                style={{ flex: 1, paddingVertical: 9, alignItems: 'center', borderRadius: t.radius.pill,
+                  backgroundColor: active ? t.colors.primary : 'transparent' }}>
+                <Text variant="caption" style={{ color: active ? '#fff' : t.colors.textMuted, fontWeight: active ? '900' : '700', fontSize: 12 }}>{tr(`ex.tab.${id2}`)}</Text>
               </Pressable>
             );
           })}

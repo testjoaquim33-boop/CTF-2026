@@ -102,6 +102,7 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
 
     // Profil
     'profile.title': 'Profil',
+    'profile.athlete': 'Athlète',
     'profile.language': 'LANGUE',
     'profile.displayName': 'NOM AFFICHÉ',
     'profile.namePlaceholder': 'Ton prénom',
@@ -426,6 +427,7 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'auth.errorTitle': 'Oops',
 
     'profile.title': 'Profile',
+    'profile.athlete': 'Athlete',
     'profile.language': 'LANGUAGE',
     'profile.displayName': 'DISPLAY NAME',
     'profile.namePlaceholder': 'Your first name',
