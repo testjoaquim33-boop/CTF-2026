@@ -53,7 +53,7 @@ export default function AddExercise() {
                 style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md, backgroundColor: t.colors.bgCard,
                   borderRadius: t.radius.md, padding: t.spacing.md, marginBottom: t.spacing.md,
                   borderWidth: 1, borderColor: t.colors.border, borderLeftWidth: 4, borderLeftColor: mc }}>
-                <ExerciseThumb group={item.primary_muscle?.group} size={44} />
+                <ExerciseThumb imageUrl={item.image_url} group={item.primary_muscle?.group} size={44} />
                 <View style={{ flex: 1 }}>
                   <Text variant="bodyMedium">{exName(item)}</Text>
                   <Text variant="caption" color="textSecondary">{item.primary_muscle?.name ?? '—'}</Text>

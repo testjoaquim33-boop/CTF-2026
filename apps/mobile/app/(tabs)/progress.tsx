@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, ScrollView, ActivityIndicator, RefreshControl, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme/ThemeProvider';
@@ -22,11 +23,14 @@ function StatTile({ icon, color, label, value }: { icon: keyof typeof Ionicons.g
   );
 }
 
-function Card({ title, children }: { title: string; children: React.ReactNode }) {
+function Card({ title, action, children }: { title: string; action?: React.ReactNode; children: React.ReactNode }) {
   const t = useTheme();
   return (
     <View style={{ backgroundColor: t.colors.bgCard, borderRadius: 22, padding: 20, borderWidth: 1, borderColor: t.colors.border }}>
-      <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1.2, color: t.colors.textMuted }}>{title.toUpperCase()}</Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 11, fontWeight: '800', letterSpacing: 1.2, color: t.colors.textMuted }}>{title.toUpperCase()}</Text>
+        {action}
+      </View>
       {children}
     </View>
   );
@@ -63,7 +67,14 @@ export default function ProgressScreen() {
           <StatTile icon="flag" color={t.colors.lime} label={tr('pg.target')} value={data?.targetWeightKg ? `${data.targetWeightKg}` : '—'} />
         </View>
 
-        <Card title={tr('pg.bodyweight')}>
+        <Card title={tr('pg.bodyweight')} action={
+          <Pressable onPress={() => router.push('/weigh-in')}
+            style={{ flexDirection: 'row', alignItems: 'center', gap: 5, paddingVertical: 5, paddingHorizontal: 11, borderRadius: 999,
+              backgroundColor: t.colors.primary + '22', borderWidth: 1, borderColor: t.colors.primary + '55' }}>
+            <Ionicons name="add" size={15} color={t.colors.primary} />
+            <Text style={{ color: t.colors.primary, fontWeight: '800', fontSize: 12 }}>{tr('weigh.add')}</Text>
+          </Pressable>
+        }>
           <View style={{ marginTop: 14 }}>
             <MiniBarChart values={(data?.bodySeries ?? []).map((b) => b.weightKg)} />
           </View>

@@ -63,7 +63,7 @@ export default function ExerciseListScreen() {
                   borderLeftWidth: 4, borderLeftColor: mc,
                   borderWidth: 1, borderColor: t.colors.border }}
               >
-                <ExerciseThumb group={item.primary_muscle?.group} name={exName(item)} size={52} />
+                <ExerciseThumb imageUrl={item.image_url} group={item.primary_muscle?.group} name={exName(item)} size={52} />
                 <View style={{ flex: 1 }}>
                   <Text variant="bodyMedium">{exName(item)}</Text>
                   <Text variant="caption" color="textSecondary" style={{ marginTop: 2 }}>

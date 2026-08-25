@@ -74,7 +74,7 @@ export default function RankingScreen() {
               <View style={{ backgroundColor: t.colors.bgCard, borderRadius: 20, padding: t.spacing.md,
                 marginBottom: t.spacing.md, borderWidth: 1, borderColor: t.colors.border, gap: t.spacing.md }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.md }}>
-                  <ExerciseThumb group={item.primary_muscle?.group} size={48} />
+                  <ExerciseThumb imageUrl={item.image_url} group={item.primary_muscle?.group} size={48} />
                   <View style={{ flex: 1 }}>
                     <Text variant="bodyMedium" numberOfLines={1}>{exName(item)}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 2 }}>

@@ -17,8 +17,15 @@ export interface PublicRow {
 export async function submitToLeaderboard(exerciseId: string): Promise<{ ok: boolean; error?: string; rank?: string | null; score?: number }> {
   const { data, error } = await supabase.functions.invoke('leaderboard-submit', { body: { exerciseId } });
   if (error) {
-    const ctx = (data ?? {}) as { error?: string };
-    return { ok: false, error: ctx.error ?? error.message };
+    // Les erreurs HTTP (non-2xx) rangent le corps de réponse dans error.context.
+    // On tente d'en extraire le code métier (ex. 'implausible_bodyweight') pour
+    // afficher un message clair, sinon on retombe sur data puis le message brut.
+    let code: string | undefined = (data as { error?: string } | null)?.error;
+    const ctx = (error as { context?: Response }).context;
+    if (!code && ctx && typeof ctx.json === 'function') {
+      try { code = (await ctx.json())?.error; } catch { /* corps non-JSON */ }
+    }
+    return { ok: false, error: code ?? error.message };
   }
   const d = data as { error?: string; rank?: string | null; score?: number };
   if (d.error) return { ok: false, error: d.error };

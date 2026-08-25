@@ -142,6 +142,12 @@ export default function DashboardScreen() {
             <View style={{ marginTop: 16 }}>
               <LineChart values={d.weightSeries} width={width - 40 - 40} />
             </View>
+            <Pressable onPress={() => router.push('/weigh-in')}
+              style={{ marginTop: 14, paddingVertical: 11, borderRadius: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 7,
+                backgroundColor: t.colors.primary + '1A', borderWidth: 1, borderColor: t.colors.primary + '44' }}>
+              <Ionicons name="add-circle" size={17} color={t.colors.primary} />
+              <Text style={{ color: t.colors.primary, fontWeight: '800', fontSize: 13 }}>{tr('weigh.add')}</Text>
+            </Pressable>
           </Widget>
 
           {/* RECORDS */}

@@ -8,6 +8,7 @@ export interface ExerciseListItem {
   name_fr: string | null;
   level: Level;
   is_bodyweight: boolean;
+  image_url: string | null;
   primary_muscle: { slug: string; name: string; group: string } | null;
 }
 
@@ -35,8 +36,8 @@ export interface ExerciseFilters {
 let hasI18nColumns: boolean | null = null;
 const UNDEFINED_COLUMN = '42703';
 
-const LIST_COLS_I18N = 'id,slug,name,name_fr,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
-const LIST_COLS_BASE = 'id,slug,name,level,is_bodyweight,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+const LIST_COLS_I18N = 'id,slug,name,name_fr,level,is_bodyweight,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
+const LIST_COLS_BASE = 'id,slug,name,level,is_bodyweight,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
 const DETAIL_COLS_I18N = 'id,slug,name,name_fr,level,is_bodyweight,description,description_fr,instructions,instructions_fr,common_mistakes,common_mistakes_fr,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
 const DETAIL_COLS_BASE = 'id,slug,name,level,is_bodyweight,description,instructions,common_mistakes,difficulty,video_url,image_url,primary_muscle:muscles!primary_muscle_id(slug,name,group)';
 
@@ -66,7 +67,7 @@ export async function fetchExercises(filters: ExerciseFilters = {}): Promise<Exe
   }
   if (error) throw error;
 
-  const rows = (data ?? []).map((r) => ({ name_fr: null, ...(r as Record<string, unknown>) })) as unknown as ExerciseListItem[];
+  const rows = (data ?? []).map((r) => ({ name_fr: null, image_url: null, ...(r as Record<string, unknown>) })) as unknown as ExerciseListItem[];
   return filters.muscleGroup
     ? rows.filter((r) => r.primary_muscle?.group === filters.muscleGroup)
     : rows;
