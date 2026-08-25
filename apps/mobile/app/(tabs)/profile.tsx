@@ -62,7 +62,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.md }}>
-        <Text variant="h1">{tr('profile.title')}</Text>
+        <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: '900', color: t.colors.text, letterSpacing: -0.8 }}>{tr('profile.title')}</Text>
         <Text color="textSecondary">{user?.email ?? '—'}</Text>
 
         {/* Sélecteur de langue */}

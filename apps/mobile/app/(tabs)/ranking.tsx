@@ -39,7 +39,7 @@ export default function RankingScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
       <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-        <Text variant="h1">{tr('rk.title')}</Text>
+        <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: '900', color: t.colors.text, letterSpacing: -0.8 }}>{tr('rk.title')}</Text>
         <Text color="textSecondary">{tr('rk.subtitle')}</Text>
         <TextInput placeholder={tr('rk.search')} placeholderTextColor={t.colors.textMuted}
           value={search} onChangeText={setSearch}

@@ -33,7 +33,7 @@ export default function WorkoutScreen() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }} edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: t.spacing.lg, gap: t.spacing.md, paddingBottom: t.spacing.xxl }}>
-        <Text variant="h1">{tr('wk.title')}</Text>
+        <Text style={{ fontSize: 30, lineHeight: 36, fontWeight: '900', color: t.colors.text, letterSpacing: -0.8 }}>{tr('wk.title')}</Text>
         <Text color="textSecondary">{tr('wk.subtitle')}</Text>
 
         {active ? (
