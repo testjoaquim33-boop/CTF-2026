@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, Pressable, Alert, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../src/theme/ThemeProvider';
@@ -24,8 +25,8 @@ export default function ActiveWorkout() {
   if (!store.active) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg, padding: t.spacing.lg }}>
-        <Text>Aucune séance en cours.</Text>
-        <Button label="Nouvelle séance" onPress={() => router.replace('/workout/new')} style={{ marginTop: t.spacing.lg }} />
+        <Text>{tr('act.noActive')}</Text>
+        <Button label={tr('nw.title')} onPress={() => router.replace('/workout/new')} style={{ marginTop: t.spacing.lg }} />
       </SafeAreaView>
     );
   }
@@ -57,62 +58,98 @@ export default function ActiveWorkout() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }}>
-      <View style={{ padding: t.spacing.lg, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.sm, flex: 1 }}>
-          <Pressable onPress={() => router.replace('/(tabs)')} hitSlop={12}>
-            <Text variant="h3" color="textSecondary">‹</Text>
-          </Pressable>
-          <Text variant="h2">{store.name}</Text>
-        </View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: t.colors.bg }} edges={['top']}>
+      {/* Header */}
+      <View style={{ paddingHorizontal: 16, paddingVertical: 10, flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+        <Pressable onPress={() => router.replace('/(tabs)')} hitSlop={12}
+          style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: t.colors.bgCard,
+            alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: t.colors.border }}>
+          <Ionicons name="chevron-back" size={22} color={t.colors.text} />
+        </Pressable>
+        <Text style={{ flex: 1, fontSize: 20, fontWeight: '900', color: t.colors.text, letterSpacing: -0.4 }} numberOfLines={1}>{store.name}</Text>
         {running ? (
-          <Pressable onPress={stopRest} style={{ backgroundColor: t.colors.primary, borderRadius: t.radius.pill, paddingHorizontal: t.spacing.lg, paddingVertical: t.spacing.sm }}>
-            <Text color="onPrimary" variant="bodyMedium">{tr('act.rest', { time: formatDuration(remaining) })}</Text>
+          <Pressable onPress={stopRest} style={{ flexDirection: 'row', alignItems: 'center', gap: 6,
+            backgroundColor: t.colors.primary + '22', borderWidth: 1, borderColor: t.colors.primary + '66',
+            borderRadius: 999, paddingHorizontal: 14, height: 40 }}>
+            <Ionicons name="timer-outline" size={16} color={t.colors.primary} />
+            <Text style={{ fontWeight: '900', color: t.colors.primary, fontVariant: ['tabular-nums'] }}>{formatDuration(remaining)}</Text>
           </Pressable>
         ) : null}
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: t.spacing.lg, paddingTop: 0 }}>
+      <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 4, paddingBottom: 24 }} showsVerticalScrollIndicator={false}>
         {store.exercises.map((ex, exIndex) => (
-          <View key={exIndex} style={{ marginBottom: t.spacing.xl, backgroundColor: t.colors.bgElevated,
-            borderRadius: t.radius.md, padding: t.spacing.lg, borderWidth: 1, borderColor: t.colors.border }}>
+          <View key={exIndex} style={{ marginBottom: 16, backgroundColor: t.colors.bgCard,
+            borderRadius: 22, padding: 16, borderWidth: 1, borderColor: t.colors.border }}>
             <ExerciseHeader exerciseId={ex.exerciseId} name={ex.name} />
 
+            {/* en-têtes de colonnes */}
+            {ex.sets.length > 0 ? (
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8, paddingHorizontal: 2 }}>
+                <Text style={{ width: 30, fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>SÉRIE</Text>
+                <Text style={{ flex: 1, textAlign: 'center', fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>KG</Text>
+                <View style={{ width: 16 }} />
+                <Text style={{ flex: 1, textAlign: 'center', fontSize: 10, fontWeight: '800', color: t.colors.textMuted, letterSpacing: 0.5 }}>REPS</Text>
+                <View style={{ width: 40 }} />
+              </View>
+            ) : null}
+
             {ex.sets.map((s, setIndex) => (
-              <View key={setIndex} style={{ flexDirection: 'row', alignItems: 'center', gap: t.spacing.sm, marginBottom: t.spacing.sm }}>
-                <Text color="textMuted" style={{ width: 24 }}>{setIndex + 1}</Text>
+              <View key={setIndex} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <View style={{ width: 30, height: 30, borderRadius: 10, alignItems: 'center', justifyContent: 'center',
+                  backgroundColor: s.completed ? t.colors.lime + '22' : t.colors.bgInput }}>
+                  <Text style={{ fontWeight: '900', fontSize: 13, color: s.completed ? t.colors.lime : t.colors.textSecondary }}>{setIndex + 1}</Text>
+                </View>
                 <TextInput
                   defaultValue={s.weightKg ? String(s.weightKg) : ''}
                   onChangeText={(v) => store.updateSet(exIndex, setIndex, { weightKg: parseFloat(v) || 0 })}
-                  keyboardType="numeric" placeholder="kg" placeholderTextColor={t.colors.textMuted}
-                  style={{ flex: 1, backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.sm, padding: t.spacing.sm, textAlign: 'center' }}
+                  keyboardType="numeric" placeholder="—" placeholderTextColor={t.colors.textMuted}
+                  style={{ flex: 1, backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: 12,
+                    paddingVertical: 11, textAlign: 'center', fontWeight: '800', fontSize: 16 }}
                 />
-                <Text color="textMuted">×</Text>
+                <Text style={{ color: t.colors.textMuted, width: 16, textAlign: 'center', fontWeight: '800' }}>×</Text>
                 <TextInput
                   defaultValue={s.reps ? String(s.reps) : ''}
                   onChangeText={(v) => store.updateSet(exIndex, setIndex, { reps: parseInt(v, 10) || 0 })}
-                  keyboardType="numeric" placeholder="reps" placeholderTextColor={t.colors.textMuted}
-                  style={{ flex: 1, backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: t.radius.sm, padding: t.spacing.sm, textAlign: 'center' }}
+                  keyboardType="numeric" placeholder="—" placeholderTextColor={t.colors.textMuted}
+                  style={{ flex: 1, backgroundColor: t.colors.bgInput, color: t.colors.text, borderRadius: 12,
+                    paddingVertical: 11, textAlign: 'center', fontWeight: '800', fontSize: 16 }}
                 />
                 <Pressable
                   onPress={() => { store.updateSet(exIndex, setIndex, { completed: !s.completed }); if (!s.completed) startRest(REST_SECONDS); }}
-                  style={{ width: 36, height: 36, borderRadius: 18, alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: s.completed ? t.colors.success : t.colors.bgInput }}>
-                  <Text color={s.completed ? 'onPrimary' : 'textMuted'}>✓</Text>
+                  style={{ width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center',
+                    backgroundColor: s.completed ? t.colors.lime : t.colors.bgInput,
+                    shadowColor: t.colors.lime, shadowOpacity: s.completed ? 0.5 : 0, shadowRadius: 8, elevation: s.completed ? 3 : 0 }}>
+                  <Ionicons name="checkmark" size={20} color={s.completed ? '#0B0B0B' : t.colors.textMuted} />
                 </Pressable>
               </View>
             ))}
 
-            <Pressable onPress={() => store.addSet(exIndex)} style={{ marginTop: t.spacing.sm }}>
-              <Text color="primary">{tr('act.addSet')}</Text>
+            <Pressable onPress={() => store.addSet(exIndex)}
+              style={{ marginTop: 6, paddingVertical: 10, borderRadius: 12, borderWidth: 1.5, borderStyle: 'dashed',
+                borderColor: t.colors.border, alignItems: 'center' }}>
+              <Text style={{ color: t.colors.primary, fontWeight: '800', fontSize: 13 }}>{tr('act.addSet')}</Text>
             </Pressable>
           </View>
         ))}
+
+        <Pressable onPress={() => router.push('/workout/add-exercise')}
+          style={{ paddingVertical: 14, borderRadius: 16, borderWidth: 1.5, borderStyle: 'dashed',
+            borderColor: t.colors.border, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: 8 }}>
+          <Ionicons name="add" size={18} color={t.colors.textSecondary} />
+          <Text style={{ color: t.colors.textSecondary, fontWeight: '800' }}>{tr('act.addExercise')}</Text>
+        </Pressable>
       </ScrollView>
 
-      <View style={{ padding: t.spacing.lg, gap: t.spacing.sm }}>
-        <Button label={tr('act.addExercise')} variant="secondary" onPress={() => router.push('/workout/add-exercise')} />
-        <Button label={saving ? tr('act.saving') : tr('act.finish')} onPress={finish} disabled={saving} />
+      {/* Barre de fin */}
+      <View style={{ padding: 16, borderTopWidth: 1, borderTopColor: t.colors.border, backgroundColor: t.colors.bg }}>
+        <Pressable onPress={finish} disabled={saving} style={{ borderRadius: 16, overflow: 'hidden', opacity: saving ? 0.7 : 1 }}>
+          <LinearGradient colors={[t.colors.primary, t.colors.pink]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+            style={{ paddingVertical: 16, alignItems: 'center', flexDirection: 'row', justifyContent: 'center', gap: 8 }}>
+            <Ionicons name="checkmark-done" size={20} color="#fff" />
+            <Text style={{ color: '#fff', fontWeight: '900', fontSize: 16 }}>{saving ? tr('act.saving') : tr('act.finish')}</Text>
+          </LinearGradient>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

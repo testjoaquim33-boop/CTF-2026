@@ -267,6 +267,7 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'act.newBadgeTitle': '🏅 Nouveau badge !',
     'act.great': 'Génial',
     'act.rest': 'Repos {time}',
+    'act.noActive': 'Aucune séance en cours.',
 
     // Classement
     'rk.title': 'Classement',
@@ -580,6 +581,7 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'act.newBadgeTitle': '🏅 New badge!',
     'act.great': 'Great',
     'act.rest': 'Rest {time}',
+    'act.noActive': 'No workout in progress.',
 
     'rk.title': 'Ranking',
     'rk.subtitle': 'Ranked on relative strength (load / bodyweight). Publish any exercise.',
