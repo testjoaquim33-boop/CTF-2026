@@ -4,12 +4,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { useQuery } from '@tanstack/react-query';
 import { useTheme } from '../../src/theme/ThemeProvider';
 import { Text } from '../../src/components';
 import { usePremium } from '../../src/hooks/usePremium';
 import { useAuthStore } from '../../src/store/auth';
 import { useSettings } from '../../src/store/settings';
 import { useT } from '../../src/i18n/useT';
+import { fetchMyEntries } from '../../src/services/ranking';
 import { signOut, deleteAccount } from '../../src/services/auth';
 import { supabase } from '../../src/services/supabase';
 import { restorePurchases, purchasesEnabled } from '../../src/services/purchases';
@@ -81,6 +83,9 @@ export default function ProfileScreen() {
             <Text color="textSecondary" variant="caption" numberOfLines={1}>{user?.email ?? '—'}</Text>
           </View>
         </View>
+
+        {/* Mon personnage : meilleur rang */}
+        <CharacterCard />
 
         {/* Carte abonnement */}
         {isPremium ? (
@@ -156,6 +161,50 @@ export default function ProfileScreen() {
         <Text variant="caption" color="textMuted" style={{ textAlign: 'center' }}>{tr('profile.rgpd')}</Text>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+const RANK_ORDER = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'elite'] as const;
+const RANK_EMOJI: Record<string, string> = {
+  bronze: '🥉', silver: '🥈', gold: '🥇', platinum: '💎', diamond: '🔷', elite: '👑',
+};
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+/** Carte « Mon personnage » : meilleur rang atteint + nombre d'exercices classés. */
+function CharacterCard() {
+  const t = useTheme();
+  const tr = useT();
+  const { data } = useQuery({ queryKey: ['myEntries'], queryFn: fetchMyEntries });
+  const ranked = (data ?? []).filter((e) => e.rankSlug)
+    .sort((a, b) => RANK_ORDER.indexOf(b.rankSlug as typeof RANK_ORDER[number]) - RANK_ORDER.indexOf(a.rankSlug as typeof RANK_ORDER[number]));
+  const best = ranked[0] ?? null;
+  const color = best ? t.colors.rank[best.rankSlug as keyof typeof t.colors.rank] : t.colors.textMuted;
+
+  return (
+    <Pressable onPress={() => router.push('/my-ranks')} style={{ borderRadius: 20, overflow: 'hidden' }}>
+      <LinearGradient colors={[color + '40', t.colors.bgCard]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+        style={{ padding: t.spacing.lg, flexDirection: 'row', alignItems: 'center', gap: t.spacing.md,
+          borderWidth: 1, borderColor: color + '55', borderRadius: 20 }}>
+        <View style={{ width: 52, height: 52, borderRadius: 16, backgroundColor: color + '2A', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 28 }}>{best ? (RANK_EMOJI[best.rankSlug!] ?? '🏆') : '🎯'}</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text variant="overline" color="textMuted">{tr('ranks.card')}</Text>
+          {best ? (
+            <>
+              <Text style={{ fontSize: 20, fontWeight: '900', color, letterSpacing: -0.3 }}>{capitalize(best.rankSlug!)}</Text>
+              <Text variant="caption" color="textSecondary">{tr('ranks.rankedCount', { n: ranked.length })}</Text>
+            </>
+          ) : (
+            <>
+              <Text variant="h3">{tr('ranks.none')}</Text>
+              <Text variant="caption" color="textSecondary">{tr('ranks.see')}</Text>
+            </>
+          )}
+        </View>
+        <Ionicons name="chevron-forward" size={20} color={t.colors.textMuted} />
+      </LinearGradient>
+    </Pressable>
   );
 }
 

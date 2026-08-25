@@ -54,6 +54,25 @@ export async function fetchMyEntries(): Promise<MyEntry[]> {
   });
 }
 
+/**
+ * Recalcule le rang de TOUS les exercices déjà travaillés (ceux ayant au moins
+ * un record personnel). Utile pour classer l'historique existant sans refaire
+ * une séance. Best-effort : chaque exo est soumis côté serveur (anti-triche),
+ * les échecs (pas de pesée, non classable…) sont ignorés.
+ * Retourne le nombre d'exercices classés avec succès.
+ */
+export async function recomputeMyRanks(): Promise<{ ranked: number; total: number }> {
+  const { data: userData } = await supabase.auth.getUser();
+  const userId = userData.user?.id;
+  if (!userId) return { ranked: 0, total: 0 };
+  const { data } = await supabase.from('personal_records')
+    .select('exercise_id').eq('user_id', userId);
+  const ids = Array.from(new Set((data ?? []).map((r) => r.exercise_id as string)));
+  const results = await Promise.allSettled(ids.map((id) => submitToLeaderboard(id)));
+  const ranked = results.filter((r) => r.status === 'fulfilled' && r.value.ok && r.value.rank).length;
+  return { ranked, total: ids.length };
+}
+
 export async function fetchPublicLeaderboard(exerciseId: string, limit = 50): Promise<PublicRow[]> {
   const { data, error } = await supabase
     .from('public_leaderboard')

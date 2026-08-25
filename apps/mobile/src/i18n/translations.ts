@@ -305,6 +305,21 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'weigh.hint': 'Une pesée par jour. Utilisée pour le classement (force relative) et ta courbe de progression.',
     'weigh.add': 'Ajouter une pesée',
 
+    // Mes rangs (personnage)
+    'ranks.title': 'Mes rangs',
+    'ranks.card': 'Mon personnage',
+    'ranks.emptyTitle': 'Aucun rang pour le moment',
+    'ranks.emptyBody': 'Termine une séance (poids + reps) pour décrocher tes premiers rangs. Le calcul est automatique.',
+    'ranks.startWorkout': 'Lancer une séance',
+    'ranks.bestOn': 'Ton meilleur rang · {ex}',
+    'ranks.rankedCount': '{n} exercice(s) classé(s)',
+    'ranks.relative': 'Force relative {x}× PdC',
+    'ranks.e1rm': '1RM {v} kg',
+    'ranks.see': 'Voir mes rangs',
+    'ranks.none': 'Pas encore classé',
+    'ranks.recompute': 'Recalculer',
+    'ranks.recomputeNone': "Aucun rang obtenu. Vérifie que tu as une pesée enregistrée et des séries loggées, puis réessaie.",
+
     // Progression
     'pg.title': 'Progression',
     'pg.workouts': 'Séances',
@@ -636,6 +651,21 @@ export const translations: Record<'fr' | 'en', Record<string, string>> = {
     'weigh.first': 'Your first weigh-in — welcome!',
     'weigh.hint': 'One weigh-in per day. Used for ranking (relative strength) and your progress curve.',
     'weigh.add': 'Add a weigh-in',
+
+    // My ranks (character)
+    'ranks.title': 'My ranks',
+    'ranks.card': 'My character',
+    'ranks.emptyTitle': 'No rank yet',
+    'ranks.emptyBody': 'Finish a workout (weight + reps) to earn your first ranks. It is computed automatically.',
+    'ranks.startWorkout': 'Start a workout',
+    'ranks.bestOn': 'Your best rank · {ex}',
+    'ranks.rankedCount': '{n} ranked exercise(s)',
+    'ranks.relative': 'Relative strength {x}× BW',
+    'ranks.e1rm': '1RM {v} kg',
+    'ranks.see': 'See my ranks',
+    'ranks.none': 'Not ranked yet',
+    'ranks.recompute': 'Recompute',
+    'ranks.recomputeNone': 'No rank obtained. Make sure you have a weigh-in saved and logged sets, then try again.',
 
     'pg.title': 'Progress',
     'pg.workouts': 'Workouts',
